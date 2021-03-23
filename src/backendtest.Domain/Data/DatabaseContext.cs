@@ -1,12 +1,12 @@
-﻿using System.Linq;
-using System.Threading.Tasks;
+﻿using System;
 using backendtest.Domain.Domain.Entities;
 using backendtest.Shared.Communication.Mediator;
 using backendtest.Shared.Data;
-using backendtest.Shared.DomainObjects;
 using backendtest.Shared.Messages;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace backendtest.Domain.Data
 {
@@ -14,12 +14,13 @@ namespace backendtest.Domain.Data
     {
         private readonly IMediatorHandler _mediatorHandler;
 
-        protected DatabaseContext(DbContextOptions<DatabaseContext> options, IMediatorHandler mediatorHandler)
+        public DatabaseContext(DbContextOptions<DatabaseContext> options, IMediatorHandler rebusHandler)
         : base(options)
         {
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
-            _mediatorHandler = mediatorHandler;
+            _mediatorHandler = rebusHandler ?? throw new ArgumentNullException(nameof(rebusHandler));
+
         }
 
         public DbSet<Desenvolvedor> Desenvolvedores { get; set; }

@@ -5,8 +5,9 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-		<PackageReference Include="FluentValidation" Version="8.4.0" />
-		<PackageReference Include="mediatr" Version="7.0.0" />
+		<PackageReference Include="FluentValidation" Version="9.5.3" />
+		<PackageReference Include="mediatr" Version="9.0.0" />
+		<PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="9.0.0" /> 
 	</ItemGroup>
 
 	<ItemGroup>

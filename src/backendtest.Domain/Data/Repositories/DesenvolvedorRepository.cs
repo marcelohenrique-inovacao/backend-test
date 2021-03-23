@@ -26,23 +26,22 @@ namespace backendtest.Domain.Data.Repositories
 
         public void Update(Desenvolvedor desenvolvedor)
         {
-            _context.Entry(desenvolvedor).State = EntityState.Modified;
-            _context.SaveChanges();
+            _context.Entry(desenvolvedor).State = EntityState.Modified; 
         }
 
         public async Task<Desenvolvedor> ObterPorCpf(string cpf)
         {
-            return await _context.Desenvolvedores.FirstOrDefaultAsync(d => d.Cpf.Numero == cpf);
+            return await _context.Desenvolvedores.AsNoTracking().FirstOrDefaultAsync(d => d.Cpf.Numero == cpf);
         }
 
         public async Task<Desenvolvedor> ObterPorId(Guid id)
         {
-            return await _context.Desenvolvedores.FirstOrDefaultAsync(d => d.Id == id); 
+            return await _context.Desenvolvedores.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id); 
         }
 
         public async Task<IEnumerable<Desenvolvedor>> ObterTodos()
         {
-            return await _context.Desenvolvedores.AsNoTracking().ToListAsync();
+            return await _context.Desenvolvedores.AsNoTracking().AsNoTracking().ToListAsync();
         } 
 
         public void Dispose()

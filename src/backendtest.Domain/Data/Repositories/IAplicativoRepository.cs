@@ -14,5 +14,8 @@ namespace backendtest.Domain.Data.Repositories
         Task<IEnumerable<Aplicativo>> ObterTodos();
         Task<Aplicativo> ObterPorNome(string nome);
         Task<Aplicativo> ObterPorId(Guid id);
+        //Task<bool> VincularDesenvolvedor(Desenvolvedor desenvolvedor);
+        //Task<bool> DesvincularDesenvolvedor(Desenvolvedor desenvolvedor);
+        Task<bool> DesenvolvedorResponsavelPorAplicativo(Guid desenvolvedor);
     }
 }

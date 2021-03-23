@@ -28,12 +28,15 @@ namespace backendtest.Domain.Data.Mappings
                 .HasColumnType("TinyInt");
 
             builder.HasOne(a => a.Responsavel)
-                .WithOne(d => d.ResponsavelAplicativo)
+                .WithOne(d => d.ResponsavelAplicativo) 
+                .HasForeignKey<Aplicativo>(a => a.IdDesenvolvedorResponsavel)
                 .OnDelete(DeleteBehavior.NoAction);
-                
+
+            builder.HasIndex(a => a.IdDesenvolvedorResponsavel);
 
             builder.HasMany(a => a.Desenvolvedores)
                 .WithMany(d => d.Aplicativos);
+
         }
     }
 }

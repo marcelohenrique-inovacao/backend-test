@@ -53,5 +53,14 @@ namespace backendtest.Domain.Domain.Entities
             IdDesenvolvedorResponsavel = null;
             Responsavel = null;
         }
+
+        public void VincularDesenvolvedor(Desenvolvedor desenvolvedor)
+        {
+            _desenvolvedores.Add(desenvolvedor);
+        }  
+        public void DesvincularDesenvolvedor(Desenvolvedor desenvolvedor)
+        {
+            _desenvolvedores.Remove(desenvolvedor);
+        }
     }
 }

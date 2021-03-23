@@ -1,12 +1,11 @@
-﻿using backendtest.Shared.Messages;
-using FluentValidation.Results;
-using MediatR;
+﻿using backendtest.Domain.Data.Repositories;
+using backendtest.Domain.Domain.Entities;
+using backendtest.Shared.Messages;
+using FluentValidation.Results; 
 using System.Threading;
 using System.Threading.Tasks;
-using backendtest.Domain.Data.Repositories;
-using backendtest.Domain.Domain.Entities;
-using backendtest.Shared.Messages.CommonMessages.IntegrationEvents;
-using Microsoft.VisualBasic;
+using backendtest.Shared.Communication.Mediator;
+using MediatR;
 
 namespace backendtest.Domain.Application.Commands.Handlers
 {
@@ -14,10 +13,13 @@ namespace backendtest.Domain.Application.Commands.Handlers
         IRequestHandler<RegistrarDesenvolvedorCommand, ValidationResult>
     {
         private readonly IDesenvolvedorRepository _desenvolvedorRepository;
+        private readonly IMediatorHandler _mediatorHandler;
 
-        public DesenvolvedorCommandHandler(IDesenvolvedorRepository desenvolvedorRepository)
+
+        public DesenvolvedorCommandHandler(IDesenvolvedorRepository desenvolvedorRepository, IMediatorHandler mediatorHandler)
         {
             _desenvolvedorRepository = desenvolvedorRepository;
+            _mediatorHandler = mediatorHandler;
         }
 
         public async Task<ValidationResult> Handle(RegistrarDesenvolvedorCommand request, CancellationToken cancellationToken)

@@ -11,13 +11,12 @@ namespace backendtest.Shared.Communication.Mediator
     public class MediatorHandler : IMediatorHandler
     {
         private readonly IMediator _mediator;
-        private readonly IEventSourcingRepository _eventSourcingRepository;
+        //private readonly IEventSourcingRepository _eventSourcingRepository;
 
-        public MediatorHandler(IMediator mediator,
-                               IEventSourcingRepository eventSourcingRepository)
+        public MediatorHandler(IMediator mediator)
         {
             _mediator = mediator;
-            _eventSourcingRepository = eventSourcingRepository;
+            //_eventSourcingRepository = eventSourcingRepository;
         }
 
         public async Task<ValidationResult> EnviarComando<T>(T comando) where T : Command
@@ -28,7 +27,7 @@ namespace backendtest.Shared.Communication.Mediator
         public async Task PublicarEvento<T>(T evento) where T : Event
         {
             await _mediator.Publish(evento);
-            await _eventSourcingRepository.SalvarEvento(evento);
+            //await _eventSourcingRepository.SalvarEvento(evento);
 
         }
 
