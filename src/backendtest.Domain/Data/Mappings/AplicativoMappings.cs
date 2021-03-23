@@ -17,15 +17,15 @@ namespace backendtest.Domain.Data.Mappings
 
             builder.Property(a => a.Nome)
                 .IsRequired()
-                .HasColumnType("varchar(255)");
+                .HasColumnType("VarChar(255)");
 
             builder.Property(a => a.DataLancamento)
                 .IsRequired()
-                .HasColumnType("smalldatetime");
+                .HasColumnType("SmallDatetime");
 
             builder.Property(a => a.Plataforma)
                 .IsRequired()
-                .HasColumnType("tinyInt");
+                .HasColumnType("TinyInt");
 
             builder.HasOne(a => a.Responsavel)
                 .WithOne(d => d.ResponsavelAplicativo)

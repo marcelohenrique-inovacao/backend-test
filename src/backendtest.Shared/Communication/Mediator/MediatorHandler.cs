@@ -4,6 +4,7 @@ using backendtest.Shared.Data.EventSourcing;
 using backendtest.Shared.Messages;
 using backendtest.Shared.Messages.CommonMessages.DomainEvents;
 using backendtest.Shared.Messages.CommonMessages.Notifications;
+using FluentValidation.Results;
 
 namespace backendtest.Shared.Communication.Mediator
 {
@@ -19,7 +20,7 @@ namespace backendtest.Shared.Communication.Mediator
             _eventSourcingRepository = eventSourcingRepository;
         }
 
-        public async Task<bool> EnviarComando<T>(T comando) where T : Command
+        public async Task<ValidationResult> EnviarComando<T>(T comando) where T : Command
         {
             return await _mediator.Send(comando);
         }

@@ -23,53 +23,18 @@ namespace backendtest.Domain.Domain.Entities
             Email = new Email(email);
             _aplicativos = new List<Aplicativo>();
         }
-
-        public void TrocarEmail(string email)
+        public void AtualizarNome(string nome)
+        {
+            Nome = nome;
+        }
+        public void AtualizarEmail(string email)
         {
             Email = new Email(email);
         }
 
-        public void TrocarCpf(string cpf)
+        public void AtualizarCpf(string cpf)
         {
             Cpf = new CPF(cpf);
         }
-        #region Command
-
-        public class DesenvolvedorCadastroValido : AbstractValidator<Desenvolvedor>
-        {
-            public DesenvolvedorCadastroValido()
-            {
-                RuleFor(d => d.Nome)
-                    .NotNull()
-                    .NotEmpty()
-                    .WithMessage("O Nome não pode ser vazio ou nulo.");
-
-                RuleFor(d => d.Nome.Length)
-                    .LessThanOrEqualTo(255)
-                    .WithMessage("O nome não pode ser maior que 255 caracteres.");
-                //RuleFor(c => c.Cpf)
-                //    .Must(TerCpfValido)
-                //    .WithMessage("O CPF informado não é válido.");
-
-                //RuleFor(c => c.Email)
-                //    .Must(TerEmailValido)
-                //    .WithMessage("O e-mail informado não é válido.");
-            }
-        }
-        protected static bool TerCpfValido(string cpf)
-        {
-            return CPF.Validar(cpf);
-        }
-
-        protected static bool TerEmailValido(string email)
-        {
-            return Email.Validar(email);
-        }
-        public override bool Valido()
-        {
-            var validationResult = new DesenvolvedorCadastroValido().Validate(this);
-            return validationResult.IsValid;
-        }
-        #endregion
     }
 }

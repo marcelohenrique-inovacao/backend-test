@@ -9,11 +9,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Application\Commands\" />
     <Folder Include="Application\Events\" />
     <Folder Include="Application\Messages\" />
     <Folder Include="Data\Migrations\" />
-    <Folder Include="Data\Repositories\" />
   </ItemGroup>
 
   <ItemGroup>

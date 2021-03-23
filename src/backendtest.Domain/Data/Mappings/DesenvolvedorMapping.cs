@@ -10,17 +10,20 @@ namespace backendtest.Domain.Data.Mappings
         public void Configure(EntityTypeBuilder<Desenvolvedor> builder)
         {
             builder.ToTable("Desenvolvedor");
+
             builder.HasKey(d => d.Id);
+
             builder.Property(d => d.Nome)
                 .IsRequired()
-                .HasColumnType("varchar(255)");
+                .HasColumnType("VarChar(255)");
+
             builder.OwnsOne(c => c.Cpf, tf =>
             {
                 tf.Property(c => c.Numero)
                     .IsRequired()
                     .HasMaxLength(CPF.CPFMaxLength)
                     .HasColumnName("Cpf")
-                    .HasColumnType($"varchar({CPF.CPFMaxLength})");
+                    .HasColumnType($"Char({CPF.CPFMaxLength})");
             });
 
             builder.OwnsOne(c => c.Email, tf =>
@@ -28,7 +31,7 @@ namespace backendtest.Domain.Data.Mappings
                 tf.Property(c => c.Endereco)
                     .IsRequired()
                     .HasColumnName("Email")
-                    .HasColumnType($"varchar({Email.EnderecoMaxLength})");
+                    .HasColumnType($"VarChar({Email.EnderecoMaxLength})");
             });
 
             builder.HasMany(d => d.Aplicativos)

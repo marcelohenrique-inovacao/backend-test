@@ -4,7 +4,7 @@ using MediatR;
 
 namespace backendtest.Shared.Messages
 {
-    public abstract class Command : Message, IRequest<bool>
+    public abstract class Command : Message, IRequest<ValidationResult>
     {
         public DateTime Timestamp { get; private set; }
         public ValidationResult ValidationResult { get; set; }
@@ -14,7 +14,7 @@ namespace backendtest.Shared.Messages
             Timestamp = DateTime.Now;
         }
 
-        public virtual bool EhValido()
+        public virtual bool Valido()
         {
             throw new NotImplementedException();
         }

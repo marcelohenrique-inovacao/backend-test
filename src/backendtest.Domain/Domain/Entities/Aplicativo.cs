@@ -27,14 +27,19 @@ namespace backendtest.Domain.Domain.Entities
             _desenvolvedores = new List<Desenvolvedor>();
         }
 
-        public void TrocarNome(string nome)
+        public void AtualizarNome(string nome)
         {
             Nome = nome;
         }
 
-        public void TrocarDataLancamento(DateTime dataLancameto)
+        public void AtualizarDataLancamento(DateTime dataLancameto)
         {
             DataLancamento = dataLancameto;
+        }
+
+        public void AtualizarPlataforma(ETipoPlataforma tipoPlataforma)
+        {
+            Plataforma = tipoPlataforma;
         }
 
         public void TornarResponsavel(Desenvolvedor responsavel)
@@ -43,42 +48,10 @@ namespace backendtest.Domain.Domain.Entities
             Responsavel = responsavel;
         }
 
-        public void RemoverResponsavel(Desenvolvedor responsavel)
+        public void RemoverResponsavel()
         {
             IdDesenvolvedorResponsavel = null;
             Responsavel = null;
         }
-
-        #region Command
-        public class AplicativoCadastroValido : AbstractValidator<Aplicativo>
-        {
-            public AplicativoCadastroValido()
-            {
-                RuleFor(d => d.Nome)
-                    .NotNull()
-                    .NotEmpty()
-                    .WithMessage("O Nome não pode ser vazio ou nulo.");
-
-                RuleFor(d => d.Nome.Length)
-                    .LessThanOrEqualTo(255)
-                    .WithMessage("O nome não pode ser maior que 255 caracteres.");
-
-                RuleFor(d => d.DataLancamento)
-                    .NotNull()
-                    .NotEmpty()
-                    .WithMessage("A Data de lançamento não pode ser vazio ou nulo.");
-
-                RuleFor(d => d.Plataforma)
-                    .IsInEnum()
-                    .WithMessage("Valores aceitos para Tipo de Plataforma: 1-Desktop, 2-Web ou 3-Mobile.");
-            }
-        }
-
-        public override bool Valido()
-        {
-            var validationResult = new AplicativoCadastroValido().Validate(this);
-            return validationResult.IsValid;
-        }
-        #endregion
     }
 }

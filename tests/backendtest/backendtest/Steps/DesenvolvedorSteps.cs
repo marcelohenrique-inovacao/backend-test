@@ -54,5 +54,11 @@ namespace backendtest.Steps
             ScenarioContext.Current.Pending();
         }
 
+        [When(@"ele estiver vinculado à um Aplicativo")]
+        public void QuandoEleEstiverVinculadoAUmAplicativo()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
     }
 }

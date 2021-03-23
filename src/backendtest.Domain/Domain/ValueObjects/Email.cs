@@ -5,8 +5,7 @@ namespace backendtest.Domain.Domain.ValueObjects
 {
     public class Email
     {
-        public const int EnderecoMaxLength = 254;
-        public const int EnderecoMinLength = 5;
+        public const int EnderecoMaxLength = 100; 
         public string Endereco { get; private set; }
 
         //Construtor do EntityFramework

@@ -71,5 +71,52 @@ namespace backendtest.Steps
         {
             ScenarioContext.Current.Pending();
         }
+        [Given(@"será removido sua responsabilidade de um aplicativo")]
+        public void DadoSeraRemovidoSuaResponsabilidadeDeUmAplicativo()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [When(@"todos os dados da remoção estão corretos")]
+        public void QuandoTodosOsDadosDaRemocaoEstaoCorretos()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [When(@"alguma informação do remoção está inválida")]
+        public void QuandoAlgumaInformacaoDoRemocaoEstaInvalida()
+        {
+            ScenarioContext.Current.Pending();
+        }
+        [Given(@"que um desenvolvedor será o responsável pelo Aplicativo")]
+        public void DadoQueUmDesenvolvedorSeraOResponsavelPeloAplicativo()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [When(@"não há ninguém responsável pelo Aplicativo")]
+        public void QuandoNaoHaNinguemResponsavelPeloAplicativo()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [When(@"ele não é responsável por outro Aplicativo")]
+        public void QuandoEleNaoEResponsavelPorOutroAplicativo()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [When(@"ele é responsável por outro Aplicativo")]
+        public void QuandoEleEResponsavelPorOutroAplicativo()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
+        [When(@"já existe um responsável pelo Aplicativo")]
+        public void QuandoJaExisteUmResponsavelPeloAplicativo()
+        {
+            ScenarioContext.Current.Pending();
+        }
+
     }
 }
