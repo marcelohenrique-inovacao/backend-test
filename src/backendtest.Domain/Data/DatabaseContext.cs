@@ -26,7 +26,7 @@ namespace backendtest.Domain.Data
 
         public virtual DbSet<Desenvolvedor> Desenvolvedores { get; set; }
         public virtual DbSet<Aplicativo> Aplicativos { get; set; }
-        public virtual DbSet<DesenvolvedorAplicativo> DesenvolvedorAplicativos { get; set; }
+        public virtual DbSet<DesenvolvedorAplicativo> DesenvolvedorAplicativo { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

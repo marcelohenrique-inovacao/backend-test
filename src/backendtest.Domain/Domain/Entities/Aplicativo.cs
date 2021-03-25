@@ -17,10 +17,10 @@ namespace backendtest.Domain.Domain.Entities
 
         private List<DesenvolvedorAplicativo> _desenvolvedorAplicativos;
 
-        public virtual IReadOnlyCollection<DesenvolvedorAplicativo> DesenvolvedorAplicativos =>
+        public virtual IReadOnlyCollection<DesenvolvedorAplicativo> desenvolvedorAplicativo =>
             _desenvolvedorAplicativos;
 
-        protected Aplicativo()
+        public Aplicativo()
         {
             _desenvolvedorAplicativos = new List<DesenvolvedorAplicativo>();
         }

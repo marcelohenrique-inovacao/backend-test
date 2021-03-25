@@ -20,6 +20,11 @@ namespace backendtest.Tests.Repositories
             
         }
 
+        public Task<bool> Excluir(Desenvolvedor desenvolvedor)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<Desenvolvedor>> ObterTodos()
         {
             return null;
@@ -35,6 +40,16 @@ namespace backendtest.Tests.Repositories
         {
             return null;
 
+        }
+
+        public Task<Desenvolvedor> ObterPorIdComTracking(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<DesenvolvedorAplicativo>> ObterAplicativosDesenvolvedorFazParte(Guid id)
+        {
+            throw new NotImplementedException();
         }
 
         public void Dispose()

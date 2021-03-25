@@ -38,8 +38,7 @@ namespace backendtest.Domain.Migrations
                         name: "Id_DesenvolvedorResponsavel",
                         column: x => x.Id_DesenvolvedorResponsavel,
                         principalTable: "Desenvolvedor",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Restrict);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -70,7 +69,9 @@ namespace backendtest.Domain.Migrations
             migrationBuilder.CreateIndex(
                 name: "Idx_Id_DesenvolvedorResponsavel",
                 table: "Aplicativo",
-                column: "Id_DesenvolvedorResponsavel");
+                column: "Id_DesenvolvedorResponsavel",
+                unique: true,
+                filter: "[Id_DesenvolvedorResponsavel] IS NOT NULL");
 
             migrationBuilder.CreateIndex(
                 name: "Idx_Id_Aplicativo",

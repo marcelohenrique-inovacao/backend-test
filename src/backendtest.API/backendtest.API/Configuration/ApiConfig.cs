@@ -28,6 +28,10 @@ namespace backendtest.API.Configuration
             services.AddDbContext<DatabaseContext>(options =>
                 options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
 
+            services.AddControllersWithViews()
+                .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
+                );
             //services.AddDbContext<DatabaseContext>(
             //    opt => opt.UseInMemoryDatabase("Database")); 
         }

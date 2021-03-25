@@ -11,7 +11,6 @@
   <ItemGroup>
     <Folder Include="Application\Events\" />
     <Folder Include="Application\Messages\" />
-    <Folder Include="Data\Migrations\" />
   </ItemGroup>
 
   <ItemGroup>

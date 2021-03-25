@@ -10,21 +10,20 @@ namespace backendtest.Domain.Domain.Entities
         public string Nome { get; private set; }
         public CPF Cpf { get; private set; }
         public Email Email { get; private set; } 
-        public virtual IReadOnlyCollection<Aplicativo> Aplicativos { get; set; }
-        public virtual IReadOnlyCollection<DesenvolvedorAplicativo> DesenvolvedorAplicativos { get; set; }
+        public virtual Aplicativo Aplicativo { get; set; }
+        public virtual IReadOnlyCollection<DesenvolvedorAplicativo> desenvolvedorAplicativo { get; set; }
 
 
         protected Desenvolvedor()
-        {
-            Aplicativos = new List<Aplicativo>();
-            DesenvolvedorAplicativos = new HashSet<DesenvolvedorAplicativo>(); 
+        { 
+            desenvolvedorAplicativo = new List<DesenvolvedorAplicativo>(); 
         }
         public Desenvolvedor(string nome, string cpf, string email)
         {
             Nome = nome;
             Cpf = new CPF(cpf);
             Email = new Email(email);
-            Aplicativos = new List<Aplicativo>();
+            Aplicativo = new Aplicativo();
         }
         public void AtualizarNome(string nome)
         {
@@ -38,6 +37,14 @@ namespace backendtest.Domain.Domain.Entities
         public void AtualizarCpf(string cpf)
         {
             Cpf = new CPF(cpf);
+        }
+
+        public bool PermiteExcluir()
+        {
+            if (desenvolvedorAplicativo.Count > 0)
+                return false;
+
+            return true;
         }
     }
 }

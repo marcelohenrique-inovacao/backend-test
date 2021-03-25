@@ -41,7 +41,9 @@ namespace backendtest.Domain.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex(new[] { "IdDesenvolvedorResponsavel" }, "Idx_Id_DesenvolvedorResponsavel");
+                    b.HasIndex(new[] { "IdDesenvolvedorResponsavel" }, "Idx_Id_DesenvolvedorResponsavel")
+                        .IsUnique()
+                        .HasFilter("[Id_DesenvolvedorResponsavel] IS NOT NULL");
 
                     b.ToTable("Aplicativo");
                 });
@@ -89,9 +91,10 @@ namespace backendtest.Domain.Migrations
             modelBuilder.Entity("backendtest.Domain.Domain.Entities.Aplicativo", b =>
                 {
                     b.HasOne("backendtest.Domain.Domain.Entities.Desenvolvedor", "Responsavel")
-                        .WithMany("Aplicativos")
-                        .HasForeignKey("IdDesenvolvedorResponsavel")
-                        .HasConstraintName("Id_DesenvolvedorResponsavel");
+                        .WithOne("Aplicativo")
+                        .HasForeignKey("backendtest.Domain.Domain.Entities.Aplicativo", "IdDesenvolvedorResponsavel")
+                        .HasConstraintName("Id_DesenvolvedorResponsavel")
+                        .OnDelete(DeleteBehavior.NoAction);
 
                     b.Navigation("Responsavel");
                 });
@@ -147,13 +150,13 @@ namespace backendtest.Domain.Migrations
             modelBuilder.Entity("backendtest.Domain.Domain.Entities.DesenvolvedorAplicativo", b =>
                 {
                     b.HasOne("backendtest.Domain.Domain.Entities.Aplicativo", "FkAplicativoNavigation")
-                        .WithMany("DesenvolvedorAplicativos")
+                        .WithMany("DesenvolvedoresAplicativos")
                         .HasForeignKey("FkAplicativo")
                         .HasConstraintName("Id_Aplicativo")
                         .IsRequired();
 
                     b.HasOne("backendtest.Domain.Domain.Entities.Desenvolvedor", "FkDesenvolvedorNavigation")
-                        .WithMany("DesenvolvedorAplicativos")
+                        .WithMany("DesenvolvedoresAplicativos")
                         .HasForeignKey("FkDesenvolvedor")
                         .HasConstraintName("Id_Desenvolvedor")
                         .IsRequired();
@@ -165,14 +168,14 @@ namespace backendtest.Domain.Migrations
 
             modelBuilder.Entity("backendtest.Domain.Domain.Entities.Aplicativo", b =>
                 {
-                    b.Navigation("DesenvolvedorAplicativos");
+                    b.Navigation("DesenvolvedoresAplicativos");
                 });
 
             modelBuilder.Entity("backendtest.Domain.Domain.Entities.Desenvolvedor", b =>
                 {
-                    b.Navigation("Aplicativos");
+                    b.Navigation("Aplicativo");
 
-                    b.Navigation("DesenvolvedorAplicativos");
+                    b.Navigation("DesenvolvedoresAplicativos");
                 });
 #pragma warning restore 612, 618
         }
