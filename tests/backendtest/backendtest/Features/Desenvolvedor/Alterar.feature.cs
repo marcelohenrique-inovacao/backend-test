@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace backendtest.Features.Desenvolvedor
+namespace backendtest.Tests.Features.Desenvolvedor
 {
     using TechTalk.SpecFlow;
     using System;
@@ -65,7 +65,7 @@ namespace backendtest.Features.Desenvolvedor
             if (((testRunner.FeatureContext != null) 
                         && (testRunner.FeatureContext.FeatureInfo.Title != "Alterar")))
             {
-                global::backendtest.Features.Desenvolvedor.AlterarFeature.FeatureSetup(null);
+                global::backendtest.Tests.Features.Desenvolvedor.AlterarFeature.FeatureSetup(null);
             }
         }
         
@@ -120,13 +120,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 5
- testRunner.Given("que o cadastro de um desenvolvedor será alterado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+ testRunner.Given("que todos os dados do desenvolvedor estão corretos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 6
- testRunner.When("todos os dados do desenvolvedor estão corretos", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+ testRunner.When("eu tento alterar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 7
- testRunner.Then("retorna Ok com as informações do desenvolvedor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+ testRunner.Then("retorna Ok", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();
@@ -161,13 +161,13 @@ this.ScenarioInitialize(scenarioInfo);
             {
                 this.ScenarioStart();
 #line 10
- testRunner.Given("que o cadastro de um desenvolvedor será alterado", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
+ testRunner.Given("que alguma informação do desenvolvedor está inválida", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Dado ");
 #line hidden
 #line 11
- testRunner.When("alguma informação do desenvolvedor está inválida", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
+ testRunner.When("eu tento alterar", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Quando ");
 #line hidden
 #line 12
- testRunner.Then("retorna BadRequest com validações do desenvolvedor", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
+ testRunner.Then("retorna BadRequest", ((string)(null)), ((TechTalk.SpecFlow.Table)(null)), "Então ");
 #line hidden
             }
             this.ScenarioCleanup();

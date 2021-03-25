@@ -6,12 +6,10 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 namespace backendtest.Domain.Data.Mappings
 {
     public class AplicativoMappings : IEntityTypeConfiguration<Aplicativo>
-    {
-
-
+    { 
         public void Configure(EntityTypeBuilder<Aplicativo> builder)
         {
-            builder.ToTable("Desenvolvedor");
+            builder.ToTable("Aplicativo");
 
             builder.HasKey(a => a.Id);
 
@@ -27,16 +25,13 @@ namespace backendtest.Domain.Data.Mappings
                 .IsRequired()
                 .HasColumnType("TinyInt");
 
-            builder.HasOne(a => a.Responsavel)
-                .WithOne(d => d.ResponsavelAplicativo) 
-                .HasForeignKey<Aplicativo>(a => a.IdDesenvolvedorResponsavel)
-                .OnDelete(DeleteBehavior.NoAction);
+            builder.HasOne(d => d.Responsavel)
+                .WithMany(p => p.Aplicativos)
+                .HasForeignKey(d => d.IdDesenvolvedorResponsavel)
+                .HasConstraintName("Id_DesenvolvedorResponsavel");
 
-            builder.HasIndex(a => a.IdDesenvolvedorResponsavel);
-
-            builder.HasMany(a => a.Desenvolvedores)
-                .WithMany(d => d.Aplicativos);
-
+            builder.HasIndex(e => e.IdDesenvolvedorResponsavel, "Idx_Id_DesenvolvedorResponsavel");
+            builder.Property(e => e.IdDesenvolvedorResponsavel).HasColumnName("Id_DesenvolvedorResponsavel");
         }
     }
 }

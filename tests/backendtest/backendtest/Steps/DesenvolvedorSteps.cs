@@ -1,64 +1,92 @@
-﻿using System;
+﻿using backendtest.Domain.Application.Commands;
+using backendtest.Domain.Application.Commands.Handlers;
+using backendtest.Domain.Data.Repositories;
+using backendtest.Shared.Communication.Mediator;
+using FluentAssertions;
+using FluentValidation.Results;
+using Moq;
+using System;
+using System.Threading;
+using backendtest.Tests.Repositories;
 using TechTalk.SpecFlow;
 
-namespace backendtest.Steps
+namespace backendtest.Tests.Steps
 {
     [Binding]
     public class DesenvolvedorSteps
     {
-        [Given(@"que um desenvolvedor será cadastrado")]
-        public void DadoQueUmDesenvolvedorSeraCadastrado()
+        private static readonly Mock<IMediatorHandler> _mediatorHandler = new(); 
+        private DesenvolvedorCommandHandler _handler = 
+            new(new FakeDesenvolvedorRepository(), _mediatorHandler.Object);
+
+        private RegistrarDesenvolvedorCommand _command; 
+        private readonly ScenarioContext _scenarioContext; 
+        private ValidationResult retornoCommand;
+        public DesenvolvedorSteps(ScenarioContext scenarioContext)
         {
-            ScenarioContext.Current.Pending();
-        }
-        
-        [When(@"todos os dados do desenvolvedor estão corretos")]
-        public void QuandoTodosOsDadosDoDesenvolvedorEstaoCorretos()
-        {
-            ScenarioContext.Current.Pending();
-        }
-        
-        [When(@"alguma informação do desenvolvedor está inválida")]
-        public void QuandoAlgumaInformacaoDoDesenvolvedorEstaInvalida()
-        {
-            ScenarioContext.Current.Pending();
-        }
-        
-        [Then(@"retorna Ok com as informações do desenvolvedor")]
-        public void EntaoRetornaOkComAsInformacoesDoDesenvolvedor()
-        {
-            ScenarioContext.Current.Pending();
-        }
-        
-        [Then(@"retorna BadRequest com validações do desenvolvedor")]
-        public void EntaoRetornaBadRequestComValidacoesDoDesenvolvedor()
-        {
-            ScenarioContext.Current.Pending();
+            _scenarioContext = scenarioContext;
         }
 
-        [Given(@"que um desenvolvedor será excluído")]
-        public void DadoQueUmDesenvolvedorSeraExcluido()
-        {
-            ScenarioContext.Current.Pending();
+        [Given(@"que todos os dados do desenvolvedor estão corretos")]
+        public void DadoQueTodosOsDadosDoDesenvolvedorEstaoCorretos()
+        { 
+            _command = new RegistrarDesenvolvedorCommand(
+                Guid.Empty, "Marcelo", "08272217627", "marcelo@gmail.com");
         }
 
-        [Then(@"retorna BadRequest com validações")]
-        public void EntaoRetornaBadRequestComValidacoes()
+        [Given(@"que alguma informação do desenvolvedor está inválida")]
+        public void DadoQueAlgumaInformacaoDoDesenvolvedorEstaInvalida()
         {
-            ScenarioContext.Current.Pending();
+            _command = new RegistrarDesenvolvedorCommand(
+                Guid.Empty, "", "08272217627", "marcelo@gmail.com");
         }
 
-        [Given(@"que o cadastro de um desenvolvedor será alterado")]
-        public void DadoQueOCadastroDeUmDesenvolvedorSeraAlterado()
+        [Given(@"que ele estiver vinculado à um Aplicativo")]
+        public void DadoQueEleEstiverVinculadoAUmAplicativo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
-        [When(@"ele estiver vinculado à um Aplicativo")]
-        public void QuandoEleEstiverVinculadoAUmAplicativo()
+        [Given(@"que o CPF do desenvolvedor está inválido")]
+        public void DadoQueOCPFDoDesenvolvedorEstaInvalido()
         {
-            ScenarioContext.Current.Pending();
+            _command = new RegistrarDesenvolvedorCommand(
+                Guid.Empty,"Marcelo", "123", "marcelo@gmail.com");
         }
 
+        [Given(@"que o Email do desenvolvedor está inválido")]
+        public void DadoQueOEmailDoDesenvolvedorEstaInvalido()
+        {
+            _command = new RegistrarDesenvolvedorCommand(
+                Guid.Empty,"Marcelo", "08272217627", "marcelogmail.com");
+        }
+
+        [When(@"eu tento cadastrar")]
+        public async void QuandoEuTentoCadastrar()
+        {
+            retornoCommand = await _handler.Handle(_command, new CancellationToken());
+        }
+
+        [When(@"eu tento alterar")]
+        public void QuandoEuTentoAlterar()
+        { 
+        }
+
+        [When(@"eu tento excluir")]
+        public void QuandoEuTentoExcluir()
+        { 
+        }
+
+        [Then(@"retorna Ok")]
+        public void EntaoRetornaOk()
+        {
+            retornoCommand.Errors.Count.Should().Be(null);
+        }
+
+        [Then(@"retorna BadRequest")]
+        public void EntaoRetornaBadRequest()
+        {
+            retornoCommand.Errors.Count.Should().BeGreaterThan(0); 
+        }
     }
 }

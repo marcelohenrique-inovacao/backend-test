@@ -7,7 +7,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backendtest.API", "backendt
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backendtest.Domain", "..\backendtest.Domain\backendtest.Domain.csproj", "{EDE52103-C036-4A11-9E6F-9221A6DFA379}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "backendtest.Shared", "..\backendtest.Shared\backendtest.Shared.csproj", "{E27870C0-9859-461A-B30A-1FD53396BEAA}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backendtest.Shared", "..\backendtest.Shared\backendtest.Shared.csproj", "{E27870C0-9859-461A-B30A-1FD53396BEAA}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "backendtest.Tests", "..\..\tests\backendtest\backendtest\backendtest.Tests.csproj", "{4C3B84F1-9DB8-4D1C-B64C-0B39A3739183}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -27,6 +29,10 @@ Global
 		{E27870C0-9859-461A-B30A-1FD53396BEAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{E27870C0-9859-461A-B30A-1FD53396BEAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{E27870C0-9859-461A-B30A-1FD53396BEAA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4C3B84F1-9DB8-4D1C-B64C-0B39A3739183}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4C3B84F1-9DB8-4D1C-B64C-0B39A3739183}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4C3B84F1-9DB8-4D1C-B64C-0B39A3739183}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4C3B84F1-9DB8-4D1C-B64C-0B39A3739183}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

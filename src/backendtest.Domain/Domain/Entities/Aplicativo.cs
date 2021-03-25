@@ -2,6 +2,7 @@
 using backendtest.Shared.DomainObjects;
 using FluentValidation;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 
 namespace backendtest.Domain.Domain.Entities
@@ -12,19 +13,22 @@ namespace backendtest.Domain.Domain.Entities
         public DateTime DataLancamento { get; private set; }
         public ETipoPlataforma Plataforma { get; private set; }
         public Guid? IdDesenvolvedorResponsavel { get; private set; }
-        public Desenvolvedor Responsavel { get; private set; }
+        public virtual Desenvolvedor Responsavel { get; private set; }
 
+        private List<DesenvolvedorAplicativo> _desenvolvedorAplicativos;
 
-        public readonly List<Desenvolvedor> _desenvolvedores;
-        public IReadOnlyCollection<Desenvolvedor> Desenvolvedores => _desenvolvedores;
+        public virtual IReadOnlyCollection<DesenvolvedorAplicativo> DesenvolvedorAplicativos =>
+            _desenvolvedorAplicativos;
 
-        protected Aplicativo() { _desenvolvedores = new List<Desenvolvedor>(); }
+        protected Aplicativo()
+        {
+            _desenvolvedorAplicativos = new List<DesenvolvedorAplicativo>();
+        }
         public Aplicativo(string nome, DateTime dataLancamento, ETipoPlataforma plataforma)
         {
             Nome = nome;
             DataLancamento = dataLancamento;
             Plataforma = plataforma;
-            _desenvolvedores = new List<Desenvolvedor>();
         }
 
         public void AtualizarNome(string nome)
@@ -56,11 +60,12 @@ namespace backendtest.Domain.Domain.Entities
 
         public void VincularDesenvolvedor(Desenvolvedor desenvolvedor)
         {
-            _desenvolvedores.Add(desenvolvedor);
-        }  
+            _desenvolvedorAplicativos.Add(new DesenvolvedorAplicativo(this, desenvolvedor));
+        }
         public void DesvincularDesenvolvedor(Desenvolvedor desenvolvedor)
         {
-            _desenvolvedores.Remove(desenvolvedor);
+            // REVIEW: isso não vai funcionar. 
+            _desenvolvedorAplicativos.Remove(new DesenvolvedorAplicativo(this, desenvolvedor));
         }
     }
 }

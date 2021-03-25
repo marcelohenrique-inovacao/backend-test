@@ -19,7 +19,7 @@ namespace backendtest.Domain.Domain.ValueObjects
 
         public static bool Validar(string valor)
         {
-            valor = new string(valor.Where(char.IsDigit).ToArray());
+            valor = new string(valor?.Where(char.IsDigit).ToArray());
 
             if (valor.Length > 11)
                 return false;

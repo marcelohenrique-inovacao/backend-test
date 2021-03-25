@@ -8,7 +8,7 @@ namespace backendtest.Domain.Application.Commands
 {
     public class RegistrarAplicativoCommand : Command
     {
-        public Guid Id { get;private  set; }
+        public Guid Id { get; private set; }
         public string Nome { get; private set; }
         public DateTime DataLancamento { get; private set; }
         public ETipoPlataforma TipoPlataforma { get; private set; }
@@ -26,8 +26,10 @@ namespace backendtest.Domain.Application.Commands
 
         public override bool Valido()
         {
-            return new RegistrarAplicativoValidation().Validate(this).IsValid;
-        } 
+            var validationReturn = new RegistrarAplicativoValidation().Validate(this);
+            ValidationResult = validationReturn;
+            return validationReturn.IsValid;
+        }
         public class RegistrarAplicativoValidation : AbstractValidator<RegistrarAplicativoCommand>
         {
             public RegistrarAplicativoValidation()
@@ -48,8 +50,8 @@ namespace backendtest.Domain.Application.Commands
 
                 RuleFor(d => d.TipoPlataforma)
                     .IsInEnum()
-                    .WithMessage("Valores aceitos para Tipo de Plataforma: 1-Desktop, 2-Web ou 3-Mobile."); 
+                    .WithMessage("Valores aceitos para Tipo de Plataforma: 1-Desktop, 2-Web ou 3-Mobile.");
             }
-        } 
+        }
     }
 }

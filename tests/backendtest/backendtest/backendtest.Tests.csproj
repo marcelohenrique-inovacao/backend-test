@@ -6,6 +6,7 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="16.5.0" />
+    <PackageReference Include="Moq" Version="4.16.1" />
     <PackageReference Include="SpecFlow.Plus.LivingDocPlugin" Version="3.7.10" />
     <PackageReference Include="SpecFlow.MsTest" Version="3.7.13" />
     <PackageReference Include="MSTest.TestAdapter" Version="2.1.0" />
@@ -17,7 +18,11 @@
   <ItemGroup>
     <Folder Include="Drivers\" />
     <Folder Include="Hooks\" />
-    <Folder Include="Steps\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\..\src\backendtest.Domain\backendtest.Domain.csproj" />
+    <ProjectReference Include="..\..\..\src\backendtest.Shared\backendtest.Shared.csproj" />
   </ItemGroup>
 
 </Project>

@@ -15,27 +15,28 @@ namespace backendtest.Domain.Data.Mappings
 
             builder.Property(d => d.Nome)
                 .IsRequired()
-                .HasColumnType("VarChar(255)");
-
-            builder.OwnsOne(c => c.Cpf, tf =>
+                .HasColumnType("VarChar(255)"); 
+             
+            builder.OwnsOne(d => d.Cpf, opt =>
             {
-                tf.Property(c => c.Numero)
+                opt.Property(opt => opt.Numero)
                     .IsRequired()
                     .HasMaxLength(CPF.CPFMaxLength)
-                    .HasColumnName("Cpf")
-                    .HasColumnType($"Char({CPF.CPFMaxLength})");
+                    .IsUnicode(false)
+                    .HasColumnName("CPF")
+                    .HasColumnType("Char")
+                    .IsFixedLength();
             });
 
-            builder.OwnsOne(c => c.Email, tf =>
+            builder.OwnsOne(d => d.Email, opt =>
             {
-                tf.Property(c => c.Endereco)
+                opt.Property(opt => opt.Endereco)
                     .IsRequired()
+                    .HasMaxLength(Email.EnderecoMaxLength)
+                    .HasColumnType("VarChar")
                     .HasColumnName("Email")
-                    .HasColumnType($"VarChar({Email.EnderecoMaxLength})");
+                    .IsUnicode(false);
             });
-
-            builder.HasMany(d => d.Aplicativos)
-                .WithMany(a => a.Desenvolvedores);
         }
     }
 }

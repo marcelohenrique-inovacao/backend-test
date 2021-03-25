@@ -2,11 +2,16 @@
 	Permitir o cadastro de um novo desenvolvedor
 
 Cenário: Cadastrar um desenvolvedor com sucesso
-	Dado que um desenvolvedor será cadastrado
-	Quando todos os dados do desenvolvedor estão corretos 
-	Então retorna Ok com as informações do desenvolvedor
+	Dado que todos os dados do desenvolvedor estão corretos 
+	Quando eu tento cadastrar
+	Então retorna Ok
 
 Cenário: Cadastrar um desenvolvedor com erro
-	Dado que um desenvolvedor será cadastrado
-	Quando alguma informação do desenvolvedor está inválida
-	Então retorna BadRequest com validações do desenvolvedor
+	Dado que o CPF do desenvolvedor está inválido
+	Quando eu tento cadastrar
+	Então retorna BadRequest
+
+Cenário: Cadastrar um desenvolvedor com email inválido
+	Dado que o Email do desenvolvedor está inválido
+	Quando eu tento cadastrar
+	Então retorna BadRequest

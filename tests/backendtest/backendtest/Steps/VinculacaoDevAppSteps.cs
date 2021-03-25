@@ -9,113 +9,113 @@ namespace backendtest.Steps
         [Given(@"que um desenvolvedor será desvinculado de um aplicativo")]
         public void DadoQueUmDesenvolvedorSeraDesvinculadoDeUmAplicativo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
         
         [When(@"todos os dados do desvínculo estão corretos")]
         public void QuandoTodosOsDadosDoDesvinculoEstaoCorretos()
         {
-            ScenarioContext.Current.Pending();
+            
         }
         
         [When(@"alguma informação do desvínculo está inválida")]
         public void QuandoAlgumaInformacaoDoDesvinculoEstaInvalida()
         {
-            ScenarioContext.Current.Pending();
+            
         }
         
         [Then(@"retorna Ok com as informações do desvínculo")]
         public void EntaoRetornaOkComAsInformacoesDoDesvinculo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
         
         [Then(@"retorna BadRequest com validações do desvínculo")]
         public void EntaoRetornaBadRequestComValidacoesDoDesvinculo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [Given(@"que um desenvolvedor será vinculado à um aplicativo")]
         public void DadoQueUmDesenvolvedorSeraVinculadoAUmAplicativo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [When(@"todos os dados do vínculo estão corretos")]
         public void QuandoTodosOsDadosDoVinculoEstaoCorretos()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [Then(@"retorna Ok com as informações do vínculo")]
         public void EntaoRetornaOkComAsInformacoesDoVinculo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [When(@"alguma informação do vínculo está inválida")]
         public void QuandoAlgumaInformacaoDoVinculoEstaInvalida()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [Then(@"retorna BadRequest com validações do vínculo")]
         public void EntaoRetornaBadRequestComValidacoesDoVinculo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [When(@"ele já está vinculado a esse aplicativo")]
         public void QuandoEleJaEstaVinculadoAEsseAplicativo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
         [Given(@"será removido sua responsabilidade de um aplicativo")]
         public void DadoSeraRemovidoSuaResponsabilidadeDeUmAplicativo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [When(@"todos os dados da remoção estão corretos")]
         public void QuandoTodosOsDadosDaRemocaoEstaoCorretos()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [When(@"alguma informação do remoção está inválida")]
         public void QuandoAlgumaInformacaoDoRemocaoEstaInvalida()
         {
-            ScenarioContext.Current.Pending();
+            
         }
         [Given(@"que um desenvolvedor será o responsável pelo Aplicativo")]
         public void DadoQueUmDesenvolvedorSeraOResponsavelPeloAplicativo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [When(@"não há ninguém responsável pelo Aplicativo")]
         public void QuandoNaoHaNinguemResponsavelPeloAplicativo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [When(@"ele não é responsável por outro Aplicativo")]
         public void QuandoEleNaoEResponsavelPorOutroAplicativo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [When(@"ele é responsável por outro Aplicativo")]
         public void QuandoEleEResponsavelPorOutroAplicativo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
         [When(@"já existe um responsável pelo Aplicativo")]
         public void QuandoJaExisteUmResponsavelPeloAplicativo()
         {
-            ScenarioContext.Current.Pending();
+            
         }
 
     }

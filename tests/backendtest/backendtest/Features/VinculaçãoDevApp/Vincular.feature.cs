@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace backendtest.Features.VinculacaoDevApp
+namespace backendtest.Tests.Features.VinculacaoDevApp
 {
     using TechTalk.SpecFlow;
     using System;
@@ -65,7 +65,7 @@ namespace backendtest.Features.VinculacaoDevApp
             if (((testRunner.FeatureContext != null) 
                         && (testRunner.FeatureContext.FeatureInfo.Title != "Vincular")))
             {
-                global::backendtest.Features.VinculacaoDevApp.VincularFeature.FeatureSetup(null);
+                global::backendtest.Tests.Features.VinculacaoDevApp.VincularFeature.FeatureSetup(null);
             }
         }
         

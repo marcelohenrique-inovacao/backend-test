@@ -10,7 +10,7 @@
 // ------------------------------------------------------------------------------
 #region Designer generated code
 #pragma warning disable
-namespace backendtest.Features.Aplicativo
+namespace backendtest.Tests.Features.Aplicativo
 {
     using TechTalk.SpecFlow;
     using System;
@@ -65,7 +65,7 @@ namespace backendtest.Features.Aplicativo
             if (((testRunner.FeatureContext != null) 
                         && (testRunner.FeatureContext.FeatureInfo.Title != "Adicionar")))
             {
-                global::backendtest.Features.Aplicativo.AdicionarFeature.FeatureSetup(null);
+                global::backendtest.Tests.Features.Aplicativo.AdicionarFeature.FeatureSetup(null);
             }
         }
         

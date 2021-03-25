@@ -7,6 +7,7 @@ using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System.Threading.Tasks;
+using backendtest.Domain.Data.Mappings;
 
 namespace backendtest.Domain.Data
 {
@@ -23,8 +24,9 @@ namespace backendtest.Domain.Data
 
         }
 
-        public DbSet<Desenvolvedor> Desenvolvedores { get; set; }
-        public DbSet<Aplicativo> Aplicativos { get; set; }
+        public virtual DbSet<Desenvolvedor> Desenvolvedores { get; set; }
+        public virtual DbSet<Aplicativo> Aplicativos { get; set; }
+        public virtual DbSet<DesenvolvedorAplicativo> DesenvolvedorAplicativos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

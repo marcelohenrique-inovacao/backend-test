@@ -17,10 +17,7 @@ namespace backendtest.API.Configuration
         {
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             //services.AddScoped<IAspNetUser, AspNetUser>(); 
-            services.AddScoped<DatabaseContext>();
-
-            services.AddDbContext<DatabaseContext>(
-                opt => opt.UseInMemoryDatabase("Database"));
+            services.AddScoped<DatabaseContext>(); 
 
             services.AddScoped<IMediatorHandler, MediatorHandler>();
 
@@ -28,6 +25,7 @@ namespace backendtest.API.Configuration
             services.AddScoped<IDesenvolvedorRepository, DesenvolvedorRepository>();
 
             services.AddScoped<IRequestHandler<RegistrarDesenvolvedorCommand, ValidationResult>, DesenvolvedorCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarDesenvolvedorCommand, ValidationResult>, DesenvolvedorCommandHandler>();
             //services.AddScoped<IRequestHandler<RegistrarAplicativoCommand, ValidationResult>, AplicativoCommandHandler>();
         }
     }

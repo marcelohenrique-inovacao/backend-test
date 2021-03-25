@@ -9,19 +9,22 @@ namespace backendtest.Domain.Domain.Entities
     {
         public string Nome { get; private set; }
         public CPF Cpf { get; private set; }
-        public Email Email { get; private set; }
-        private readonly List<Aplicativo> _aplicativos;
-        public Aplicativo ResponsavelAplicativo { get; private set; }
-        public IReadOnlyCollection<Aplicativo> Aplicativos => _aplicativos;
+        public Email Email { get; private set; } 
+        public virtual IReadOnlyCollection<Aplicativo> Aplicativos { get; set; }
+        public virtual IReadOnlyCollection<DesenvolvedorAplicativo> DesenvolvedorAplicativos { get; set; }
 
 
-        protected Desenvolvedor() { _aplicativos = new List<Aplicativo>(); }
+        protected Desenvolvedor()
+        {
+            Aplicativos = new List<Aplicativo>();
+            DesenvolvedorAplicativos = new HashSet<DesenvolvedorAplicativo>(); 
+        }
         public Desenvolvedor(string nome, string cpf, string email)
         {
             Nome = nome;
             Cpf = new CPF(cpf);
             Email = new Email(email);
-            _aplicativos = new List<Aplicativo>();
+            Aplicativos = new List<Aplicativo>();
         }
         public void AtualizarNome(string nome)
         {

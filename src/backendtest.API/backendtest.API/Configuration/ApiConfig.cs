@@ -1,6 +1,8 @@
-﻿using MediatR;
+﻿using backendtest.Domain.Data;
+using MediatR;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting; 
+using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -11,9 +13,6 @@ namespace backendtest.API.Configuration
     {
         public static void AddApiConfiguration(this IServiceCollection services, IConfiguration configuration)
         {
-            //services.AddDbContext<DatabaseContext>(options =>
-            //    options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
-
             services.AddControllers();
             services.AddMediatR(typeof(Startup));
             services.AddCors(options =>
@@ -24,7 +23,13 @@ namespace backendtest.API.Configuration
                             .AllowAnyOrigin()
                             .AllowAnyMethod()
                             .AllowAnyHeader());
-            }); 
+            });
+
+            services.AddDbContext<DatabaseContext>(options =>
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            //services.AddDbContext<DatabaseContext>(
+            //    opt => opt.UseInMemoryDatabase("Database")); 
         }
 
         public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)

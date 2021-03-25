@@ -32,13 +32,13 @@ namespace backendtest.Domain.Data.Repositories
         public async Task<Aplicativo> ObterPorNome(string nome)
         {
             return await _context.Aplicativos.AsNoTracking()
-                .Include(a => a.Desenvolvedores).FirstOrDefaultAsync(a => a.Nome == nome);
+                .Include(a => a.DesenvolvedorAplicativos).FirstOrDefaultAsync(a => a.Nome == nome);
         }
 
         public async Task<Aplicativo> ObterPorId(Guid id)
         {
             return await _context.Aplicativos.AsNoTracking()
-                .Include(a => a.Desenvolvedores).FirstOrDefaultAsync(a => a.Id == id);
+                .Include(a => a.DesenvolvedorAplicativos).FirstOrDefaultAsync(a => a.Id == id);
         }
 
         //public async Task<IReadOnlyCollection<Aplicativo>> ObterAplicativosVinculados(Guid idDesenvolvedor)
@@ -76,7 +76,7 @@ namespace backendtest.Domain.Data.Repositories
         public async Task<IEnumerable<Aplicativo>> ObterTodos()
         {
             return await _context.Aplicativos.AsNoTracking()
-                .Include(a => a.Desenvolvedores).ToListAsync();
+                .Include(a => a.DesenvolvedorAplicativos).ToListAsync();
         }
 
         public void Dispose()

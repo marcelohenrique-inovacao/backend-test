@@ -36,12 +36,14 @@ namespace backendtest.Domain.Data.Repositories
 
         public async Task<Desenvolvedor> ObterPorId(Guid id)
         {
-            return await _context.Desenvolvedores.AsNoTracking().FirstOrDefaultAsync(d => d.Id == id); 
+            return await _context.Set<Desenvolvedor>() 
+                .AsNoTracking()
+                .FirstOrDefaultAsync(d => d.Id == id); 
         }
 
         public async Task<IEnumerable<Desenvolvedor>> ObterTodos()
         {
-            return await _context.Desenvolvedores.AsNoTracking().AsNoTracking().ToListAsync();
+            return await _context.Desenvolvedores.AsNoTracking().ToListAsync();
         } 
 
         public void Dispose()
