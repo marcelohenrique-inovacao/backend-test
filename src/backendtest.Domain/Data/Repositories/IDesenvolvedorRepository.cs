@@ -13,8 +13,8 @@ namespace backendtest.Domain.Data.Repositories
         Task<bool> Excluir(Desenvolvedor desenvolvedor);
         Task<IEnumerable<Desenvolvedor>> ObterTodos();
         Task<Desenvolvedor> ObterPorCpf(string cpf);
-        Task<Desenvolvedor> ObterPorId(Guid id);
+        Task<Desenvolvedor> ObterPorId(Guid idDesenvolvedor);
         Task<Desenvolvedor> ObterPorIdComTracking(Guid id);
-        Task<IEnumerable<DesenvolvedorAplicativo>> ObterAplicativosDesenvolvedorFazParte(Guid id);
+        Task<IEnumerable<DesenvolvedorAplicativo>> ObterAplicativosRelacionados(Guid idDesenvolvedor);
     }
 }

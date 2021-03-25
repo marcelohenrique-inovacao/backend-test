@@ -88,12 +88,12 @@ namespace backendtest.Domain.Application.Commands.Handlers
             }
 
             var aplicativo = await _aplicativoRepository.ObterPorId(request.Id);
-            var desenvolvedorPossuiAplicativoResponsavel =
-                await _aplicativoRepository.DesenvolvedorResponsavelPorAplicativo(request.DesenvolvedorResponsavel.Id);
+            var aplicativoResponsavel =
+                await _aplicativoRepository.ObterAplicativoResponsavel(request.DesenvolvedorResponsavel.Id);
 
-            if (!desenvolvedorPossuiAplicativoResponsavel)
+            if (aplicativoResponsavel != null)
             {
-                AdicionarErro("Este desenvolvedor já é responsável por outro aplicativo.");
+                AdicionarErro($@"Este desenvolvedor já é responsável pelo aplicativo: {aplicativoResponsavel.Nome}.");
                 return false;
             }
 
@@ -110,9 +110,9 @@ namespace backendtest.Domain.Application.Commands.Handlers
             if (!request.Valido()) return false;
 
             var aplicativo = await _aplicativoRepository.ObterPorId(request.Id);
-            aplicativo.RemoverResponsavel();
+            aplicativo.RemoverResponsavel(request.DesenvolvedorResponsavel);
             _aplicativoRepository.Update(aplicativo);
-
+            
             await PersistirDados(_aplicativoRepository.UnitOfWork);
 
             return true;

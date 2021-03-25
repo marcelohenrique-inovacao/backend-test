@@ -47,6 +47,11 @@ namespace backendtest.Tests.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<IEnumerable<DesenvolvedorAplicativo>> ObterAplicativosRelacionados(Guid idDesenvolvedor)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<DesenvolvedorAplicativo>> ObterAplicativosDesenvolvedorFazParte(Guid id)
         {
             throw new NotImplementedException();

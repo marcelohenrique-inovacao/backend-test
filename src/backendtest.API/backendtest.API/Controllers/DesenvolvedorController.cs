@@ -1,16 +1,11 @@
-﻿using System;
+﻿using backendtest.Domain.Application.Commands;
 using backendtest.Domain.Data.Repositories;
 using backendtest.Domain.Domain.Entities;
 using backendtest.Shared.Communication.Mediator;
 using Microsoft.AspNetCore.Mvc;
+using System;
 using System.Collections.Generic;
-using System.Reflection.Metadata.Ecma335;
-using System.Threading;
 using System.Threading.Tasks;
-using backendtest.Domain.Application.Commands;
-using backendtest.Domain.Application.Commands.Handlers;
-using backendtest.Domain.Data;
-using FluentValidation.Results;
 
 namespace backendtest.API.Controllers
 {
@@ -43,7 +38,7 @@ namespace backendtest.API.Controllers
         [HttpGet("/v1/desenvolvedor/aplicativosrelacionados/{id}")]
         public async Task<IEnumerable<DesenvolvedorAplicativo>> GetDesenvolvedorAplicativosRelacionados(Guid id)
         {
-            return await _desenvolvedorRepository.ObterAplicativosDesenvolvedorFazParte(id);
+            return await _desenvolvedorRepository.ObterAplicativosRelacionados(id);
         }
         #endregion
 
@@ -56,11 +51,16 @@ namespace backendtest.API.Controllers
         }
 
         #endregion
+
+        #region PUT
+
         [HttpPut("/v1/desenvolvedor/{id}")]
         public async Task<IActionResult> PutAtualizarCadastro(AtualizarDesenvolvedorCommand command)
         {
             return CustomResponse(await _mediatorHandler.EnviarComando(command));
         }
+
+        #endregion
 
         #region DELETE
 

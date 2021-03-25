@@ -29,25 +29,37 @@ namespace backendtest.Domain.Data.Repositories
             _context.Entry(aplicativo).State = EntityState.Modified; 
         }
 
+        public Task<bool> Excluir(Aplicativo aplicativo)
+        {
+            throw new NotImplementedException();
+        }
+
         public async Task<Aplicativo> ObterPorNome(string nome)
         {
             return await _context.Aplicativos.AsNoTracking()
                 .Include(a => a.desenvolvedorAplicativo).FirstOrDefaultAsync(a => a.Nome == nome);
         }
 
-        public async Task<Aplicativo> ObterPorId(Guid id)
+        public async Task<Aplicativo> ObterPorId(Guid idAplicativo)
         {
             return await _context.Aplicativos.AsNoTracking()
-                .Include(a => a.desenvolvedorAplicativo).FirstOrDefaultAsync(a => a.Id == id);
+                .Include(a => a.desenvolvedorAplicativo)
+                .FirstOrDefaultAsync(a => a.Id == idAplicativo);
         }
 
-        //public async Task<IReadOnlyCollection<Aplicativo>> ObterAplicativosVinculados(Guid idDesenvolvedor)
-        //{
-        // REVIEW: descobrir como ir na tabela merged pra buscar a informação
-        //    return await _context.Aplicativos.AsNoTracking()
-        //        .Where(a =>a.??? == idDesenvolvedor)
-        //        .ToListAsync();
-        //}
+        public Task<Aplicativo> ObterPorIdComTracking(Guid idAplicativo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public async Task<IEnumerable<DesenvolvedorAplicativo>> ObterDesenvolvedoresRelacionados(Guid idAplicativo)
+        {
+            return await _context.DesenvolvedorAplicativo
+                .Where(d=> d.FkAplicativo == idAplicativo)
+                .Include(d=> d.FkDesenvolvedorNavigation)
+                .AsNoTracking()
+                .ToListAsync();
+        } 
 
         //public async Task<bool> VincularDesenvolvedor(Guid aplicativoId, Desenvolvedor desenvolvedor)
         //{ 
@@ -60,17 +72,19 @@ namespace backendtest.Domain.Data.Repositories
         //    throw new NotImplementedException();
         //}
 
-        public async Task<bool> DesenvolvedorResponsavelPorAplicativo(Guid idDesenvolvedor)
+        public async Task<Aplicativo> ObterAplicativoResponsavel(Guid idDesenvolvedor)
         {
-            if (idDesenvolvedor == Guid.Empty) return false;
+            throw new NotImplementedException();
 
-            var aplicativo = await _context.Aplicativos.AsNoTracking()
-                .FirstOrDefaultAsync(a => a.IdDesenvolvedorResponsavel == idDesenvolvedor);
+            //if (idAplicativo == Guid.Empty) return ;
 
-            if (aplicativo != null)
-                return true;
+            //var aplicativo = await _context.Aplicativos.AsNoTracking()
+            //    .FirstOrDefaultAsync(a => a.IdDesenvolvedorResponsavel == idAplicativo);
 
-            return false;
+            //if (aplicativo != null)
+            //    return true;
+
+            //return false;
         }
 
         public async Task<IEnumerable<Aplicativo>> ObterTodos()

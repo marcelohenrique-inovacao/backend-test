@@ -39,18 +39,18 @@ namespace backendtest.Domain.Data.Repositories
                 .FirstOrDefaultAsync(d => d.Cpf.Numero == cpf);
         }
 
-        public async Task<Desenvolvedor> ObterPorId(Guid id)
+        public async Task<Desenvolvedor> ObterPorId(Guid idDesenvolvedor)
         {
             return await _context.Set<Desenvolvedor>()
                 .Include(d => d.Aplicativo)
                 .AsNoTracking()
-                .FirstOrDefaultAsync(d => d.Id == id);
+                .FirstOrDefaultAsync(d => d.Id == idDesenvolvedor);
         }
-        public async Task<Desenvolvedor> ObterPorIdComTracking(Guid id)
+        public async Task<Desenvolvedor> ObterPorIdComTracking(Guid idDesenvolvedor)
         {
             return await _context.Desenvolvedores
                 .Include(d=>d.desenvolvedorAplicativo)
-                .FirstOrDefaultAsync(d => d.Id == id);
+                .FirstOrDefaultAsync(d => d.Id == idDesenvolvedor);
         }
 
         public async Task<IEnumerable<Desenvolvedor>> ObterTodos()
@@ -60,10 +60,10 @@ namespace backendtest.Domain.Data.Repositories
                 .AsNoTracking().ToListAsync();
         }
 
-        public async Task<IEnumerable<DesenvolvedorAplicativo>> ObterAplicativosDesenvolvedorFazParte(Guid id)
+        public async Task<IEnumerable<DesenvolvedorAplicativo>> ObterAplicativosRelacionados(Guid idDesenvolvedor)
         {
             return await _context.DesenvolvedorAplicativo
-                .Where(d=> d.FkDesenvolvedor == id)
+                .Where(d=> d.FkDesenvolvedor == idDesenvolvedor)
                 .Include(d=> d.FkAplicativoNavigation)
                 .AsNoTracking()
                 .ToListAsync();

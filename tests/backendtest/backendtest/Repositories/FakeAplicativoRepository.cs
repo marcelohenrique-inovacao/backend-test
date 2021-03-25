@@ -20,6 +20,11 @@ namespace backendtest.Tests.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<bool> Excluir(Aplicativo aplicativo)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<IEnumerable<Aplicativo>> ObterTodos()
         {
             throw new NotImplementedException();
@@ -31,6 +36,21 @@ namespace backendtest.Tests.Repositories
         }
 
         public Task<Aplicativo> ObterPorId(Guid id)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Aplicativo> ObterPorIdComTracking(Guid idAplicativo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<IEnumerable<DesenvolvedorAplicativo>> ObterDesenvolvedoresRelacionados(Guid idAplicativo)
+        {
+            throw new NotImplementedException();
+        }
+
+        public Task<Aplicativo> ObterAplicativoResponsavel(Guid idDesenvolvedor)
         {
             throw new NotImplementedException();
         }

@@ -50,10 +50,16 @@ namespace backendtest.Domain.Domain.Entities
         {
             IdDesenvolvedorResponsavel = responsavel.Id;
             Responsavel = responsavel;
+
+            var linkagem = new DesenvolvedorAplicativo(this, responsavel);
+            _desenvolvedorAplicativos.Add(linkagem);
         }
 
-        public void RemoverResponsavel()
+        public void RemoverResponsavel(Desenvolvedor responsavel)
         {
+            var linkagem = new DesenvolvedorAplicativo(this, responsavel);
+            _desenvolvedorAplicativos.Remove(linkagem);
+
             IdDesenvolvedorResponsavel = null;
             Responsavel = null;
         }
@@ -66,6 +72,11 @@ namespace backendtest.Domain.Domain.Entities
         {
             // REVIEW: isso não vai funcionar. 
             _desenvolvedorAplicativos.Remove(new DesenvolvedorAplicativo(this, desenvolvedor));
+        }
+
+        public bool PermiteExcluir()
+        {
+            return _desenvolvedorAplicativos.Count <= 0;
         }
     }
 }

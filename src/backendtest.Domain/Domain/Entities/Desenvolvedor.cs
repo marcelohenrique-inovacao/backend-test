@@ -41,10 +41,7 @@ namespace backendtest.Domain.Domain.Entities
 
         public bool PermiteExcluir()
         {
-            if (desenvolvedorAplicativo.Count > 0)
-                return false;
-
-            return true;
+            return desenvolvedorAplicativo.Count <= 0;
         }
     }
 }

@@ -21,6 +21,6 @@ namespace backendtest.Domain.Domain.Entities
                 FkAplicativo = aplicativo.Id;
                 FkAplicativoNavigation = aplicativo;
                 FkDesenvolvedorNavigation = desenvolvedor;
-            }
+            } 
     }
 }
