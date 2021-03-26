@@ -26,7 +26,8 @@ namespace backendtest.API.Configuration
 
             services.AddScoped<IRequestHandler<RegistrarDesenvolvedorCommand, ValidationResult>, DesenvolvedorCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarDesenvolvedorCommand, ValidationResult>, DesenvolvedorCommandHandler>();
-            //services.AddScoped<IRequestHandler<RegistrarAplicativoCommand, ValidationResult>, AplicativoCommandHandler>();
+            services.AddScoped<IRequestHandler<RegistrarAplicativoCommand, ValidationResult>, AplicativoCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarAplicativoCommand, ValidationResult>, AplicativoCommandHandler>();
         }
     }
 }

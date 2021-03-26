@@ -9,21 +9,20 @@ namespace backendtest.Domain.Domain.Entities
     {
         public string Nome { get; private set; }
         public CPF Cpf { get; private set; }
-        public Email Email { get; private set; } 
+        public Email Email { get; private set; }
         public virtual Aplicativo Aplicativo { get; set; }
         public virtual IReadOnlyCollection<DesenvolvedorAplicativo> desenvolvedorAplicativo { get; set; }
 
 
         protected Desenvolvedor()
-        { 
-            desenvolvedorAplicativo = new List<DesenvolvedorAplicativo>(); 
+        {
+            desenvolvedorAplicativo = new List<DesenvolvedorAplicativo>();
         }
         public Desenvolvedor(string nome, string cpf, string email)
         {
             Nome = nome;
             Cpf = new CPF(cpf);
             Email = new Email(email);
-            Aplicativo = new Aplicativo();
         }
         public void AtualizarNome(string nome)
         {
@@ -37,6 +36,16 @@ namespace backendtest.Domain.Domain.Entities
         public void AtualizarCpf(string cpf)
         {
             Cpf = new CPF(cpf);
+        }
+
+        public void RemoverCpf()
+        {
+            Cpf = null;
+        }
+
+        public void RemoverEmail()
+        {
+            Email = null;
         }
 
         public bool PermiteExcluir()

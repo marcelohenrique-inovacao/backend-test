@@ -55,9 +55,13 @@ namespace backendtest.API.Controllers
         #region PUT
 
         [HttpPut("/v1/desenvolvedor/{id}")]
-        public async Task<IActionResult> PutAtualizarCadastro(AtualizarDesenvolvedorCommand command)
+        public async Task<IActionResult> PutAtualizarCadastro(Guid id, AtualizarDesenvolvedorCommand command)
         {
-            return CustomResponse(await _mediatorHandler.EnviarComando(command));
+            if (id == command.Id)
+                return CustomResponse(await _mediatorHandler.EnviarComando(command));
+
+            AdicionarErroProcessamento("O Id informado no request está diferente do informado no JSON.");
+            return CustomResponse();
         }
 
         #endregion
@@ -69,6 +73,12 @@ namespace backendtest.API.Controllers
         {
             var desenvolvedor = await _desenvolvedorRepository.ObterPorIdComTracking(id);
 
+            if (desenvolvedor == null)
+            {
+                AdicionarErroProcessamento("Não existe Desenvolvedor com este Id");
+                return CustomResponse();
+            }
+
             //REVIEW: Mostrar os nomes dos aplicativos na mensagem.
             if (!desenvolvedor.PermiteExcluir())
             {
@@ -78,11 +88,7 @@ namespace backendtest.API.Controllers
 
             var sucesso = await _desenvolvedorRepository.Excluir(desenvolvedor);
 
-            if (sucesso)
-                return CustomResponse("Excluído com sucesso");
-
-            return CustomResponse("Falha ao excluir");
-
+            return CustomResponse(sucesso ? "Excluído com sucesso" : "Falha ao excluir");
         }
         #endregion
     }

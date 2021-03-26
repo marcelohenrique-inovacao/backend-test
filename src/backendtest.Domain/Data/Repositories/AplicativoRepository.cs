@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using backendtest.Domain.Domain.Entities;
 using backendtest.Shared.Data;
+using backendtest.Shared.Extensions;
 using Microsoft.EntityFrameworkCore;
 
 namespace backendtest.Domain.Data.Repositories
@@ -29,9 +30,13 @@ namespace backendtest.Domain.Data.Repositories
             _context.Entry(aplicativo).State = EntityState.Modified; 
         }
 
-        public Task<bool> Excluir(Aplicativo aplicativo)
+        public async Task<bool> Excluir(Aplicativo aplicativo)
         {
-            throw new NotImplementedException();
+            _context.Aplicativos.Remove(aplicativo);
+
+            var sucesso = await _context.SaveChangesAsync();
+
+            return sucesso > 0;
         }
 
         public async Task<Aplicativo> ObterPorNome(string nome)
@@ -47,9 +52,11 @@ namespace backendtest.Domain.Data.Repositories
                 .FirstOrDefaultAsync(a => a.Id == idAplicativo);
         }
 
-        public Task<Aplicativo> ObterPorIdComTracking(Guid idAplicativo)
+        public async Task<Aplicativo> ObterPorIdComTracking(Guid idAplicativo)
         {
-            throw new NotImplementedException();
+            return await _context.Aplicativos
+                .Include(a => a.desenvolvedorAplicativo)
+                .FirstOrDefaultAsync(a => a.Id == idAplicativo);
         }
 
         public async Task<IEnumerable<DesenvolvedorAplicativo>> ObterDesenvolvedoresRelacionados(Guid idAplicativo)

@@ -89,6 +89,12 @@ namespace backendtest.Domain.Application.Commands.Handlers
 
             var desenvolvedor = await _desenvolvedorRepository.ObterPorId(request.Id);
 
+            if (desenvolvedor == null)
+            {
+                AdicionarErro("Não foi encontrado Desenvolvedor com este Id");
+                return ValidationResult;
+            }
+
             desenvolvedor.AtualizarNome(request.Nome);
             desenvolvedor.AtualizarCpf(request.Cpf);
             desenvolvedor.AtualizarEmail(request.Email);

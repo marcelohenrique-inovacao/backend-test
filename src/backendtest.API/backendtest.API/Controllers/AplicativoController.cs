@@ -5,7 +5,10 @@ using backendtest.Shared.Communication.Mediator;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
+using backendtest.Shared.Extensions;
 
 namespace backendtest.API.Controllers
 {
@@ -16,7 +19,7 @@ namespace backendtest.API.Controllers
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IAplicativoRepository _aplicativoRepository;
 
-        public AplicativoController(IAplicativoRepository aplicativoRepository, IMediatorHandler mediatorHandler)
+        public AplicativoController(IAplicativoRepository aplicativoRepository, IMediatorHandler mediatorHandler, IDesenvolvedorRepository desenvolvedorRepository)
         {
             _aplicativoRepository = aplicativoRepository;
             _mediatorHandler = mediatorHandler;
@@ -32,7 +35,7 @@ namespace backendtest.API.Controllers
         [HttpGet("/v1/aplicativo/{id}")]
         public async Task<Aplicativo> GetAplicativo(Guid id)
         {
-            return await _aplicativoRepository.ObterPorId(id); 
+            return await _aplicativoRepository.ObterPorId(id);
         }
 
         [HttpGet("/v1/aplicativo/desenvolvedoresrelacionados/{id}")]
@@ -55,9 +58,13 @@ namespace backendtest.API.Controllers
 
         #region PUT
         [HttpPut("/v1/aplicativo/{id}")]
-        public async Task<IActionResult> PutAtualizarCadastro(AtualizarAplicativoCommand command)
+        public async Task<IActionResult> PutAtualizarCadastro(Guid id, AtualizarAplicativoCommand command)
         {
-            return CustomResponse(await _mediatorHandler.EnviarComando(command));
+            if (id == command.Id)
+                return CustomResponse(await _mediatorHandler.EnviarComando(command));
+
+            AdicionarErroProcessamento("O id informado no request está diferente do informado no JSON");
+            return CustomResponse();
         }
 
 
@@ -70,10 +77,25 @@ namespace backendtest.API.Controllers
         {
             var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(id);
 
-            //REVIEW: Mostrar os nomes dos desenvolvedores na mensagem.
+            if (aplicativo == null)
+            {
+                AdicionarErroProcessamento("Nenhum Aplicativo encontrado com esse Id");
+                return CustomResponse();
+            }
+
             if (!aplicativo.PermiteExcluir())
             {
-                AdicionarErroProcessamento("Impossível excluir, pois este Aplicativo está vinculado à algum Desenvolvedor.");
+                var desenvolvedores =
+                    await _aplicativoRepository.ObterDesenvolvedoresRelacionados(aplicativo.Id);
+
+                var desenvolvedoresVinculados = new StringBuilder();
+
+                desenvolvedoresVinculados.AppendJoin(",",
+                    desenvolvedores.Take(desenvolvedores.Count())
+                        .ToList()
+                        .Select(a => a.FkDesenvolvedorNavigation.Nome));
+
+                AdicionarErroProcessamento($@"Impossível excluir, pois este Aplicativo está vinculado aos Desenvolvedores: {desenvolvedoresVinculados}.");
                 return CustomResponse();
             }
 

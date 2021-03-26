@@ -50,6 +50,8 @@ namespace backendtest.Domain.Data.Repositories
         {
             return await _context.Desenvolvedores
                 .Include(d=>d.desenvolvedorAplicativo)
+                .Include(d=>d.Cpf)
+                .Include(d=> d.Email)
                 .FirstOrDefaultAsync(d => d.Id == idDesenvolvedor);
         }
 
@@ -71,13 +73,13 @@ namespace backendtest.Domain.Data.Repositories
 
         public async Task<bool> Excluir(Desenvolvedor desenvolvedor)
         {
-            _context.Desenvolvedores.Remove(desenvolvedor);
+            desenvolvedor.RemoverCpf();
+            desenvolvedor.RemoverEmail();
+            _context.Desenvolvedores.RemoveRange(desenvolvedor); 
+            
             var sucesso = await _context.SaveChangesAsync();
 
-            if (sucesso > 0)
-                return true;
-
-            return false;
+            return sucesso > 0;
         }
 
         public void Dispose()
