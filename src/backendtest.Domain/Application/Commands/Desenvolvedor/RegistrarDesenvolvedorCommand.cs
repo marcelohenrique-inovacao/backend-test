@@ -2,47 +2,40 @@
 using backendtest.Shared.Messages;
 using FluentValidation;
 
-namespace backendtest.Domain.Application.Commands
+namespace backendtest.Domain.Application.Commands.Desenvolvedor
 {
-    public class AtualizarDesenvolvedorCommand : Command
+    public class RegistrarDesenvolvedorCommand : Command
     {
         public Guid Id { get; private set; }
         public string Nome { get; private set; }
         public string Cpf { get; private set; }
         public string Email { get; private set; }
-
-        public AtualizarDesenvolvedorCommand(Guid id, string nome, string cpf, string email)
+         
+        public RegistrarDesenvolvedorCommand(Guid id, string nome, string cpf, string email)
         {
-            AggregateId = id;
             Id = id;
+            AggregateId = id;
             Nome = nome;
             Cpf = cpf;
             Email = email;
         }
+
         public override bool Valido()
         {
-            var validationReturn = new AtualizarDesenvolvedorValidation().Validate(this);
+            var validationReturn = new RegistrarDesenvolvedorValidation().Validate(this);
             ValidationResult = validationReturn;
             return validationReturn.IsValid;
         }
-        //REVIEW: CÓDIGO DUPLICADO
-        public class AtualizarDesenvolvedorValidation : AbstractValidator<AtualizarDesenvolvedorCommand>
+
+        public class RegistrarDesenvolvedorValidation : AbstractValidator<RegistrarDesenvolvedorCommand>
         {
-            public AtualizarDesenvolvedorValidation()
+            public RegistrarDesenvolvedorValidation()
             {
                 this.CascadeMode = CascadeMode.Stop;
-
-                RuleFor(d => d.Id)
-                    .NotNull()
-                    .WithMessage("O Id não pode ser nulo.")
-
-                    .NotEmpty()
-                    .WithMessage("O Id não pode ser vazio.");
-
                 RuleFor(d => d.Nome)
                     .NotNull()
                     .WithMessage("O Nome não pode ser nulo.")
-
+                    
                     .NotEmpty()
                     .WithMessage("O Nome não pode ser vazio.");
 
@@ -50,20 +43,20 @@ namespace backendtest.Domain.Application.Commands
                 RuleFor(c => c.Cpf)
                     .NotNull()
                     .WithMessage("O CPF não pode ser nulo.")
-
+                    
                     .NotEmpty()
                     .WithMessage("O CPF não pode ser vazio.")
-
+                    
                     .Must(TerCpfValido)
                     .WithMessage("O CPF informado não é válido.");
 
                 RuleFor(c => c.Email)
                     .NotNull()
                     .WithMessage("O Email não pode ser nulo.")
-
+                    
                     .NotEmpty()
                     .WithMessage("O Email não pode ser vazio.")
-
+                    
                     .Must(TerEmailValido)
                     .WithMessage("O e-mail informado não é válido.");
 

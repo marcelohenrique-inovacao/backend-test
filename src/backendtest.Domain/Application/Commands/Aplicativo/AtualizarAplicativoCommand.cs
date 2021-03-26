@@ -1,10 +1,9 @@
 ﻿using System;
-using backendtest.Domain.Domain.Entities;
 using backendtest.Domain.Domain.Enums;
 using backendtest.Shared.Messages;
 using FluentValidation;
 
-namespace backendtest.Domain.Application.Commands
+namespace backendtest.Domain.Application.Commands.Aplicativo
 {
     public class AtualizarAplicativoCommand : Command
     {
@@ -12,10 +11,10 @@ namespace backendtest.Domain.Application.Commands
         public string Nome { get; private set; }
         public string DataLancamento { get; private set; }
         public ETipoPlataforma TipoPlataforma { get; private set; }
-        public Desenvolvedor? DesenvolvedorResponsavel { get; private set; }
+        public Domain.Entities.Desenvolvedor? DesenvolvedorResponsavel { get; private set; }
 
         public AtualizarAplicativoCommand(Guid id, string nome, string dataLancamento, int tipoPlataforma,
-            Desenvolvedor desenvolvedorResponsavel)
+            Domain.Entities.Desenvolvedor desenvolvedorResponsavel)
         {
             AggregateId = id;
             Id = id;

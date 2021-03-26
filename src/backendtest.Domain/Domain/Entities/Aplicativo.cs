@@ -46,20 +46,14 @@ namespace backendtest.Domain.Domain.Entities
             Plataforma = tipoPlataforma;
         }
 
-        public void TornarResponsavel(Desenvolvedor responsavel)
+        public void AdicionarResponsavel(Desenvolvedor responsavel)
         {
             IdDesenvolvedorResponsavel = responsavel.Id;
-            Responsavel = responsavel;
-
-            var linkagem = new DesenvolvedorAplicativo(this, responsavel);
-            _desenvolvedorAplicativos.Add(linkagem);
+            Responsavel = responsavel; 
         }
 
-        public void RemoverResponsavel(Desenvolvedor responsavel)
-        {
-            var linkagem = new DesenvolvedorAplicativo(this, responsavel);
-            _desenvolvedorAplicativos.Remove(linkagem);
-
+        public void RemoverResponsavel()
+        {  
             IdDesenvolvedorResponsavel = null;
             Responsavel = null;
         }
@@ -70,13 +64,18 @@ namespace backendtest.Domain.Domain.Entities
         }
         public void DesvincularDesenvolvedor(Desenvolvedor desenvolvedor)
         {
-            // REVIEW: isso não vai funcionar. 
+            // REVIEW: isso não vai funcionar?
             _desenvolvedorAplicativos.Remove(new DesenvolvedorAplicativo(this, desenvolvedor));
         }
 
         public bool PermiteExcluir()
         {
             return _desenvolvedorAplicativos.Count <= 0;
+        }
+
+        public bool PermiteVinculacao()
+        {
+            return IdDesenvolvedorResponsavel == null;
         }
     }
 }

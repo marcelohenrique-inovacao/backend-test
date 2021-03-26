@@ -1,7 +1,6 @@
-﻿using System;
-using TechTalk.SpecFlow;
+﻿using TechTalk.SpecFlow;
 
-namespace backendtest.Steps
+namespace backendtest.Tests.Steps
 {
     [Binding]
     public class VinculacaoDevAppSteps

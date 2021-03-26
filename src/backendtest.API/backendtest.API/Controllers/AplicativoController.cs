@@ -1,4 +1,5 @@
-﻿using backendtest.Domain.Application.Commands;
+﻿using backendtest.Domain.Application.Commands.Aplicativo;
+using backendtest.Domain.Application.Commands.Vinculacao;
 using backendtest.Domain.Data.Repositories;
 using backendtest.Domain.Domain.Entities;
 using backendtest.Shared.Communication.Mediator;
@@ -8,7 +9,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using backendtest.Shared.Extensions;
 
 namespace backendtest.API.Controllers
 {
@@ -67,6 +67,27 @@ namespace backendtest.API.Controllers
             return CustomResponse();
         }
 
+        [HttpPut("/v1/aplicativo/vincularDesenvolvedor")]
+        public async Task<IActionResult> PutVincularDesenvolvedor(VincularAplicativoDesenvolvedorCommand command)
+        {
+            return CustomResponse(await _mediatorHandler.EnviarComando(command));
+        }
+
+        [HttpPut("/v1/aplicativo/desvincularDesenvolvedor")]
+        public async Task<IActionResult> PutDesvincularDesenvolvedor(DesvincularAplicativoDesenvolvedorCommand command)
+        {
+            return CustomResponse(await _mediatorHandler.EnviarComando(command));
+        }
+        [HttpPut("/v1/aplicativo/AdicionarDesenvolvedorResponsavel")]
+        public async Task<IActionResult> PutAdicionarDesenvolvedorResponsavel(AdicionarDesenvolvedorResponsavelCommand command)
+        {
+            return ModelState.IsValid ? CustomResponse(await _mediatorHandler.EnviarComando(command)) : CustomResponse("modelo");
+        }
+        [HttpPut("/v1/aplicativo/RemoverDesenvolvedorResponsavel")]
+        public async Task<IActionResult> PutRemoverDesenvolvedorResponsavel(RemoverDesenvolvedorResponsavelCommand command)
+        {
+            return CustomResponse(await _mediatorHandler.EnviarComando(command));
+        }
 
         #endregion
 

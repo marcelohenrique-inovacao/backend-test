@@ -1,5 +1,5 @@
-﻿using backendtest.Domain.Data.Repositories;
-using backendtest.Domain.Domain.Entities;
+﻿using backendtest.Domain.Application.Commands.Desenvolvedor;
+using backendtest.Domain.Data.Repositories;
 using backendtest.Shared.Communication.Mediator;
 using backendtest.Shared.Messages;
 using FluentValidation.Results;
@@ -27,7 +27,7 @@ namespace backendtest.Domain.Application.Commands.Handlers
         {
             if (!request.Valido()) return request.ValidationResult;
 
-            var desenvolvedor = new Desenvolvedor(request.Nome, request.Cpf, request.Email);
+            var desenvolvedor = new Domain.Entities.Desenvolvedor(request.Nome, request.Cpf, request.Email);
 
             var desenvolvedorExiste = await _desenvolvedorRepository.ObterPorCpf(request.Cpf);
 

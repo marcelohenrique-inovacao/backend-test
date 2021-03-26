@@ -1,4 +1,5 @@
-﻿using System.Threading.Tasks;
+﻿using System;
+using System.Threading.Tasks;
 using backendtest.Shared.Data;
 using FluentValidation.Results;
 
@@ -19,7 +20,7 @@ namespace backendtest.Shared.Messages
         }
 
         protected async Task<ValidationResult> PersistirDados(IUnitOfWork uow)
-        {
+        { 
             if (!await uow.Commit()) AdicionarErro("Houve um erro ao persistir os dados");
 
             return ValidationResult;

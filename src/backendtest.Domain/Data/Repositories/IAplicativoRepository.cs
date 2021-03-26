@@ -16,10 +16,8 @@ namespace backendtest.Domain.Data.Repositories
         Task<Aplicativo> ObterPorNome(string nome);
         Task<Aplicativo> ObterPorId(Guid idAplicativo);
         Task<Aplicativo> ObterPorIdComTracking(Guid idAplicativo);
-
-        //Task<bool> VincularDesenvolvedor(Desenvolvedor desenvolvedor);
-        //Task<bool> DesvincularDesenvolvedor(Desenvolvedor desenvolvedor);
         Task<IEnumerable<DesenvolvedorAplicativo>> ObterDesenvolvedoresRelacionados(Guid idAplicativo);
         Task<Aplicativo> ObterAplicativoResponsavel(Guid idDesenvolvedor);
+        Task<bool> PermiteVincularDesenvolvedor(Guid idDesenvolvedor);
     }
 }

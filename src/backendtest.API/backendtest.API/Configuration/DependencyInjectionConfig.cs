@@ -1,13 +1,14 @@
-﻿using backendtest.Domain.Application.Commands;
+﻿using backendtest.Domain.Application.Commands.Aplicativo;
+using backendtest.Domain.Application.Commands.Desenvolvedor;
 using backendtest.Domain.Application.Commands.Handlers;
+using backendtest.Domain.Application.Commands.Vinculacao;
 using backendtest.Domain.Data;
 using backendtest.Domain.Data.Repositories;
 using backendtest.Shared.Communication.Mediator;
 using FluentValidation.Results;
 using MediatR;
 using Microsoft.AspNetCore.Http;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.DependencyInjection; 
+using Microsoft.Extensions.DependencyInjection;
 
 namespace backendtest.API.Configuration
 {
@@ -28,6 +29,12 @@ namespace backendtest.API.Configuration
             services.AddScoped<IRequestHandler<AtualizarDesenvolvedorCommand, ValidationResult>, DesenvolvedorCommandHandler>();
             services.AddScoped<IRequestHandler<RegistrarAplicativoCommand, ValidationResult>, AplicativoCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarAplicativoCommand, ValidationResult>, AplicativoCommandHandler>();
+
+            services.AddScoped<IRequestHandler<AdicionarDesenvolvedorResponsavelCommand, ValidationResult>, VinculacaoAplicativoDesenvolvedorHandler>();
+            services.AddScoped<IRequestHandler<RemoverDesenvolvedorResponsavelCommand, ValidationResult>, VinculacaoAplicativoDesenvolvedorHandler>();
+            services.AddScoped<IRequestHandler<VincularAplicativoDesenvolvedorCommand, ValidationResult>, VinculacaoAplicativoDesenvolvedorHandler>();
+            services.AddScoped<IRequestHandler<DesvincularAplicativoDesenvolvedorCommand, ValidationResult>, VinculacaoAplicativoDesenvolvedorHandler>();
+
         }
     }
 }

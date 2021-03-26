@@ -1,13 +1,12 @@
-﻿using backendtest.Domain.Application.Commands;
+﻿using backendtest.Domain.Application.Commands.Desenvolvedor;
 using backendtest.Domain.Application.Commands.Handlers;
-using backendtest.Domain.Data.Repositories;
 using backendtest.Shared.Communication.Mediator;
+using backendtest.Tests.Repositories;
 using FluentAssertions;
 using FluentValidation.Results;
 using Moq;
 using System;
 using System.Threading;
-using backendtest.Tests.Repositories;
 using TechTalk.SpecFlow;
 
 namespace backendtest.Tests.Steps

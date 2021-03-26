@@ -1,10 +1,9 @@
-﻿using backendtest.Domain.Domain.Enums;
+﻿using System;
+using backendtest.Domain.Domain.Enums;
 using backendtest.Shared.Messages;
 using FluentValidation;
-using System;
-using backendtest.Domain.Domain.Entities;
 
-namespace backendtest.Domain.Application.Commands
+namespace backendtest.Domain.Application.Commands.Aplicativo
 {
     public class RegistrarAplicativoCommand : Command
     {
@@ -12,9 +11,9 @@ namespace backendtest.Domain.Application.Commands
         public string Nome { get; private set; }
         public string DataLancamento { get; private set; }
         public ETipoPlataforma TipoPlataforma { get; private set; }
-        public Desenvolvedor? DesenvolvedorResponsavel { get; private set; }
+        public Domain.Entities.Desenvolvedor? DesenvolvedorResponsavel { get; private set; }
 
-        public RegistrarAplicativoCommand(Guid id, string nome, string dataLancamento, int tipoPlataforma, Desenvolvedor desenvolvedorResponsavel)
+        public RegistrarAplicativoCommand(Guid id, string nome, string dataLancamento, int tipoPlataforma, Domain.Entities.Desenvolvedor desenvolvedorResponsavel)
         {
             AggregateId = id;
             Id = id;
