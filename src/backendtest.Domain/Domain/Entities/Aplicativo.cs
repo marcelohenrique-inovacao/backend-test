@@ -17,7 +17,7 @@ namespace backendtest.Domain.Domain.Entities
 
         private List<DesenvolvedorAplicativo> _desenvolvedorAplicativos;
 
-        public virtual IReadOnlyCollection<DesenvolvedorAplicativo> desenvolvedorAplicativo =>
+        public virtual ICollection<DesenvolvedorAplicativo> desenvolvedorAplicativo =>
             _desenvolvedorAplicativos;
 
         public Aplicativo()
@@ -58,14 +58,13 @@ namespace backendtest.Domain.Domain.Entities
             Responsavel = null;
         }
 
-        public void VincularDesenvolvedor(Desenvolvedor desenvolvedor)
-        {
-            _desenvolvedorAplicativos.Add(new DesenvolvedorAplicativo(this, desenvolvedor));
+        public void VincularDesenvolvedor(DesenvolvedorAplicativo vinculacao)
+        { 
+            _desenvolvedorAplicativos.Add(vinculacao);
         }
-        public void DesvincularDesenvolvedor(Desenvolvedor desenvolvedor)
-        {
-            // REVIEW: isso não vai funcionar?
-            _desenvolvedorAplicativos.Remove(new DesenvolvedorAplicativo(this, desenvolvedor));
+        public void DesvincularDesenvolvedor(List<DesenvolvedorAplicativo> vinculacao)
+        {  
+            _desenvolvedorAplicativos = vinculacao;
         }
 
         public bool PermiteExcluir()

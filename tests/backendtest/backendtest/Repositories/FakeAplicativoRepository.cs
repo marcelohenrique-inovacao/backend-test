@@ -55,6 +55,11 @@ namespace backendtest.Tests.Repositories
             throw new NotImplementedException();
         }
 
+        public Task<bool> PermiteVincularDesenvolvedor(Guid idDesenvolvedor)
+        {
+            throw new NotImplementedException();
+        }
+
         public Task<bool> DesenvolvedorResponsavelPorAplicativo(Guid desenvolvedor)
         {
             throw new NotImplementedException();

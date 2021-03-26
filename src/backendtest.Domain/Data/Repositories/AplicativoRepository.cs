@@ -58,7 +58,7 @@ namespace backendtest.Domain.Data.Repositories
         {
             return await _context.Aplicativos
                 .Include(a => a.desenvolvedorAplicativo)
-                .Include(a=> a.Responsavel)
+                .Include(a => a.Responsavel)
                 .FirstOrDefaultAsync(a => a.Id == idAplicativo);
         }
 
@@ -92,6 +92,30 @@ namespace backendtest.Domain.Data.Repositories
             return quantidadeAplicativosVinculado < 3;
         }
 
+        public void VincularDesenvolvedor(Aplicativo aplicativo, Desenvolvedor desenvolvedor)
+        {
+            var vinculacao = new DesenvolvedorAplicativo(aplicativo, desenvolvedor);
+            aplicativo.VincularDesenvolvedor(vinculacao);
+
+            _context.Entry(vinculacao).State = EntityState.Added;
+        }
+        public async Task<bool> DesvincularDesenvolvedor(Aplicativo aplicativo, Desenvolvedor desenvolvedor)
+        {
+            var listaVinculacao = await _context.DesenvolvedorAplicativo
+                .Where(a=>a.FkAplicativo == aplicativo.Id)
+                .ToListAsync();
+
+            var vinculacao = await _context.DesenvolvedorAplicativo
+                .Where(a => a.FkAplicativo == aplicativo.Id && a.FkDesenvolvedor == desenvolvedor.Id)
+                .FirstOrDefaultAsync();
+
+            listaVinculacao.Remove(vinculacao);
+
+            aplicativo.DesvincularDesenvolvedor(listaVinculacao);
+
+            _context.Entry(vinculacao).State = EntityState.Deleted;
+            return true;
+        }
         public async Task<IEnumerable<Aplicativo>> ObterTodos()
         {
             return await _context.Aplicativos.AsNoTracking()

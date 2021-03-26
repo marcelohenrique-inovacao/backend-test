@@ -19,5 +19,7 @@ namespace backendtest.Domain.Data.Repositories
         Task<IEnumerable<DesenvolvedorAplicativo>> ObterDesenvolvedoresRelacionados(Guid idAplicativo);
         Task<Aplicativo> ObterAplicativoResponsavel(Guid idDesenvolvedor);
         Task<bool> PermiteVincularDesenvolvedor(Guid idDesenvolvedor);
+        void VincularDesenvolvedor(Aplicativo aplicativo, Desenvolvedor desenvolvedor);
+        Task<bool> DesvincularDesenvolvedor(Aplicativo aplicativo, Desenvolvedor desenvolvedor);
     }
 }

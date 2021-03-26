@@ -1,17 +1,15 @@
-﻿using System;
+﻿using backendtest.Domain.Domain.Entities;
+using backendtest.Shared.Data;
+using backendtest.Shared.DomainObjects;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using backendtest.Domain.Domain.Entities;
-using backendtest.Domain.Domain.ValueObjects;
-using backendtest.Shared.Data;
-using FluentValidation.Results;
-using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.Internal;
 
 namespace backendtest.Domain.Data.Repositories
 {
-    public class DesenvolvedorRepository : IDesenvolvedorRepository
+    public class DesenvolvedorRepository : IDesenvolvedorRepository, IAggregateRoot
     {
         private readonly DatabaseContext _context;
 

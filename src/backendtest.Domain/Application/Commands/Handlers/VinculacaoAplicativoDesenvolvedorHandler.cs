@@ -102,9 +102,9 @@ namespace backendtest.Domain.Application.Commands.Handlers
             {
                 AdicionarErro("Este Desenvolvedor já está vinculado ao máximo(3) de Aplicativos permitidos.");
                 return ValidationResult;
-            }
+            }  
 
-            aplicativo.VincularDesenvolvedor(desenvolvedor);
+            _aplicativoRepository.VincularDesenvolvedor(aplicativo, desenvolvedor);
             _aplicativoRepository.Update(aplicativo);
 
             await PersistirDados(_aplicativoRepository.UnitOfWork);
@@ -129,8 +129,9 @@ namespace backendtest.Domain.Application.Commands.Handlers
                 AdicionarErro("Desenvolvedor não encontrado.");
                 return ValidationResult;
             }
+             
 
-            aplicativo.DesvincularDesenvolvedor(desenvolvedor);
+            await _aplicativoRepository.DesvincularDesenvolvedor(aplicativo, desenvolvedor); 
             _aplicativoRepository.Update(aplicativo);
 
             await PersistirDados(_aplicativoRepository.UnitOfWork);
