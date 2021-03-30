@@ -87,7 +87,7 @@ namespace backendtest.Domain.Application.Commands.Handlers
         {
             if (!request.Valido()) return request.ValidationResult;
 
-            var desenvolvedor = await _desenvolvedorRepository.ObterPorId(request.Id);
+            var desenvolvedor = await _desenvolvedorRepository.ObterPorIdComTracking(request.Id);
 
             if (desenvolvedor == null)
             {

@@ -1,7 +1,6 @@
 ﻿using backendtest.Domain.Application.Commands.Desenvolvedor;
 using backendtest.Domain.Application.Commands.Handlers;
 using backendtest.Shared.Communication.Mediator;
-using backendtest.Tests.Repositories;
 using FluentAssertions;
 using FluentValidation.Results;
 using Moq;
@@ -14,9 +13,7 @@ namespace backendtest.Tests.Steps
     [Binding]
     public class DesenvolvedorSteps
     {
-        private static readonly Mock<IMediatorHandler> _mediatorHandler = new(); 
-        private DesenvolvedorCommandHandler _handler = 
-            new(new FakeDesenvolvedorRepository(), _mediatorHandler.Object);
+        private static readonly Mock<IMediatorHandler> _mediatorHandler = new();  
 
         private RegistrarDesenvolvedorCommand _command; 
         private readonly ScenarioContext _scenarioContext; 
@@ -62,8 +59,7 @@ namespace backendtest.Tests.Steps
 
         [When(@"eu tento cadastrar")]
         public async void QuandoEuTentoCadastrar()
-        {
-            retornoCommand = await _handler.Handle(_command, new CancellationToken());
+        { 
         }
 
         [When(@"eu tento alterar")]

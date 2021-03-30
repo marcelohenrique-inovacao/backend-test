@@ -18,6 +18,7 @@
   <ItemGroup>
     <Folder Include="Drivers\" />
     <Folder Include="Hooks\" />
+    <Folder Include="Repositories\" />
   </ItemGroup>
 
   <ItemGroup>

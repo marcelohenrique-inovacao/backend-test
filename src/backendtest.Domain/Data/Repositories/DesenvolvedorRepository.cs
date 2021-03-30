@@ -6,6 +6,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backendtest.Domain.Application.DTOs;
+using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
 
 namespace backendtest.Domain.Data.Repositories
 {
@@ -30,19 +32,23 @@ namespace backendtest.Domain.Data.Repositories
             _context.Entry(desenvolvedor).State = EntityState.Modified;
         }
 
-        public async Task<Desenvolvedor> ObterPorCpf(string cpf)
+        public async Task<DesenvolvedorDto> ObterPorCpf(string cpf)
         {
-            return await _context.Desenvolvedores
+            var desenvolvedor = await _context.Desenvolvedores
                 .AsNoTracking()
                 .FirstOrDefaultAsync(d => d.Cpf.Numero == cpf);
+
+            return DesenvolvedorDto.ParaDesenvolvedorDto(desenvolvedor);
         }
 
-        public async Task<Desenvolvedor> ObterPorId(Guid idDesenvolvedor)
+        public async Task<DesenvolvedorDto> ObterPorId(Guid idDesenvolvedor)
         {
-            return await _context.Set<Desenvolvedor>()
+            var desenvolvedor = await _context.Set<Desenvolvedor>()
                 .Include(d => d.Aplicativo)
                 .AsNoTracking()
                 .FirstOrDefaultAsync(d => d.Id == idDesenvolvedor);
+
+            return DesenvolvedorDto.ParaDesenvolvedorDto(desenvolvedor);
         }
         public async Task<Desenvolvedor> ObterPorIdComTracking(Guid idDesenvolvedor)
         {
@@ -53,20 +59,30 @@ namespace backendtest.Domain.Data.Repositories
                 .FirstOrDefaultAsync(d => d.Id == idDesenvolvedor);
         }
 
-        public async Task<IEnumerable<Desenvolvedor>> ObterTodos()
+        public async Task<IEnumerable<DesenvolvedorDto>> ObterTodos()
         {
-            return await _context.Desenvolvedores
+            var desenvolvedores = await _context.Desenvolvedores
                 .Include(d=> d.Aplicativo)
                 .AsNoTracking().ToListAsync();
+            return desenvolvedores.Select(DesenvolvedorDto.ParaDesenvolvedorDto);
         }
 
-        public async Task<IEnumerable<DesenvolvedorAplicativo>> ObterAplicativosRelacionados(Guid idDesenvolvedor)
+        public async Task<IEnumerable<AplicativoDto>> ObterAplicativosRelacionados(Guid idDesenvolvedor)
         {
-            return await _context.DesenvolvedorAplicativo
+            var desenvolvedorAplicativos = await _context.DesenvolvedorAplicativo
                 .Where(d=> d.FkDesenvolvedor == idDesenvolvedor)
                 .Include(d=> d.FkAplicativoNavigation)
+                .Include(d=> d.FkAplicativoNavigation.Responsavel)
                 .AsNoTracking()
                 .ToListAsync();
+
+            //var aplicativos = new List<AplicativoDto>();
+            //foreach (var item in desenvolvedorAplicativos)
+            //{
+            //    item.FkAplicativoNavigation 
+            //}
+
+            return desenvolvedorAplicativos.Select(x => AplicativoDto.ParaAplicativoDto(x.FkAplicativoNavigation));
         }
 
         public async Task<bool> Excluir(Desenvolvedor desenvolvedor)

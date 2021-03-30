@@ -43,7 +43,7 @@ namespace backendtest.Domain.Application.Commands.Handlers
         {
             if (!request.Valido()) return false;
 
-            var aplicativo = await _aplicativoRepository.ObterPorId(request.Id);
+            var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.Id);
             aplicativo.AtualizarNome(request.Nome);
             _aplicativoRepository.Update(aplicativo);
 
@@ -56,7 +56,7 @@ namespace backendtest.Domain.Application.Commands.Handlers
         {
             if (!request.Valido()) return false;
 
-            var aplicativo = await _aplicativoRepository.ObterPorId(request.Id);
+            var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.Id);
             aplicativo.AtualizarDataLancamento(DateTime.Parse(request.DataLancamento));
             _aplicativoRepository.Update(aplicativo);
 
@@ -69,7 +69,7 @@ namespace backendtest.Domain.Application.Commands.Handlers
         {
             if (!request.Valido()) return false;
 
-            var aplicativo = await _aplicativoRepository.ObterPorId(request.Id);
+            var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.Id);
             aplicativo.AtualizarPlataforma(request.TipoPlataforma);
             _aplicativoRepository.Update(aplicativo);
 

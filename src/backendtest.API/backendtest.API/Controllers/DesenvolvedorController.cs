@@ -6,6 +6,7 @@ using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using backendtest.Domain.Application.DTOs;
 
 namespace backendtest.API.Controllers
 {
@@ -24,19 +25,19 @@ namespace backendtest.API.Controllers
         #region GET
 
         [HttpGet("/v1/desenvolvedores")]
-        public async Task<IEnumerable<Desenvolvedor>> GetTodosDesenvolvedores()
+        public async Task<IEnumerable<DesenvolvedorDto>> GetTodosDesenvolvedores()
         {
             return await _desenvolvedorRepository.ObterTodos();
         }
 
         [HttpGet("/v1/desenvolvedor/{id}")]
-        public async Task<Desenvolvedor> GetDesenvolvedor(Guid id)
+        public async Task<DesenvolvedorDto> GetDesenvolvedor(Guid id)
         {
             return await _desenvolvedorRepository.ObterPorId(id);
         }
 
         [HttpGet("/v1/desenvolvedor/aplicativosrelacionados/{id}")]
-        public async Task<IEnumerable<DesenvolvedorAplicativo>> GetDesenvolvedorAplicativosRelacionados(Guid id)
+        public async Task<IEnumerable<AplicativoDto>> GetDesenvolvedorAplicativosRelacionados(Guid id)
         {
             return await _desenvolvedorRepository.ObterAplicativosRelacionados(id);
         }

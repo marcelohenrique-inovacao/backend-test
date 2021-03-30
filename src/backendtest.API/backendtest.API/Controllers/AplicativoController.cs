@@ -9,6 +9,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using backendtest.Domain.Application.DTOs;
 
 namespace backendtest.API.Controllers
 {
@@ -27,19 +28,19 @@ namespace backendtest.API.Controllers
 
         #region GET
         [HttpGet("/v1/aplicativos")]
-        public async Task<IEnumerable<Aplicativo>> GetTodosAplicativos()
+        public async Task<IEnumerable<AplicativoDto>> GetTodosAplicativos()
         {
             return await _aplicativoRepository.ObterTodos();
         }
 
         [HttpGet("/v1/aplicativo/{id}")]
-        public async Task<Aplicativo> GetAplicativo(Guid id)
+        public async Task<AplicativoDto> GetAplicativo(Guid id)
         {
             return await _aplicativoRepository.ObterPorId(id);
         }
 
         [HttpGet("/v1/aplicativo/desenvolvedoresrelacionados/{id}")]
-        public async Task<IEnumerable<DesenvolvedorAplicativo>> GetAplicativoDesenvolvedoresRelacionados(Guid id)
+        public async Task<IEnumerable<DesenvolvedorDto>> GetAplicativoDesenvolvedoresRelacionados(Guid id)
         {
             return await _aplicativoRepository.ObterDesenvolvedoresRelacionados(id);
         }
@@ -111,10 +112,10 @@ namespace backendtest.API.Controllers
 
                 var desenvolvedoresVinculados = new StringBuilder();
 
-                desenvolvedoresVinculados.AppendJoin(",",
+                desenvolvedoresVinculados.AppendJoin(", ",
                     desenvolvedores.Take(desenvolvedores.Count())
                         .ToList()
-                        .Select(a => a.FkDesenvolvedorNavigation.Nome));
+                        .Select(a => a.Nome));
 
                 AdicionarErroProcessamento($@"Impossível excluir, pois este Aplicativo está vinculado aos Desenvolvedores: {desenvolvedoresVinculados}.");
                 return CustomResponse();

@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using backendtest.Domain.Application.DTOs;
 
 namespace backendtest.Domain.Data.Repositories
 {
@@ -37,21 +38,33 @@ namespace backendtest.Domain.Data.Repositories
 
             return sucesso > 0;
         }
-
-        public async Task<Aplicativo> ObterPorNome(string nome)
+        public async Task<IEnumerable<AplicativoDto>> ObterTodos()
         {
-            return await _context.Aplicativos.AsNoTracking()
-                .Include(a => a.desenvolvedorAplicativo)
-                .Include(a => a.desenvolvedorAplicativo)
-                .FirstOrDefaultAsync(a => a.Nome == nome);
+            var aplicativos = await _context.Aplicativos
+                .Include(a=>a.Responsavel)
+                .AsNoTracking()
+                .ToListAsync();
+
+            return aplicativos.Select(AplicativoDto.ParaAplicativoDto);
         }
 
-        public async Task<Aplicativo> ObterPorId(Guid idAplicativo)
+        public async Task<AplicativoDto> ObterPorNome(string nome)
         {
-            return await _context.Aplicativos.AsNoTracking()
+            var aplicativo = await _context.Aplicativos.AsNoTracking()
+                .Include(a => a.desenvolvedorAplicativo)
+                .FirstOrDefaultAsync(a => a.Nome == nome);
+
+            return AplicativoDto.ParaAplicativoDto(aplicativo);
+        }
+
+        public async Task<AplicativoDto> ObterPorId(Guid idAplicativo)
+        {
+            var aplicativo = await _context.Aplicativos.AsNoTracking()
                 .Include(a => a.desenvolvedorAplicativo)
                 .Include(a => a.Responsavel)
                 .FirstOrDefaultAsync(a => a.Id == idAplicativo);
+
+            return AplicativoDto.ParaAplicativoDto(aplicativo);
         }
 
         public async Task<Aplicativo> ObterPorIdComTracking(Guid idAplicativo)
@@ -62,13 +75,15 @@ namespace backendtest.Domain.Data.Repositories
                 .FirstOrDefaultAsync(a => a.Id == idAplicativo);
         }
 
-        public async Task<IEnumerable<DesenvolvedorAplicativo>> ObterDesenvolvedoresRelacionados(Guid idAplicativo)
+        public async Task<IEnumerable<DesenvolvedorDto>> ObterDesenvolvedoresRelacionados(Guid idAplicativo)
         {
-            return await _context.DesenvolvedorAplicativo
+            var desenvolvedores = await _context.DesenvolvedorAplicativo
                 .Where(d => d.FkAplicativo == idAplicativo)
                 .Include(d => d.FkDesenvolvedorNavigation)
                 .AsNoTracking()
                 .ToListAsync();
+
+            return desenvolvedores.Select(d=> DesenvolvedorDto.ParaDesenvolvedorDto(d.FkDesenvolvedorNavigation));
         }
 
         public async Task<Aplicativo> ObterAplicativoResponsavel(Guid idDesenvolvedor)
@@ -115,11 +130,6 @@ namespace backendtest.Domain.Data.Repositories
 
             _context.Entry(vinculacao).State = EntityState.Deleted;
             return true;
-        }
-        public async Task<IEnumerable<Aplicativo>> ObterTodos()
-        {
-            return await _context.Aplicativos.AsNoTracking()
-                .ToListAsync();
         }
 
         public void Dispose()
