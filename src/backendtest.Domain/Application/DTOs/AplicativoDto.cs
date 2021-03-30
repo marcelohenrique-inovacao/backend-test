@@ -14,6 +14,8 @@ namespace backendtest.Domain.Application.DTOs
 
         public static AplicativoDto ParaAplicativoDto(Aplicativo aplicativo)
         {
+            if (aplicativo == null) return null;
+
             return new AplicativoDto
             {
                 Id = aplicativo.Id,
@@ -21,7 +23,7 @@ namespace backendtest.Domain.Application.DTOs
                 DataLancamento = aplicativo.DataLancamento,
                 Plataforma = aplicativo.Plataforma.ToString(),
                 IdResponsavel = aplicativo.IdDesenvolvedorResponsavel,
-                NomeResponsavel = aplicativo.Responsavel?.Nome 
+                NomeResponsavel = aplicativo.Responsavel?.Nome
             };
         }
     }

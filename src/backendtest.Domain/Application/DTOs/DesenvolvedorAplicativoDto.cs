@@ -17,6 +17,8 @@ namespace backendtest.Domain.Application.DTOs
 
         public static DesenvolvedorAplicativoDto ParaDesenvolvedorAplicativoDto(Aplicativo aplicativo)
         {
+            if (aplicativo == null) return null;
+
             var desenvolvedorAplicativoDto = new DesenvolvedorAplicativoDto
             {
                 Id = aplicativo.Id,

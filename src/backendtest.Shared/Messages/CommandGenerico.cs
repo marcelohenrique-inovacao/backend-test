@@ -5,12 +5,12 @@ using MediatR;
 
 namespace backendtest.Shared.Messages
 {
-    public abstract class Command : Message, IRequest<ValidationResult>
+    public abstract class CommandGenerico : Message, IRequest<ICommandResult>
     {
         public DateTime Timestamp { get; private set; }
         public ValidationResult ValidationResult { get; set; } 
 
-        protected Command()
+        protected CommandGenerico()
         {
             Timestamp = DateTime.Now;
         }

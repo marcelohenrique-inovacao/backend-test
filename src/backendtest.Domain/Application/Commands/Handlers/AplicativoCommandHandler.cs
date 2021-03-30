@@ -32,7 +32,7 @@ namespace backendtest.Domain.Application.Commands.Handlers
 
             if (aplicativoExiste != null)
             {
-                AdicionarErro("Já existe um aplicativo com este nome.");
+                AdicionarErro("Nome","Já existe um aplicativo com este nome.");
                 return ValidationResult;
             }
 
@@ -86,7 +86,7 @@ namespace backendtest.Domain.Application.Commands.Handlers
 
             if (aplicativo == null)
             {
-                AdicionarErro("Não foi encontrado Aplicativo com este Id");
+                AdicionarErro("Id","Não foi encontrado Aplicativo com este Id");
                 return ValidationResult;
             }
 

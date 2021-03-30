@@ -29,7 +29,10 @@ namespace backendtest.Domain.Data.Repositories
 
         public void Update(Desenvolvedor desenvolvedor)
         {
+            //REVIEW: Modificar para as alterações de CPF e EMAIL passar pela camado do repositório para somente setar a entidade correta como modificada.
             _context.Entry(desenvolvedor).State = EntityState.Modified;
+            _context.Entry(desenvolvedor.Cpf).State = EntityState.Modified;
+            _context.Entry(desenvolvedor.Email).State = EntityState.Modified;
         }
 
         public async Task<DesenvolvedorDto> ObterPorCpf(string cpf)

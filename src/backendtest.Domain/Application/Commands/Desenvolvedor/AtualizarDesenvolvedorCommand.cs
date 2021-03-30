@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace backendtest.Domain.Application.Commands.Desenvolvedor
 {
-    public class AtualizarDesenvolvedorCommand : Command
+    public class AtualizarDesenvolvedorCommand : CommandGenerico
     {
         public Guid Id { get; private set; }
         public string Nome { get; private set; }

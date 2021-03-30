@@ -33,21 +33,21 @@ namespace backendtest.Domain.Application.Commands.Handlers
             var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.IdAplicativo);
             if (aplicativo == null)
             {
-                AdicionarErro("Aplicativo não encontrado.");
+                AdicionarErro("Id","Aplicativo não encontrado com este Id.");
                 return ValidationResult;
             }
 
             var desenvolvedor = await _desenvolvedorRepository.ObterPorIdComTracking(request.IdDesenvolvedor);
             if (desenvolvedor == null)
             {
-                AdicionarErro("Desenvolvedor não encontrado.");
+                AdicionarErro("Id","Desenvolvedor não encontrado com este Id.");
                 return ValidationResult;
             }
 
             var aplicativoResponsavel = await _aplicativoRepository.ObterAplicativoResponsavel(request.IdDesenvolvedor);
             if (aplicativoResponsavel != null)
             {
-                AdicionarErro($@"O Desenvolvedor {desenvolvedor.Nome}, já é responsável pelo Aplicativo: {aplicativoResponsavel.Nome}");
+                AdicionarErro("Id",$@"O Desenvolvedor: {desenvolvedor.Nome}, com o Id informado, já é responsável pelo Aplicativo: {aplicativoResponsavel.Nome}");
                 return ValidationResult;
             }
 
@@ -67,7 +67,7 @@ namespace backendtest.Domain.Application.Commands.Handlers
             var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.IdAplicativo);
             if (aplicativo == null)
             {
-                AdicionarErro("Aplicativo não encontrado.");
+                AdicionarErro("Id","Aplicativo não encontrado com este Id.");
                 return ValidationResult;
             }
 
@@ -86,21 +86,21 @@ namespace backendtest.Domain.Application.Commands.Handlers
             var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.IdAplicativo);
             if (aplicativo == null)
             {
-                AdicionarErro("Aplicativo não encontrado.");
+                AdicionarErro("Id","Aplicativo não encontrado com este Id.");
                 return ValidationResult;
             }
 
             var desenvolvedor = await _desenvolvedorRepository.ObterPorIdComTracking(request.IdDesenvolvedor);
             if (desenvolvedor == null)
             {
-                AdicionarErro("Desenvolvedor não encontrado.");
+                AdicionarErro("Id","Desenvolvedor não encontrado com este Id.");
                 return ValidationResult;
             }
 
             var permiteVincular = await _aplicativoRepository.PermiteVincularDesenvolvedor(request.IdDesenvolvedor);
             if (!permiteVincular)
             {
-                AdicionarErro("Este Desenvolvedor já está vinculado ao máximo(3) de Aplicativos permitidos.");
+                AdicionarErro("Id","O Desenvolvedor informado já está vinculado ao máximo(3) de Aplicativos permitidos.");
                 return ValidationResult;
             }  
 
@@ -119,14 +119,14 @@ namespace backendtest.Domain.Application.Commands.Handlers
             var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.IdAplicativo);
             if (aplicativo == null)
             {
-                AdicionarErro("Aplicativo não encontrado.");
+                AdicionarErro("Id","Aplicativo não encontrado com este Id.");
                 return ValidationResult;
             }
 
             var desenvolvedor = await _desenvolvedorRepository.ObterPorIdComTracking(request.IdDesenvolvedor);
             if (desenvolvedor == null)
             {
-                AdicionarErro("Desenvolvedor não encontrado.");
+                AdicionarErro("Id","Desenvolvedor não encontrado com este Id.");
                 return ValidationResult;
             }
              

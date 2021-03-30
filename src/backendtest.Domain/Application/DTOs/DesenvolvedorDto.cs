@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Reflection.Metadata.Ecma335;
 using backendtest.Domain.Domain.Entities;
 
 namespace backendtest.Domain.Application.DTOs
@@ -13,10 +14,12 @@ namespace backendtest.Domain.Application.DTOs
 
         public static DesenvolvedorDto ParaDesenvolvedorDto(Desenvolvedor desenvolvedor)
         {
+            if (desenvolvedor == null) return null;
+
             return new DesenvolvedorDto
             {
                 Id = desenvolvedor.Id,
-                Nome = desenvolvedor.Nome, 
+                Nome = desenvolvedor.Nome,
                 Cpf = desenvolvedor.Cpf.Numero,
                 Email = desenvolvedor.Email.Endereco
             };

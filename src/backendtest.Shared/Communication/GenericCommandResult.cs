@@ -1,29 +1,62 @@
 ﻿using System.Collections.Generic;
+using FluentValidation.Results;
+using MediatR;
 
 namespace backendtest.Shared.Communication
 {
-    public class GenericCommandResult
+    public sealed class GenericCommandResult : ICommandResult
     {
-        public string Status { get; set; }
-
+        public string Status;
         public object Result { get; set; }
-        public List<Validacoes> Erros { get; set; }
+        public readonly List<Validacao> Erros = new();
 
         public GenericCommandResult()
         {
         }
 
-        public GenericCommandResult(string status, object result, List<Validacoes> erros)
+        public GenericCommandResult(object result, List<Validacao> erros)
         {
-            Status = status;
             Result = result;
             Erros = erros;
+            Status = SetStatus();
         }
 
-        public class Validacoes
+        internal string SetStatus()
         {
-            public string campo;
-            public string erro;
+            return Erros.Count > 0 ? "400 Bad Request" : "200 Ok";
+        }
+
+        public void AddFluentValidation(ValidationResult validationResult)
+        {
+            foreach (var item in validationResult.Errors)
+            {
+                AddErro(item.PropertyName, item.ErrorMessage);
+            }
+
+            Status = SetStatus();
+        }
+
+        public void AddResult(object obj)
+        {
+            Result = obj;
+        }
+
+        public void AddErro(string campo, string mensagem)
+        {
+
+            Erros.Add(new Validacao(campo, mensagem));
+        }
+
+        public class Validacao
+        {
+            public string Campo;
+            public string Erro;
+
+            public Validacao(string campo, string erro)
+            {
+                Campo = campo;
+                Erro = erro;
+            }
         }
 
     }

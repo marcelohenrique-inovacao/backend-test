@@ -4,6 +4,7 @@ using backendtest.Domain.Application.Commands.Handlers;
 using backendtest.Domain.Application.Commands.Vinculacao;
 using backendtest.Domain.Data;
 using backendtest.Domain.Data.Repositories;
+using backendtest.Shared.Communication;
 using backendtest.Shared.Communication.Mediator;
 using FluentValidation.Results;
 using MediatR;
@@ -21,12 +22,13 @@ namespace backendtest.API.Configuration
             services.AddScoped<DatabaseContext>(); 
 
             services.AddScoped<IMediatorHandler, MediatorHandler>();
+            services.AddScoped<ICommandResult, GenericCommandResult>();
 
             services.AddScoped<IAplicativoRepository, AplicativoRepository>();
             services.AddScoped<IDesenvolvedorRepository, DesenvolvedorRepository>();
 
-            services.AddScoped<IRequestHandler<RegistrarDesenvolvedorCommand, ValidationResult>, DesenvolvedorCommandHandler>();
-            services.AddScoped<IRequestHandler<AtualizarDesenvolvedorCommand, ValidationResult>, DesenvolvedorCommandHandler>();
+            services.AddScoped<IRequestHandler<RegistrarDesenvolvedorCommand, ICommandResult>, DesenvolvedorCommandHandler>();
+            services.AddScoped<IRequestHandler<AtualizarDesenvolvedorCommand, ICommandResult>, DesenvolvedorCommandHandler>();
             services.AddScoped<IRequestHandler<RegistrarAplicativoCommand, ValidationResult>, AplicativoCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarAplicativoCommand, ValidationResult>, AplicativoCommandHandler>();
 
@@ -34,7 +36,6 @@ namespace backendtest.API.Configuration
             services.AddScoped<IRequestHandler<RemoverDesenvolvedorResponsavelCommand, ValidationResult>, VinculacaoAplicativoDesenvolvedorHandler>();
             services.AddScoped<IRequestHandler<VincularAplicativoDesenvolvedorCommand, ValidationResult>, VinculacaoAplicativoDesenvolvedorHandler>();
             services.AddScoped<IRequestHandler<DesvincularAplicativoDesenvolvedorCommand, ValidationResult>, VinculacaoAplicativoDesenvolvedorHandler>();
-
         }
     }
 }

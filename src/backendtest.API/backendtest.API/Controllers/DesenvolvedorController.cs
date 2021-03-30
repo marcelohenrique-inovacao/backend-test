@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 using backendtest.Domain.Application.DTOs;
+using backendtest.Shared.Communication;
 
 namespace backendtest.API.Controllers
 {
@@ -16,10 +17,13 @@ namespace backendtest.API.Controllers
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IDesenvolvedorRepository _desenvolvedorRepository;
-        public DesenvolvedorController(IMediatorHandler mediatorHandler, IDesenvolvedorRepository desenvolvedorRepository)
+        private readonly ICommandResult _comandResult;
+
+        public DesenvolvedorController(IMediatorHandler mediatorHandler, IDesenvolvedorRepository desenvolvedorRepository, ICommandResult comandResult)
         {
             _mediatorHandler = mediatorHandler;
             _desenvolvedorRepository = desenvolvedorRepository;
+            _comandResult = comandResult;
         }
 
         #region GET
@@ -46,9 +50,9 @@ namespace backendtest.API.Controllers
         #region POST
 
         [HttpPost("/v1/desenvolvedor/registrar")]
-        public async Task<IActionResult> PostCadastrar(RegistrarDesenvolvedorCommand command)
+        public async Task<ICommandResult> PostCadastrar(RegistrarDesenvolvedorCommand command)
         {
-            return CustomResponse(await _mediatorHandler.EnviarComando(command));
+            return await _mediatorHandler.EnviarComandoGenerico(command);
         }
 
         #endregion
@@ -56,13 +60,13 @@ namespace backendtest.API.Controllers
         #region PUT
 
         [HttpPut("/v1/desenvolvedor/{id}")]
-        public async Task<IActionResult> PutAtualizarCadastro(Guid id, AtualizarDesenvolvedorCommand command)
+        public async Task<ICommandResult> PutAtualizarCadastro(Guid id, AtualizarDesenvolvedorCommand command)
         {
             if (id == command.Id)
-                return CustomResponse(await _mediatorHandler.EnviarComando(command));
+                return await _mediatorHandler.EnviarComandoGenerico(command);
 
-            AdicionarErroProcessamento("O Id informado no request está diferente do informado no JSON.");
-            return CustomResponse();
+            _comandResult.AddErro("Id", "O Id informado no request está diferente do informado no JSON.");
+            return _comandResult;
         }
 
         #endregion
@@ -70,26 +74,32 @@ namespace backendtest.API.Controllers
         #region DELETE
 
         [HttpDelete("/v1/desenvolvedor/{id}")]
-        public async Task<IActionResult> ExcluirDesenvolvedor(Guid id)
+        public async Task<ICommandResult> ExcluirDesenvolvedor(Guid id)
         {
             var desenvolvedor = await _desenvolvedorRepository.ObterPorIdComTracking(id);
 
             if (desenvolvedor == null)
             {
-                AdicionarErroProcessamento("Não existe Desenvolvedor com este Id");
-                return CustomResponse();
+                _comandResult.AddErro("Id", "Não existe Desenvolvedor com este Id");
+                return _comandResult;
             }
 
             //REVIEW: Mostrar os nomes dos aplicativos na mensagem.
             if (!desenvolvedor.PermiteExcluir())
             {
-                AdicionarErroProcessamento("Impossível excluir, pois este Desenvolvedor está vinculado à algum Aplicativo.");
-                return CustomResponse();
+                _comandResult.AddErro("Id", "Impossível excluir, pois este Desenvolvedor está vinculado à algum Aplicativo.");
+                return _comandResult;
+
             }
 
             var sucesso = await _desenvolvedorRepository.Excluir(desenvolvedor);
 
-            return CustomResponse(sucesso ? "Excluído com sucesso" : "Falha ao excluir");
+            if (sucesso)
+                _comandResult.AddResult("Excluído com sucesso");
+            else
+                _comandResult.AddErro("Id", "Falha ao excluir");
+
+            return _comandResult;
         }
         #endregion
     }

@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace backendtest.Domain.Application.Commands.Desenvolvedor
 {
-    public class RegistrarDesenvolvedorCommand : Command
+    public class RegistrarDesenvolvedorCommand : CommandGenerico
     {
         public Guid Id { get; private set; }
         public string Nome { get; private set; }
@@ -35,7 +35,6 @@ namespace backendtest.Domain.Application.Commands.Desenvolvedor
                 RuleFor(d => d.Nome)
                     .NotNull()
                     .WithMessage("O Nome não pode ser nulo.")
-                    
                     .NotEmpty()
                     .WithMessage("O Nome não pode ser vazio.");
 

@@ -1,5 +1,6 @@
 ﻿using backendtest.Domain.Application.Commands.Desenvolvedor;
 using backendtest.Domain.Data.Repositories;
+using backendtest.Shared.Communication;
 using backendtest.Shared.Communication.Mediator;
 using backendtest.Shared.Messages;
 using FluentValidation.Results;
@@ -10,22 +11,28 @@ using System.Threading.Tasks;
 namespace backendtest.Domain.Application.Commands.Handlers
 {
     public class DesenvolvedorCommandHandler : CommandHandler,
-        IRequestHandler<RegistrarDesenvolvedorCommand, ValidationResult>,
-        IRequestHandler<AtualizarDesenvolvedorCommand, ValidationResult>
+        IRequestHandler<RegistrarDesenvolvedorCommand, ICommandResult>,
+        IRequestHandler<AtualizarDesenvolvedorCommand, ICommandResult>
     {
         private readonly IDesenvolvedorRepository _desenvolvedorRepository;
         private readonly IMediatorHandler _mediatorHandler;
+        private readonly ICommandResult _comandResult;
 
 
-        public DesenvolvedorCommandHandler(IDesenvolvedorRepository desenvolvedorRepository, IMediatorHandler mediatorHandler)
+        public DesenvolvedorCommandHandler(IDesenvolvedorRepository desenvolvedorRepository, IMediatorHandler mediatorHandler, ICommandResult comandResult)
         {
             _desenvolvedorRepository = desenvolvedorRepository;
             _mediatorHandler = mediatorHandler;
+            _comandResult = comandResult;
         }
 
-        public async Task<ValidationResult> Handle(RegistrarDesenvolvedorCommand request, CancellationToken cancellationToken)
+        public async Task<ICommandResult> Handle(RegistrarDesenvolvedorCommand request, CancellationToken cancellationToken)
         {
-            if (!request.Valido()) return request.ValidationResult;
+            if (!request.Valido())
+            {
+                _comandResult.AddFluentValidation(request.ValidationResult);
+                return _comandResult;
+            }
 
             var desenvolvedor = new Domain.Entities.Desenvolvedor(request.Nome, request.Cpf, request.Email);
 
@@ -33,15 +40,20 @@ namespace backendtest.Domain.Application.Commands.Handlers
 
             if (desenvolvedorExiste != null)
             {
-                AdicionarErro("Já existe um cadastro de Desenvolvedor com este CPF.");
-                return ValidationResult;
+                AdicionarErro("Cpf", "Já existe um cadastro de Desenvolvedor com este CPF.");
+                _comandResult.AddFluentValidation(ValidationResult);
+                return _comandResult;
             }
 
             _desenvolvedorRepository.Adicionar(desenvolvedor);
             //REVIEW: Adicionar evento de cadastro.
             //desenvolvedor.AdicionarEvento(new DesenvolvedorRegistradoEvent());
 
-            return await PersistirDados(_desenvolvedorRepository.UnitOfWork);
+            var validacaoSalvar = await PersistirDados(_desenvolvedorRepository.UnitOfWork);
+            _comandResult.AddFluentValidation(validacaoSalvar);
+            _comandResult.AddResult(desenvolvedor.Id);
+
+            return _comandResult;
         }
 
         // Métodos Desnecessários?
@@ -83,24 +95,33 @@ namespace backendtest.Domain.Application.Commands.Handlers
         //    return true;
         //}
 
-        public async Task<ValidationResult> Handle(AtualizarDesenvolvedorCommand request, CancellationToken cancellationToken)
+        public async Task<ICommandResult> Handle(AtualizarDesenvolvedorCommand request, CancellationToken cancellationToken)
         {
-            if (!request.Valido()) return request.ValidationResult;
+            if (!request.Valido())
+            {
+                _comandResult.AddFluentValidation(request.ValidationResult);
+                return _comandResult;
+            }
 
             var desenvolvedor = await _desenvolvedorRepository.ObterPorIdComTracking(request.Id);
 
             if (desenvolvedor == null)
             {
-                AdicionarErro("Não foi encontrado Desenvolvedor com este Id");
-                return ValidationResult;
+                AdicionarErro("Id", "Não foi encontrado Desenvolvedor com este Id");
+                _comandResult.AddFluentValidation(ValidationResult);
+                return _comandResult;
             }
 
             desenvolvedor.AtualizarNome(request.Nome);
             desenvolvedor.AtualizarCpf(request.Cpf);
             desenvolvedor.AtualizarEmail(request.Email);
 
-            _desenvolvedorRepository.Update(desenvolvedor);
-            return await PersistirDados(_desenvolvedorRepository.UnitOfWork);
+            _desenvolvedorRepository.Update(desenvolvedor); 
+            var validacaoSalvar = await PersistirDados(_desenvolvedorRepository.UnitOfWork);
+            _comandResult.AddFluentValidation(validacaoSalvar);
+            _comandResult.AddResult("Alterado com sucesso.");
+
+            return _comandResult;
         }
     }
 }

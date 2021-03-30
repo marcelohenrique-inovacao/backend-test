@@ -5,12 +5,14 @@ using backendtest.Shared.Messages;
 using backendtest.Shared.Messages.CommonMessages.DomainEvents;
 using backendtest.Shared.Messages.CommonMessages.Notifications;
 using FluentValidation.Results;
+using Microsoft.VisualBasic.CompilerServices;
 
 namespace backendtest.Shared.Communication.Mediator
 {
     public class MediatorHandler : IMediatorHandler
     {
         private readonly IMediator _mediator;
+         
         //private readonly IEventSourcingRepository _eventSourcingRepository;
 
         public MediatorHandler(IMediator mediator)
@@ -21,6 +23,11 @@ namespace backendtest.Shared.Communication.Mediator
 
         public async Task<ValidationResult> EnviarComando<T>(T comando) where T : Command
         {
+            return await _mediator.Send(comando);
+        }
+
+        public async Task<ICommandResult> EnviarComandoGenerico<T>(T comando) where T : CommandGenerico
+        { 
             return await _mediator.Send(comando);
         }
 
