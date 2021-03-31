@@ -38,6 +38,9 @@ namespace backendtest.Domain.Application.Commands.Desenvolvedor
                     .NotEmpty()
                     .WithMessage("O Nome não pode ser vazio.");
 
+                RuleFor(d => d.Nome.Length)
+                    .LessThanOrEqualTo(255)
+                    .WithMessage("O nome não pode ser maior que 255 caracteres.");
 
                 RuleFor(c => c.Cpf)
                     .NotNull()
@@ -59,13 +62,9 @@ namespace backendtest.Domain.Application.Commands.Desenvolvedor
                     .Must(TerEmailValido)
                     .WithMessage("O e-mail informado não é válido.");
 
-                RuleFor(d => d.Nome.Length)
-                    .LessThanOrEqualTo(255)
-                    .WithMessage("O nome não pode ser maior que 255 caracteres.");
-
                 RuleFor(d => d.Email.Length)
                     .LessThanOrEqualTo(100)
-                    .WithMessage("O nome não pode ser maior que 100 caracteres.");
+                    .WithMessage("O e-mail não pode ser maior que 100 caracteres.");
             }
         }
         protected static bool TerCpfValido(string cpf)

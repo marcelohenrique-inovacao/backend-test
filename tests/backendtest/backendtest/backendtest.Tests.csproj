@@ -19,6 +19,7 @@
     <Folder Include="Drivers\" />
     <Folder Include="Hooks\" />
     <Folder Include="Repositories\" />
+    <Folder Include="UnitTests\Handlers\" />
   </ItemGroup>
 
   <ItemGroup>

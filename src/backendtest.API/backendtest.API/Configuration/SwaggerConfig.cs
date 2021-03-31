@@ -15,10 +15,9 @@ namespace backendtest.API.Configuration
                 {
                     Title = "Teste de fim da trilha BackEnd",
                     Description = "Esta API é um cadastro de Desenvolvedores com seus respectivos Aplicativos.",
-                    Contact = new OpenApiContact() {Name = "Marcelo Henrique Chaves", Email = "marcelohenrique.inovacao@gmail.com" },
-                    License = new OpenApiLicense() {Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT")}
+                    Contact = new OpenApiContact() { Name = "Marcelo Henrique Chaves", Email = "marcelohenrique.inovacao@gmail.com" },
+                    License = new OpenApiLicense() { Name = "MIT", Url = new Uri("https://opensource.org/licenses/MIT") }
                 });
-
                 //c.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
                 //{
                 //    Description = "Insira o token JWT desta maneira: Bearer {seu token}",

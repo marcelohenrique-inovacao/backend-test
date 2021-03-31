@@ -1,0 +1,701 @@
+openapi: 3.0.1
+info:
+  version: '3.0'
+  title: Teste de fim da trilha BackEnd
+  description: Esta API é um cadastro de Desenvolvedores com seus respectivos Aplicativos.
+  contact:
+    name: Marcelo Henrique Chaves
+    email: marcelohenrique.inovacao@gmail.com
+  license:
+    name: MIT
+    url: 'https://opensource.org/licenses/MIT'
+paths:
+  /v1/aplicativos:
+    get:
+      summary: Retorna todos os Desenvolvedores Cadastrados
+      tags:
+        - Aplicativo
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Desenvolvedor' 
+  '/v1/aplicativo/{id}':
+    get:
+      tags:
+        - Aplicativo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content:
+            text/plain:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+    put:
+      tags:
+        - Aplicativo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/AtualizarAplicativoCommand'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtualizarAplicativoCommand'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AtualizarAplicativoCommand'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AtualizarAplicativoCommand'
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult' 
+    delete:
+      tags:
+        - Aplicativo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+  '/v1/aplicativo/desenvolvedoresrelacionados/{id}':
+    get:
+      tags:
+        - Aplicativo
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+  /v1/aplicativo/registrar:
+    post:
+      tags:
+        - Aplicativo
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/RegistrarAplicativoCommand'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrarAplicativoCommand'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RegistrarAplicativoCommand'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/RegistrarAplicativoCommand'
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+  /v1/aplicativo/vincularDesenvolvedor:
+    put:
+      tags:
+        - Aplicativo
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/VincularAplicativoDesenvolvedorCommand'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VincularAplicativoDesenvolvedorCommand'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/VincularAplicativoDesenvolvedorCommand'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/VincularAplicativoDesenvolvedorCommand'
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+  /v1/aplicativo/desvincularDesenvolvedor:
+    put:
+      tags:
+        - Aplicativo
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/DesvincularAplicativoDesenvolvedorCommand'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/DesvincularAplicativoDesenvolvedorCommand'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/DesvincularAplicativoDesenvolvedorCommand'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/DesvincularAplicativoDesenvolvedorCommand'
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+  /v1/aplicativo/AdicionarDesenvolvedorResponsavel:
+    put:
+      tags:
+        - Aplicativo
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/AdicionarDesenvolvedorResponsavelCommand'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AdicionarDesenvolvedorResponsavelCommand'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AdicionarDesenvolvedorResponsavelCommand'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AdicionarDesenvolvedorResponsavelCommand'
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+  /v1/aplicativo/RemoverDesenvolvedorResponsavel:
+    put:
+      tags:
+        - Aplicativo
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/RemoverDesenvolvedorResponsavelCommand'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RemoverDesenvolvedorResponsavelCommand'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RemoverDesenvolvedorResponsavelCommand'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/RemoverDesenvolvedorResponsavelCommand'
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+  /v1/desenvolvedores:
+    get:
+      tags:
+        - Desenvolvedor
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+  '/v1/desenvolvedor/{id}':
+    get:
+      tags:
+        - Desenvolvedor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+    put:
+      tags:
+        - Desenvolvedor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/AtualizarDesenvolvedorCommand'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AtualizarDesenvolvedorCommand'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/AtualizarDesenvolvedorCommand'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/AtualizarDesenvolvedorCommand'
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+    delete:
+      tags:
+        - Desenvolvedor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+  '/v1/desenvolvedor/aplicativosrelacionados/{id}':
+    get:
+      tags:
+        - Desenvolvedor
+      parameters:
+        - name: id
+          in: path
+          required: true
+          schema:
+            type: string
+            format: uuid
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+  /v1/desenvolvedor/registrar:
+    post:
+      tags:
+        - Desenvolvedor
+      requestBody:
+        content:
+          application/json-patch+json:
+            schema:
+              $ref: '#/components/schemas/RegistrarDesenvolvedorCommand'
+          application/json:
+            schema:
+              $ref: '#/components/schemas/RegistrarDesenvolvedorCommand'
+          text/json:
+            schema:
+              $ref: '#/components/schemas/RegistrarDesenvolvedorCommand'
+          application/*+json:
+            schema:
+              $ref: '#/components/schemas/RegistrarDesenvolvedorCommand'
+      responses:
+        '200':
+          description: Success
+          content: 
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+            text/json:
+              schema:
+                $ref: '#/components/schemas/ICommandResult'
+components:
+  schemas:
+    AdicionarDesenvolvedorResponsavelCommand:
+      type: object
+      required:
+        - idAplicativo 
+        - idDesenvolvedor
+      properties: 
+        idAplicativo:
+          type: string
+          format: uuid 
+        idDesenvolvedor:
+          type: string
+          format: uuid  
+      additionalProperties: false
+    Aplicativo:
+      type: object
+      required:
+        - nome
+        - dataLancamento
+        - plataforma
+      properties:
+        id:
+          type: string
+          format: uuid 
+          readOnly: true
+          nullable: true
+        nome:
+          type: string 
+        dataLancamento:
+          type: string
+          format: date-time
+          readOnly: true
+        plataforma:
+          $ref: '#/components/schemas/ETipoPlataforma'
+        idDesenvolvedorResponsavel:
+          type: string
+          format: uuid
+          nullable: true
+          readOnly: true
+        nomeResponsavel:
+          type: string
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    AtualizarAplicativoCommand:
+      type: object
+      required:
+        - id
+        - nome
+        - dataLancamento
+        - tipoPlataforma
+      properties:  
+        id:
+          type: string
+          format: uuid 
+        nome:
+          type: string 
+        dataLancamento:
+          type: string 
+        tipoPlataforma:
+          $ref: '#/components/schemas/ETipoPlataforma' 
+      additionalProperties: false
+    AtualizarDesenvolvedorCommand:
+      type: object
+      required:
+        - id
+        - nome
+        - cpf
+        - email
+      properties:   
+        id:
+          type: string
+          format: uuid  
+        nome:
+          type: string 
+        cpf:
+          type: string 
+        email:
+          type: string 
+      additionalProperties: false
+    CPF: 
+      type: string
+      nullable: false   
+      minLength: 11
+      maxLength: 11  
+    Desenvolvedor:
+      type: object
+      required:
+        - cpf
+        - email
+        - nome
+      properties:
+        id:
+          type: string
+          format: uuid 
+          readOnly: true
+        nome:
+          type: string
+          nullable: false
+        cpf:
+          $ref: '#/components/schemas/CPF'
+        email:
+          $ref: '#/components/schemas/Email'
+      additionalProperties: false 
+    DesvincularAplicativoDesenvolvedorCommand:
+      type: object
+      required:
+        - idAplicativo 
+        - idDesenvolvedor
+      properties: 
+        idAplicativo:
+          type: string
+          format: uuid 
+        idDesenvolvedor:
+          type: string
+          format: uuid 
+      additionalProperties: false
+    Email: 
+      type: string
+      nullable: false  
+      maximum: 100
+      additionalProperties: false
+    ETipoPlataforma:
+      description: 'Valores: 1-Desktop, 2-Web ou 3-Mobile'
+      enum:
+        - 1
+        - 2
+        - 3
+      type: integer
+      format: int32 
+    status: 
+      enum:
+        - '200 Ok'
+        - '400 Bad Request'
+        - '404 Not Found'
+      type: string 
+      readOnly: true
+    ICommandResult:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/status' 
+        result: 
+          description: 'Retorna um array de objetos, podendo ser um texto explicativo. Preenchido somente se não houver erros.'
+          oneOf:
+            - $ref: '#/components/schemas/Aplicativo' 
+            - $ref: '#/components/schemas/Desenvolvedor' 
+            - type: string
+        erros:
+          type: array
+          items: 
+            type: object
+            properties:
+              campo:
+                type: string
+              erro:
+                type: string
+      additionalProperties: false
+    RegistrarAplicativoCommand:
+      type: object
+      properties:
+        messageType:
+          type: string
+          nullable: true
+          readOnly: true
+        aggregateId:
+          type: string
+          format: uuid
+          readOnly: true
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        validationResult:
+          $ref: '#/components/schemas/ValidationResult'
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        nome:
+          type: string
+          nullable: true
+          readOnly: true
+        dataLancamento:
+          type: string
+          nullable: true
+          readOnly: true
+        tipoPlataforma:
+          $ref: '#/components/schemas/ETipoPlataforma'
+        desenvolvedorResponsavel:
+          $ref: '#/components/schemas/Desenvolvedor'
+      additionalProperties: false
+    RegistrarDesenvolvedorCommand:
+      type: object
+      properties:
+        messageType:
+          type: string
+          nullable: true
+          readOnly: true
+        aggregateId:
+          type: string
+          format: uuid
+          readOnly: true
+        timestamp:
+          type: string
+          format: date-time
+          readOnly: true
+        validationResult:
+          $ref: '#/components/schemas/ValidationResult'
+        id:
+          type: string
+          format: uuid
+          readOnly: true
+        nome:
+          type: string
+          nullable: true
+          readOnly: true
+        cpf:
+          type: string
+          nullable: true
+          readOnly: true
+        email:
+          type: string
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    RemoverDesenvolvedorResponsavelCommand:
+      type: object
+      required:
+        - idAplicativo  
+      properties: 
+        idAplicativo:
+          type: string
+          format: uuid  
+      additionalProperties: false
+    Severity:
+      enum:
+        - 0
+        - 1
+        - 2
+      type: integer
+      format: int32
+    ValidationFailure:
+      type: object
+      properties:
+        propertyName:
+          type: string
+          nullable: true
+        errorMessage:
+          type: string
+          nullable: true
+        attemptedValue:
+          nullable: true
+        customState:
+          nullable: true
+        severity:
+          $ref: '#/components/schemas/Severity'
+        errorCode:
+          type: string
+          nullable: true
+        formattedMessageArguments:
+          type: array
+          items: {}
+          nullable: true
+          deprecated: true
+        formattedMessagePlaceholderValues:
+          type: object
+          additionalProperties: {}
+          nullable: true
+      additionalProperties: false
+    ValidationResult:
+      type: object
+      properties:
+        isValid:
+          type: boolean
+          readOnly: true
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/ValidationFailure'
+          nullable: true
+          readOnly: true
+        ruleSetsExecuted:
+          type: array
+          items:
+            type: string
+          nullable: true
+          readOnly: true
+      additionalProperties: false
+    VincularAplicativoDesenvolvedorCommand:
+      type: object
+      required:
+        - idAplicativo 
+        - idDesenvolvedor
+      properties: 
+        idAplicativo:
+          type: string
+          format: uuid 
+        idDesenvolvedor:
+          type: string
+          format: uuid 
+      additionalProperties: false
