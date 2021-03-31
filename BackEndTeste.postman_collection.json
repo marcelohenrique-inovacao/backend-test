@@ -1,0 +1,455 @@
+{
+	"info": {
+		"_postman_id": "78923f7a-6f62-4997-b038-e211acd28c25",
+		"name": "BackEndTeste",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Desenvolvedor",
+			"item": [
+				{
+					"name": "Get Todos Desenvolvedores",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44337/v1/desenvolvedores",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"desenvolvedores"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Desenvolvedor Específico",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44337/v1/desenvolvedor/e69f58f3-5465-4619-8f9b-cbd0c13d93b0",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"desenvolvedor",
+								"e69f58f3-5465-4619-8f9b-cbd0c13d93b0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Desenvolvedor Aplicativos Relacionados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44337/v1/desenvolvedor/aplicativosrelacionados/9a82f9ca-0bc5-4e11-a417-e2bf8b7308ef",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"desenvolvedor",
+								"aplicativosrelacionados",
+								"9a82f9ca-0bc5-4e11-a417-e2bf8b7308ef"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Desenvolvedor",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"nome\": \"Marcelo\",\r\n    \"cpf\": \"08272217627\",\r\n    \"email\": \"marcelo@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44337/v1/desenvolvedor/registrar",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"desenvolvedor",
+								"registrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Dados Desenvolvedor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\": \"e69f58f3-5465-4619-8f9b-cbd0c13d93b0\",\r\n    \"Nome\": \" \",\r\n    \"Cpf\": \"08272217627\",\r\n    \"Email\": \"marcelo@gmail.com\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44337/v1/desenvolvedor/e69f58f3-5465-4619-8f9b-cbd0c13d93b0",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"desenvolvedor",
+								"e69f58f3-5465-4619-8f9b-cbd0c13d93b0"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Desenvolvedor",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44337/v1/desenvolvedor/9a82f9ca-0bc5-4e11-a417-e2bf8b7308ef",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"desenvolvedor",
+								"9a82f9ca-0bc5-4e11-a417-e2bf8b7308ef"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Aplicativo",
+			"item": [
+				{
+					"name": "Get Todos Aplicativos",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44337/v1/aplicativos",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"aplicativos"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Aplicativo Específico",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44337/v1/aplicativo/790687bb-682c-480d-811e-c999790c298f",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"aplicativo",
+								"790687bb-682c-480d-811e-c999790c298f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Aplicativo Desenvolvedores Relacionados",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44337/v1/aplicativo/desenvolvedoresrelacionados/790687bb-682c-480d-811e-c999790c298f",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"aplicativo",
+								"desenvolvedoresrelacionados",
+								"790687bb-682c-480d-811e-c999790c298f"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Aplicativo",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.sendRequest(\"https://postman-echo.com/get\", function (err, response) {\r",
+									"    console.log(response.json());\r",
+									"});\r",
+									"\r",
+									"pm.test(\"Status test\", function () {\r",
+									"    pm.response.to.have.status(400);\r",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Nome\":\"Bradesco\",\r\n    \"DataLancamento\":\"2021-10-29\",\r\n    \"TipoPlataforma\":1\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44337/v1/aplicativo/registrar",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"aplicativo",
+								"registrar"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Atualizar Dados Aplicativo",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"Id\":\"f9737aca-6a40-45b7-b1b8-00e863213a6e\",\r\n    \"Nome\":\"Bradesco111111\",\r\n    \"DataLancamento\":\"2030-10-29\",\r\n    \"TipoPlataforma\":3\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44337/v1/aplicativo/f9737aca-6a40-45b7-b1b8-00e863213a6e",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"aplicativo",
+								"f9737aca-6a40-45b7-b1b8-00e863213a6e"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Aplicativo",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "https://localhost:44337/v1/aplicativo/790687bb-682c-480d-811e-c999790c298f",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"aplicativo",
+								"790687bb-682c-480d-811e-c999790c298f"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Vinculação",
+			"item": [
+				{
+					"name": "Vincular Desenvolvedor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"IdAplicativo\":\"1a59cf44-5197-47c0-b9a0-772c817d8b93\",\r\n    \"IdDesenvolvedor\":\"e69f58f3-5465-4619-8f9b-cbd0c13d93b0\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44337/v1/aplicativo/vincularDesenvolvedor",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"aplicativo",
+								"vincularDesenvolvedor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Desvincular Desenvolvedor",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"IdAplicativo\":\"1a59cf44-5197-47c0-b9a0-772c817d8b93\",\r\n    \"IdDesenvolvedor\":\"1e5c0a5f-7f5e-4eb0-a4a7-bd6a35bb053e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44337/v1/aplicativo/desvincularDesenvolvedor",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"aplicativo",
+								"desvincularDesenvolvedor"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Adicionar Desenvolvedor Responsavel",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"IdAplicativo\":\"277ebfc8-a657-4714-bd3b-45645ff2a82e\",\r\n    \"IdDesenvolvedor\":\"1e5c0a5f-7f5e-4eb0-a4a7-bd6a35bb053f\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44337/v1/aplicativo/AdicionarDesenvolvedorResponsavel",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"aplicativo",
+								"AdicionarDesenvolvedorResponsavel"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Remover Desenvolvedor Responsavel",
+					"request": {
+						"method": "PUT",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"IdAplicativo\":\"277ebfc8-a657-4714-bd3b-45645ff2a82e\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "https://localhost:44337/v1/aplicativo/RemoverDesenvolvedorResponsavel",
+							"protocol": "https",
+							"host": [
+								"localhost"
+							],
+							"port": "44337",
+							"path": [
+								"v1",
+								"aplicativo",
+								"RemoverDesenvolvedorResponsavel"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
