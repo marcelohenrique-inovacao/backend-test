@@ -81,25 +81,27 @@ namespace backendtest.API.Controllers
         }
 
         [HttpPut("/v1/aplicativo/vincularDesenvolvedor")]
-        public async Task<IActionResult> PutVincularDesenvolvedor(VincularAplicativoDesenvolvedorCommand command)
+        public async Task<ICommandResult> PutVincularDesenvolvedor(VincularAplicativoDesenvolvedorCommand command)
         {
-            return CustomResponse(await _mediatorHandler.EnviarComando(command));
+            return await _mediatorHandler.EnviarComandoGenerico(command);
         }
 
         [HttpPut("/v1/aplicativo/desvincularDesenvolvedor")]
-        public async Task<IActionResult> PutDesvincularDesenvolvedor(DesvincularAplicativoDesenvolvedorCommand command)
+        public async Task<ICommandResult> PutDesvincularDesenvolvedor(DesvincularAplicativoDesenvolvedorCommand command)
         {
-            return CustomResponse(await _mediatorHandler.EnviarComando(command));
+            return await _mediatorHandler.EnviarComandoGenerico(command);
+
         }
         [HttpPut("/v1/aplicativo/AdicionarDesenvolvedorResponsavel")]
-        public async Task<IActionResult> PutAdicionarDesenvolvedorResponsavel(AdicionarDesenvolvedorResponsavelCommand command)
+        public async Task<ICommandResult> PutAdicionarDesenvolvedorResponsavel(AdicionarDesenvolvedorResponsavelCommand command)
         {
-            return ModelState.IsValid ? CustomResponse(await _mediatorHandler.EnviarComando(command)) : CustomResponse("modelo");
+            return await _mediatorHandler.EnviarComandoGenerico(command);
         }
         [HttpPut("/v1/aplicativo/RemoverDesenvolvedorResponsavel")]
-        public async Task<IActionResult> PutRemoverDesenvolvedorResponsavel(RemoverDesenvolvedorResponsavelCommand command)
+        public async Task<ICommandResult> PutRemoverDesenvolvedorResponsavel(RemoverDesenvolvedorResponsavelCommand command)
         {
-            return CustomResponse(await _mediatorHandler.EnviarComando(command));
+            return await _mediatorHandler.EnviarComandoGenerico(command);
+
         }
 
         #endregion

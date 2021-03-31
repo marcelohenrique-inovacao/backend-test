@@ -32,10 +32,10 @@ namespace backendtest.API.Configuration
             services.AddScoped<IRequestHandler<RegistrarAplicativoCommand, ICommandResult>, AplicativoCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarAplicativoCommand, ICommandResult>, AplicativoCommandHandler>();
 
-            services.AddScoped<IRequestHandler<AdicionarDesenvolvedorResponsavelCommand, ValidationResult>, VinculacaoAplicativoDesenvolvedorHandler>();
-            services.AddScoped<IRequestHandler<RemoverDesenvolvedorResponsavelCommand, ValidationResult>, VinculacaoAplicativoDesenvolvedorHandler>();
-            services.AddScoped<IRequestHandler<VincularAplicativoDesenvolvedorCommand, ValidationResult>, VinculacaoAplicativoDesenvolvedorHandler>();
-            services.AddScoped<IRequestHandler<DesvincularAplicativoDesenvolvedorCommand, ValidationResult>, VinculacaoAplicativoDesenvolvedorHandler>();
+            services.AddScoped<IRequestHandler<AdicionarDesenvolvedorResponsavelCommand, ICommandResult>, VinculacaoAplicativoDesenvolvedorHandler>();
+            services.AddScoped<IRequestHandler<RemoverDesenvolvedorResponsavelCommand, ICommandResult>, VinculacaoAplicativoDesenvolvedorHandler>();
+            services.AddScoped<IRequestHandler<VincularAplicativoDesenvolvedorCommand, ICommandResult>, VinculacaoAplicativoDesenvolvedorHandler>();
+            services.AddScoped<IRequestHandler<DesvincularAplicativoDesenvolvedorCommand, ICommandResult>, VinculacaoAplicativoDesenvolvedorHandler>();
         }
     }
 }

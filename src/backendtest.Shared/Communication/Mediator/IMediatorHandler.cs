@@ -9,7 +9,7 @@ namespace backendtest.Shared.Communication.Mediator
     public interface IMediatorHandler
     {
         Task PublicarEvento<T>(T evento) where T : Event;
-        Task<ValidationResult> EnviarComando<T>(T comando) where T : Command;
+        //Task<ValidationResult> EnviarComando<T>(T comando) where T : Command;
         Task<ICommandResult> EnviarComandoGenerico<T>(T comando) where T : CommandGenerico;
         Task PublicarNotificacao<T>(T notificacao) where T : DomainNotification;
         Task PublicarDomainEvent<T>(T notificacao) where T : DomainEvent;

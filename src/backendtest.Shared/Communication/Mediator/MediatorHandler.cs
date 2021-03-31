@@ -21,10 +21,10 @@ namespace backendtest.Shared.Communication.Mediator
             //_eventSourcingRepository = eventSourcingRepository;
         }
 
-        public async Task<ValidationResult> EnviarComando<T>(T comando) where T : Command
-        {
-            return await _mediator.Send(comando);
-        }
+        //public async Task<ValidationResult> EnviarComando<T>(T comando) where T : Command
+        //{
+        //    return await _mediator.Send(comando);
+        //}
 
         public async Task<ICommandResult> EnviarComandoGenerico<T>(T comando) where T : CommandGenerico
         { 

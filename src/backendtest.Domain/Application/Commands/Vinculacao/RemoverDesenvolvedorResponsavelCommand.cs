@@ -4,15 +4,13 @@ using FluentValidation;
 
 namespace backendtest.Domain.Application.Commands.Vinculacao
 {
-    public class RemoverDesenvolvedorResponsavelCommand : Command
+    public class RemoverDesenvolvedorResponsavelCommand : CommandGenerico
     {
-        public Guid IdAplicativo { get; private set; }
-        public Guid IdDesenvolvedor { get; private set; }
+        public Guid IdAplicativo { get; private set; } 
 
         public RemoverDesenvolvedorResponsavelCommand(Guid idAplicativo, Guid idDesenvolvedor)
         {
-            IdAplicativo = idAplicativo;
-            IdDesenvolvedor = idDesenvolvedor;
+            IdAplicativo = idAplicativo; 
         }
 
         public override bool Valido()
@@ -31,13 +29,7 @@ namespace backendtest.Domain.Application.Commands.Vinculacao
                 .NotNull()
                 .WithMessage("O Id do Aplicativo não pode ser nulo.")
                 .NotEmpty()
-                .WithMessage("O Id do Aplicativo não pode ser vazio.");
-
-            RuleFor(a => a.IdDesenvolvedor)
-                .NotNull()
-                .WithMessage("O Id do Desenvolvedor não pode ser nulo.")
-                .NotEmpty()
-                .WithMessage("O Id do Desenvolvedor não pode ser vazio.");
+                .WithMessage("O Id do Aplicativo não pode ser vazio."); 
         }
     }
 }

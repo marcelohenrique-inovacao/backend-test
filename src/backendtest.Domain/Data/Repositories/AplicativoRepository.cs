@@ -126,6 +126,11 @@ namespace backendtest.Domain.Data.Repositories
                 .Where(a => a.FkAplicativo == aplicativo.Id && a.FkDesenvolvedor == desenvolvedor.Id)
                 .FirstOrDefaultAsync();
 
+            if (vinculacao == null)
+            {
+                return false;
+            }
+
             listaVinculacao.Remove(vinculacao);
 
             aplicativo.DesvincularDesenvolvedor(listaVinculacao);

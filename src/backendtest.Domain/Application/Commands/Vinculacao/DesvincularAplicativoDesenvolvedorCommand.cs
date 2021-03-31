@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace backendtest.Domain.Application.Commands.Vinculacao
 {
-    public class DesvincularAplicativoDesenvolvedorCommand : Command
+    public class DesvincularAplicativoDesenvolvedorCommand : CommandGenerico
 
     {
         public Guid IdAplicativo { get; private set; }

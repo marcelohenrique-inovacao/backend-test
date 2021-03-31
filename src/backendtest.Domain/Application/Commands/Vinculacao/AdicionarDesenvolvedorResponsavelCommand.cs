@@ -4,7 +4,7 @@ using FluentValidation;
 
 namespace backendtest.Domain.Application.Commands.Vinculacao
 {
-    public class AdicionarDesenvolvedorResponsavelCommand : Command
+    public class AdicionarDesenvolvedorResponsavelCommand : CommandGenerico
     {
         public Guid IdAplicativo { get; private set; }
         public Guid IdDesenvolvedor { get; private set; }
