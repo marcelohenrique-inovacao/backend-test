@@ -5,7 +5,7 @@ using FluentValidation;
 
 namespace backendtest.Domain.Application.Commands.Aplicativo
 {
-    public class RegistrarAplicativoCommand : Command
+    public class RegistrarAplicativoCommand : CommandGenerico
     {
         public Guid Id { get; private set; }
         public string Nome { get; private set; }

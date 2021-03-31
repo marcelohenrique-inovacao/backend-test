@@ -7,25 +7,32 @@ using MediatR;
 using System;
 using System.Threading;
 using System.Threading.Tasks;
+using backendtest.Shared.Communication;
 
 namespace backendtest.Domain.Application.Commands.Handlers
 {
     public class AplicativoCommandHandler : CommandHandler,
-        IRequestHandler<RegistrarAplicativoCommand, ValidationResult>,
-        IRequestHandler<AtualizarAplicativoCommand, ValidationResult>
+        IRequestHandler<RegistrarAplicativoCommand, ICommandResult>,
+        IRequestHandler<AtualizarAplicativoCommand, ICommandResult>
     {
         private readonly IAplicativoRepository _aplicativoRepository;
         private readonly IMediatorHandler _mediatorHandler;
+        private readonly ICommandResult _commandResult;
 
-        public AplicativoCommandHandler(IAplicativoRepository aplicativoRepository, IMediatorHandler mediatorHandler)
+        public AplicativoCommandHandler(IAplicativoRepository aplicativoRepository, IMediatorHandler mediatorHandler, ICommandResult commandResult)
         {
             _aplicativoRepository = aplicativoRepository;
             _mediatorHandler = mediatorHandler;
+            _commandResult = commandResult;
         }
 
-        public async Task<ValidationResult> Handle(RegistrarAplicativoCommand request, CancellationToken cancellationToken)
+        public async Task<ICommandResult> Handle(RegistrarAplicativoCommand request, CancellationToken cancellationToken)
         {
-            if (!request.Valido()) return request.ValidationResult;
+            if (!request.Valido())
+            {
+                _commandResult.AddFluentValidation(request.ValidationResult);
+                return _commandResult;
+            }
 
             var aplicativo = new Domain.Entities.Aplicativo(request.Nome, DateTime.Parse(request.DataLancamento), request.TipoPlataforma);
             var aplicativoExiste = await _aplicativoRepository.ObterPorNome(request.Nome);
@@ -33,61 +40,73 @@ namespace backendtest.Domain.Application.Commands.Handlers
             if (aplicativoExiste != null)
             {
                 AdicionarErro("Nome","Já existe um aplicativo com este nome.");
-                return ValidationResult;
+                _commandResult.AddFluentValidation(ValidationResult);
+                return _commandResult;
             }
 
             _aplicativoRepository.Adicionar(aplicativo);
-            return await PersistirDados(_aplicativoRepository.UnitOfWork);
+
+            var validacaoSalvar = await PersistirDados(_aplicativoRepository.UnitOfWork);
+            _commandResult.AddFluentValidation(validacaoSalvar);
+            _commandResult.AddResult(aplicativo.Id);
+
+            return _commandResult;
         }
-        public async Task<bool> AtualizarNome(RegistrarAplicativoCommand request)
+        //public async Task<bool> AtualizarNome(RegistrarAplicativoCommand request)
+        //{
+        //    if (!request.Valido()) return false;
+
+        //    var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.Id);
+        //    aplicativo.AtualizarNome(request.Nome);
+        //    _aplicativoRepository.Update(aplicativo);
+
+        //    await PersistirDados(_aplicativoRepository.UnitOfWork);
+
+        //    return true;
+        //}
+
+        //public async Task<bool> AtualizarDataLancamento(RegistrarAplicativoCommand request)
+        //{
+        //    if (!request.Valido()) return false;
+
+        //    var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.Id);
+        //    aplicativo.AtualizarDataLancamento(DateTime.Parse(request.DataLancamento));
+        //    _aplicativoRepository.Update(aplicativo);
+
+        //    await PersistirDados(_aplicativoRepository.UnitOfWork);
+
+        //    return true;
+        //}
+
+        //public async Task<bool> AtualizarPlataforma(RegistrarAplicativoCommand request)
+        //{
+        //    if (!request.Valido()) return false;
+
+        //    var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.Id);
+        //    aplicativo.AtualizarPlataforma(request.TipoPlataforma);
+        //    _aplicativoRepository.Update(aplicativo);
+
+        //    await PersistirDados(_aplicativoRepository.UnitOfWork);
+
+        //    return true;
+        //}  
+
+        public async Task<ICommandResult> Handle(AtualizarAplicativoCommand request, CancellationToken cancellationToken)
         {
-            if (!request.Valido()) return false;
+            if (!request.Valido())
+            {
+                _commandResult.AddFluentValidation(request.ValidationResult);
+                return (_commandResult);
+            }
 
-            var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.Id);
-            aplicativo.AtualizarNome(request.Nome);
-            _aplicativoRepository.Update(aplicativo);
-
-            await PersistirDados(_aplicativoRepository.UnitOfWork);
-
-            return true;
-        }
-
-        public async Task<bool> AtualizarDataLancamento(RegistrarAplicativoCommand request)
-        {
-            if (!request.Valido()) return false;
-
-            var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.Id);
-            aplicativo.AtualizarDataLancamento(DateTime.Parse(request.DataLancamento));
-            _aplicativoRepository.Update(aplicativo);
-
-            await PersistirDados(_aplicativoRepository.UnitOfWork);
-
-            return true;
-        }
-
-        public async Task<bool> AtualizarPlataforma(RegistrarAplicativoCommand request)
-        {
-            if (!request.Valido()) return false;
-
-            var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.Id);
-            aplicativo.AtualizarPlataforma(request.TipoPlataforma);
-            _aplicativoRepository.Update(aplicativo);
-
-            await PersistirDados(_aplicativoRepository.UnitOfWork);
-
-            return true;
-        }  
-
-        public async Task<ValidationResult> Handle(AtualizarAplicativoCommand request, CancellationToken cancellationToken)
-        {
-            if (!request.Valido()) return request.ValidationResult;
 
             var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(request.Id);
 
             if (aplicativo == null)
             {
                 AdicionarErro("Id","Não foi encontrado Aplicativo com este Id");
-                return ValidationResult;
+                _commandResult.AddFluentValidation(ValidationResult);
+                return _commandResult;
             }
 
             aplicativo.AtualizarNome(request.Nome); 
@@ -95,7 +114,12 @@ namespace backendtest.Domain.Application.Commands.Handlers
             aplicativo.AtualizarPlataforma(request.TipoPlataforma);
 
             _aplicativoRepository.Update(aplicativo);
-            return await PersistirDados(_aplicativoRepository.UnitOfWork);
+
+            var validacaoSalvar = await PersistirDados(_aplicativoRepository.UnitOfWork);
+            _commandResult.AddFluentValidation(validacaoSalvar);
+            _commandResult.AddResult(aplicativo.Id);
+
+            return _commandResult;
         }
     }
 }

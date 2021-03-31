@@ -27,7 +27,7 @@ namespace backendtest.Domain.Data.Repositories
 
         public void Update(Aplicativo aplicativo)
         {
-            _context.Entry(aplicativo).State = EntityState.Modified;
+            _context.Entry(aplicativo).State = EntityState.Modified; 
         }
 
         public async Task<bool> Excluir(Aplicativo aplicativo)
@@ -38,6 +38,8 @@ namespace backendtest.Domain.Data.Repositories
 
             return sucesso > 0;
         }
+        //Gets vão virar queries dapper. 
+
         public async Task<IEnumerable<AplicativoDto>> ObterTodos()
         {
             var aplicativos = await _context.Aplicativos

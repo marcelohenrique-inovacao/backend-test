@@ -10,6 +10,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using backendtest.Domain.Application.DTOs;
+using backendtest.Shared.Communication;
 
 namespace backendtest.API.Controllers
 {
@@ -19,39 +20,50 @@ namespace backendtest.API.Controllers
     {
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IAplicativoRepository _aplicativoRepository;
+        private readonly ICommandResult _commandResult;
 
-        public AplicativoController(IAplicativoRepository aplicativoRepository, IMediatorHandler mediatorHandler, IDesenvolvedorRepository desenvolvedorRepository)
+        public AplicativoController(IAplicativoRepository aplicativoRepository, IMediatorHandler mediatorHandler, IDesenvolvedorRepository desenvolvedorRepository, ICommandResult commandResult)
         {
             _aplicativoRepository = aplicativoRepository;
             _mediatorHandler = mediatorHandler;
+            _commandResult = commandResult;
         }
 
         #region GET
         [HttpGet("/v1/aplicativos")]
-        public async Task<IEnumerable<AplicativoDto>> GetTodosAplicativos()
+        public async Task<ICommandResult> GetTodosAplicativos()
         {
-            return await _aplicativoRepository.ObterTodos();
+            var aplicativos = await _aplicativoRepository.ObterTodos();
+            _commandResult.AddResult(aplicativos);
+            return _commandResult;
         }
 
         [HttpGet("/v1/aplicativo/{id}")]
-        public async Task<AplicativoDto> GetAplicativo(Guid id)
+        public async Task<ICommandResult> GetAplicativo(Guid id)
         {
-            return await _aplicativoRepository.ObterPorId(id);
+            var aplicativo = await _aplicativoRepository.ObterPorId(id);
+            _commandResult.AddResult(aplicativo);
+            return _commandResult;
         }
 
         [HttpGet("/v1/aplicativo/desenvolvedoresrelacionados/{id}")]
-        public async Task<IEnumerable<DesenvolvedorDto>> GetAplicativoDesenvolvedoresRelacionados(Guid id)
+        public async Task<ICommandResult> GetAplicativoDesenvolvedoresRelacionados(Guid id)
         {
-            return await _aplicativoRepository.ObterDesenvolvedoresRelacionados(id);
+            var desenvolvedores = await _aplicativoRepository.ObterDesenvolvedoresRelacionados(id);
+
+            if (desenvolvedores.Any())
+                _commandResult.AddResult(desenvolvedores);
+
+            return _commandResult;
         }
 
         #endregion
 
         #region POST
         [HttpPost("/v1/aplicativo/registrar")]
-        public async Task<IActionResult> PostCadastrar(RegistrarAplicativoCommand command)
+        public async Task<ICommandResult> PostCadastrar(RegistrarAplicativoCommand command)
         {
-            return CustomResponse(await _mediatorHandler.EnviarComando(command));
+            return await _mediatorHandler.EnviarComandoGenerico(command);
         }
 
 
@@ -59,13 +71,13 @@ namespace backendtest.API.Controllers
 
         #region PUT
         [HttpPut("/v1/aplicativo/{id}")]
-        public async Task<IActionResult> PutAtualizarCadastro(Guid id, AtualizarAplicativoCommand command)
+        public async Task<ICommandResult> PutAtualizarCadastro(Guid id, AtualizarAplicativoCommand command)
         {
             if (id == command.Id)
-                return CustomResponse(await _mediatorHandler.EnviarComando(command));
+                return await _mediatorHandler.EnviarComandoGenerico(command);
 
-            AdicionarErroProcessamento("O id informado no request está diferente do informado no JSON");
-            return CustomResponse();
+            _commandResult.AddErro("Id", "O id informado no request está diferente do informado no JSON");
+            return _commandResult;
         }
 
         [HttpPut("/v1/aplicativo/vincularDesenvolvedor")]
@@ -95,14 +107,14 @@ namespace backendtest.API.Controllers
         #region DELETE
 
         [HttpDelete("/v1/aplicativo/{id}")]
-        public async Task<IActionResult> ExcluirAplicativo(Guid id)
+        public async Task<ICommandResult> ExcluirAplicativo(Guid id)
         {
             var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(id);
 
             if (aplicativo == null)
             {
-                AdicionarErroProcessamento("Nenhum Aplicativo encontrado com esse Id");
-                return CustomResponse();
+                _commandResult.AddErro("Id", "Nenhum Aplicativo encontrado com esse Id");
+                return _commandResult;
             }
 
             if (!aplicativo.PermiteExcluir())
@@ -117,13 +129,18 @@ namespace backendtest.API.Controllers
                         .ToList()
                         .Select(a => a.Nome));
 
-                AdicionarErroProcessamento($@"Impossível excluir, pois este Aplicativo está vinculado aos Desenvolvedores: {desenvolvedoresVinculados}.");
-                return CustomResponse();
+                _commandResult.AddErro("Id", $@"Impossível excluir, pois este Aplicativo está vinculado aos Desenvolvedores: {desenvolvedoresVinculados}.");
+                return _commandResult;
             }
 
             var sucesso = await _aplicativoRepository.Excluir(aplicativo);
 
-            return CustomResponse(sucesso ? "Excluído com sucesso" : "Falha ao excluir");
+            if (sucesso)
+                _commandResult.AddResult("Excluído com sucesso");
+            else
+                _commandResult.AddErro("Id", "Falha ao excluir");
+
+            return _commandResult;
         }
 
         #endregion
