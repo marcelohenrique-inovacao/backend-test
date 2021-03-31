@@ -56,16 +56,16 @@ namespace backendtest.Domain.Data.Repositories
         public async Task<Desenvolvedor> ObterPorIdComTracking(Guid idDesenvolvedor)
         {
             return await _context.Desenvolvedores
-                .Include(d=>d.desenvolvedorAplicativo)
-                .Include(d=>d.Cpf)
-                .Include(d=> d.Email)
+                .Include(d => d.desenvolvedorAplicativo)
+                .Include(d => d.Cpf)
+                .Include(d => d.Email)
                 .FirstOrDefaultAsync(d => d.Id == idDesenvolvedor);
         }
 
         public async Task<IEnumerable<DesenvolvedorDto>> ObterTodos()
         {
             var desenvolvedores = await _context.Desenvolvedores
-                .Include(d=> d.Aplicativo)
+                .Include(d => d.Aplicativo)
                 .AsNoTracking().ToListAsync();
             return desenvolvedores.Select(DesenvolvedorDto.ParaDesenvolvedorDto);
         }
@@ -73,17 +73,11 @@ namespace backendtest.Domain.Data.Repositories
         public async Task<IEnumerable<AplicativoDto>> ObterAplicativosRelacionados(Guid idDesenvolvedor)
         {
             var desenvolvedorAplicativos = await _context.DesenvolvedorAplicativo
-                .Where(d=> d.FkDesenvolvedor == idDesenvolvedor)
-                .Include(d=> d.FkAplicativoNavigation)
-                .Include(d=> d.FkAplicativoNavigation.Responsavel)
+                .Where(d => d.FkDesenvolvedor == idDesenvolvedor)
+                .Include(d => d.FkAplicativoNavigation)
+                .Include(d => d.FkAplicativoNavigation.Responsavel)
                 .AsNoTracking()
                 .ToListAsync();
-
-            //var aplicativos = new List<AplicativoDto>();
-            //foreach (var item in desenvolvedorAplicativos)
-            //{
-            //    item.FkAplicativoNavigation 
-            //}
 
             return desenvolvedorAplicativos.Select(x => AplicativoDto.ParaAplicativoDto(x.FkAplicativoNavigation));
         }
@@ -92,8 +86,8 @@ namespace backendtest.Domain.Data.Repositories
         {
             desenvolvedor.RemoverCpf();
             desenvolvedor.RemoverEmail();
-            _context.Desenvolvedores.RemoveRange(desenvolvedor); 
-            
+            _context.Desenvolvedores.RemoveRange(desenvolvedor);
+
             var sucesso = await _context.SaveChangesAsync();
 
             return sucesso > 0;

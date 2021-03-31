@@ -7,14 +7,15 @@ namespace backendtest.Shared.Communication
     public sealed class GenericCommandResult : ICommandResult
     {
         public string Status;
-        public object Result { get; set; }
+        public List<object> Result = new();
         public readonly List<Validacao> Erros = new();
 
         public GenericCommandResult()
         {
+            Status = SetStatus();
         }
 
-        public GenericCommandResult(object result, List<Validacao> erros)
+        public GenericCommandResult(List<object> result, List<Validacao> erros)
         {
             Result = result;
             Erros = erros;
@@ -23,7 +24,10 @@ namespace backendtest.Shared.Communication
 
         internal string SetStatus()
         {
-            return Erros.Count > 0 ? "400 Bad Request" : "200 Ok";
+            if (Erros.Count > 0)
+                return "400 Bad Request";
+
+            return Result.Count > 0 ? "200 Ok" : "404 Not Found";
         }
 
         public void AddFluentValidation(ValidationResult validationResult)
@@ -38,13 +42,16 @@ namespace backendtest.Shared.Communication
 
         public void AddResult(object obj)
         {
-            Result = obj;
+            if (obj != null)
+                Result.Add(obj);
+
+            Status = SetStatus();
         }
 
         public void AddErro(string campo, string mensagem)
         {
-
             Erros.Add(new Validacao(campo, mensagem));
+            Status = SetStatus();
         }
 
         public class Validacao

@@ -5,6 +5,7 @@ using backendtest.Shared.Communication.Mediator;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using backendtest.Domain.Application.DTOs;
 using backendtest.Shared.Communication;
@@ -29,21 +30,29 @@ namespace backendtest.API.Controllers
         #region GET
 
         [HttpGet("/v1/desenvolvedores")]
-        public async Task<IEnumerable<DesenvolvedorDto>> GetTodosDesenvolvedores()
+        public async Task<ICommandResult> GetTodosDesenvolvedores()
         {
-            return await _desenvolvedorRepository.ObterTodos();
+            var desenvolvedores = await _desenvolvedorRepository.ObterTodos();
+            _comandResult.AddResult(desenvolvedores);
+            return _comandResult;
         }
 
         [HttpGet("/v1/desenvolvedor/{id}")]
-        public async Task<DesenvolvedorDto> GetDesenvolvedor(Guid id)
+        public async Task<ICommandResult> GetDesenvolvedor(Guid id)
         {
-            return await _desenvolvedorRepository.ObterPorId(id);
+            var desenvolvedor = await _desenvolvedorRepository.ObterPorId(id); 
+            
+            _comandResult.AddResult(desenvolvedor);
+            return _comandResult;
         }
 
         [HttpGet("/v1/desenvolvedor/aplicativosrelacionados/{id}")]
-        public async Task<IEnumerable<AplicativoDto>> GetDesenvolvedorAplicativosRelacionados(Guid id)
-        {
-            return await _desenvolvedorRepository.ObterAplicativosRelacionados(id);
+        public async Task<ICommandResult> GetDesenvolvedorAplicativosRelacionados(Guid id)
+        { 
+            var aplicativos = await _desenvolvedorRepository.ObterAplicativosRelacionados(id);
+            if (aplicativos.Any())
+                _comandResult.AddResult(aplicativos);
+            return _comandResult;
         }
         #endregion
 
@@ -80,7 +89,7 @@ namespace backendtest.API.Controllers
 
             if (desenvolvedor == null)
             {
-                _comandResult.AddErro("Id", "Não existe Desenvolvedor com este Id");
+                _comandResult.AddErro("Id", "Não existe Desenvolvedor com este Id.");
                 return _comandResult;
             }
 
