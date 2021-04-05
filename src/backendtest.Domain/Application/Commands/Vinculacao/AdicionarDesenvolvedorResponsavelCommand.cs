@@ -17,8 +17,8 @@ namespace backendtest.Domain.Application.Commands.Vinculacao
 
         public override bool Valido()
         {
-            var validationResult = new AdicionarDesenvolvedorResponsavelValidation().Validate(this);
-            return validationResult.IsValid;
+            ValidationResult = new AdicionarDesenvolvedorResponsavelValidation().Validate(this); 
+            return ValidationResult.IsValid;
         }
     }
 

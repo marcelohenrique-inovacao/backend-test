@@ -15,8 +15,8 @@ namespace backendtest.Domain.Application.Commands.Vinculacao
 
         public override bool Valido()
         {
-            var validationResult = new RemoverDesenvolvedorResponsavelValidation().Validate(this);
-            return validationResult.IsValid;
+            ValidationResult = new RemoverDesenvolvedorResponsavelValidation().Validate(this);
+            return ValidationResult.IsValid;
         }
     }
     public class RemoverDesenvolvedorResponsavelValidation : AbstractValidator<RemoverDesenvolvedorResponsavelCommand>

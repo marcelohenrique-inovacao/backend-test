@@ -33,6 +33,8 @@ namespace backendtest.Domain.Application.Commands.Aplicativo
         {
             public RegistrarAplicativoValidation()
             {
+                this.CascadeMode = CascadeMode.Stop;
+
                 RuleFor(d => d.Nome)
                     .NotNull()
                     .WithMessage("O Nome não pode ser nulo.")
@@ -45,11 +47,11 @@ namespace backendtest.Domain.Application.Commands.Aplicativo
 
                 RuleFor(d => d.DataLancamento)
                     .NotNull()
-                    .WithMessage("A Data de lançamento não pode ser nulo.")
+                    .WithMessage("A Data de lançamento não pode ser nula.")
                     .NotEmpty()
-                    .WithMessage("A Data de lançamento não pode ser vazio.")
+                    .WithMessage("A Data de lançamento não pode ser vazia.")
                     .Must(ValidaDataLancamento)
-                    .WithMessage("Formato de data inválido. Formato aceito: YYYY-MM-DD");
+                    .WithMessage("Formato de data inválida. Formato aceito: YYYY-MM-DD.");
 
                 RuleFor(d => d.TipoPlataforma)
                     .IsInEnum()

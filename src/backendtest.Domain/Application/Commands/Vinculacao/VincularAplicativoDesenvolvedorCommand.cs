@@ -17,8 +17,8 @@ namespace backendtest.Domain.Application.Commands.Vinculacao
 
         public override bool Valido()
         {
-            var validationResult = new VincularAplicativoDesenvolvedorValidation().Validate(this);
-            return validationResult.IsValid;
+            ValidationResult = new VincularAplicativoDesenvolvedorValidation().Validate(this);
+            return ValidationResult.IsValid;
         }
     }
     public class VincularAplicativoDesenvolvedorValidation : AbstractValidator<VincularAplicativoDesenvolvedorCommand>

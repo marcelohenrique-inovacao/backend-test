@@ -2,7 +2,7 @@
 using backendtest.Domain.Application.Commands.Desenvolvedor;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-namespace backendtest.Tests.UnitTests.Commands
+namespace backendtest.Tests.UnitTests.Commands.Desenvolvedor
 {
     [TestClass]
     public class RegistrarDesenvolvedorCommandTest
@@ -100,6 +100,13 @@ namespace backendtest.Tests.UnitTests.Commands
                     "marceloaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa@gmail.com");
             _registrarDesenvolvedorCommand.Valido();
             Assert.AreEqual(_registrarDesenvolvedorCommand.ValidationResult.Errors[0].ErrorMessage, "O e-mail não pode ser maior que 100 caracteres.");
+        }
+
+        [TestMethod]
+        public void Dado_TodasInformacoesCorretas_Retorna_IsValidTrue()
+        {
+            _registrarDesenvolvedorCommand = new RegistrarDesenvolvedorCommand(Guid.Empty, "Marcelo", "08272217627", "marcelo@gmail.com");
+            Assert.IsTrue(_registrarDesenvolvedorCommand.Valido());
         }
     }
 }

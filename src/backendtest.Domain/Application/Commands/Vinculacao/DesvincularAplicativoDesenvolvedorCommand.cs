@@ -18,8 +18,8 @@ namespace backendtest.Domain.Application.Commands.Vinculacao
 
         public override bool Valido()
         {
-            var validationResult = new DesvincularAplicativoDesenvolvedorValidation().Validate(this);
-            return validationResult.IsValid;
+            ValidationResult = new DesvincularAplicativoDesenvolvedorValidation().Validate(this);
+            return ValidationResult.IsValid;
         }
     }
     public class DesvincularAplicativoDesenvolvedorValidation : AbstractValidator<DesvincularAplicativoDesenvolvedorCommand>

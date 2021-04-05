@@ -73,7 +73,7 @@ namespace backendtest.Domain.Application.Commands.Desenvolvedor
 
                 RuleFor(d => d.Email.Length)
                     .LessThanOrEqualTo(100)
-                    .WithMessage("O nome não pode ser maior que 100 caracteres.");
+                    .WithMessage("O e-mail não pode ser maior que 100 caracteres.");
             }
         }
         protected static bool TerCpfValido(string cpf)
