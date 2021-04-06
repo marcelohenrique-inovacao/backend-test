@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using backendtest.Domain.Application.DTOs;
+using backendtest.Domain.Data.Queries;
 using backendtest.Shared.Communication;
 
 namespace backendtest.API.Controllers
@@ -19,12 +20,15 @@ namespace backendtest.API.Controllers
         private readonly IMediatorHandler _mediatorHandler;
         private readonly IDesenvolvedorRepository _desenvolvedorRepository;
         private readonly ICommandResult _comandResult;
+        private readonly IDesenvolvedorQueries _desenvolvedorQueries;
 
-        public DesenvolvedorController(IMediatorHandler mediatorHandler, IDesenvolvedorRepository desenvolvedorRepository, ICommandResult comandResult)
+        public DesenvolvedorController(IMediatorHandler mediatorHandler, IDesenvolvedorRepository desenvolvedorRepository,
+            ICommandResult comandResult, IDesenvolvedorQueries desenvolvedorQueries)
         {
             _mediatorHandler = mediatorHandler;
             _desenvolvedorRepository = desenvolvedorRepository;
             _comandResult = comandResult;
+            _desenvolvedorQueries = desenvolvedorQueries;
         }
 
         #region GET
@@ -40,20 +44,29 @@ namespace backendtest.API.Controllers
         [HttpGet("/v1/desenvolvedor/{id}")]
         public async Task<ICommandResult> GetDesenvolvedor(Guid id)
         {
-            var desenvolvedor = await _desenvolvedorRepository.ObterPorId(id); 
-            
+            var desenvolvedor = await _desenvolvedorRepository.ObterPorId(id);
+
             _comandResult.AddResult(desenvolvedor);
             return _comandResult;
         }
 
-        [HttpGet("/v1/desenvolvedor/aplicativosrelacionados/{id}")]
+        [HttpGet("/v1/desenvolvedor/aplicativos-relacionados/{id}")]
         public async Task<ICommandResult> GetDesenvolvedorAplicativosRelacionados(Guid id)
-        { 
+        {
             var aplicativos = await _desenvolvedorRepository.ObterAplicativosRelacionados(id);
             if (aplicativos.Any())
                 _comandResult.AddResult(aplicativos);
             return _comandResult;
         }
+
+        [HttpGet("/v1/desenvolvedor/listar-todos-aplicativos-relacionados/{id}")]
+        public async Task<ICommandResult> GetDesenvolvedorRelacaoAplicativos(Guid id)
+        {
+            var desenvolvedorRelacaoAplicativos = await _desenvolvedorQueries.ObterDesenvolvedorRelacaoAplicativos(id);
+            _comandResult.AddResult(desenvolvedorRelacaoAplicativos);
+            return _comandResult;
+        }
+
         #endregion
 
         #region POST

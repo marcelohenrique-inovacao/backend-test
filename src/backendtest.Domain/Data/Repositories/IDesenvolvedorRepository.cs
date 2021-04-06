@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Threading.Tasks;
 using backendtest.Domain.Application.DTOs;
 using backendtest.Domain.Domain.Entities;
@@ -18,5 +19,7 @@ namespace backendtest.Domain.Data.Repositories
         Task<Desenvolvedor> ObterPorIdComTracking(Guid id);
         //REVIEW: Retornar AplicativoDTO
         Task<IEnumerable<AplicativoDto>> ObterAplicativosRelacionados(Guid idDesenvolvedor);
+
+        DbConnection ObterConexao();
     }
 }

@@ -3,6 +3,7 @@ using backendtest.Domain.Application.Commands.Desenvolvedor;
 using backendtest.Domain.Application.Commands.Handlers;
 using backendtest.Domain.Application.Commands.Vinculacao;
 using backendtest.Domain.Data;
+using backendtest.Domain.Data.Queries;
 using backendtest.Domain.Data.Repositories;
 using backendtest.Shared.Communication;
 using backendtest.Shared.Communication.Mediator;
@@ -26,6 +27,7 @@ namespace backendtest.API.Configuration
 
             services.AddScoped<IAplicativoRepository, AplicativoRepository>();
             services.AddScoped<IDesenvolvedorRepository, DesenvolvedorRepository>();
+            services.AddScoped<IDesenvolvedorQueries, DesenvolvedorQueries>();
 
             services.AddScoped<IRequestHandler<RegistrarDesenvolvedorCommand, ICommandResult>, DesenvolvedorCommandHandler>();
             services.AddScoped<IRequestHandler<AtualizarDesenvolvedorCommand, ICommandResult>, DesenvolvedorCommandHandler>();

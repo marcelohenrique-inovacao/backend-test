@@ -22,7 +22,8 @@ namespace backendtest.API.Controllers
         private readonly IAplicativoRepository _aplicativoRepository;
         private readonly ICommandResult _commandResult;
 
-        public AplicativoController(IAplicativoRepository aplicativoRepository, IMediatorHandler mediatorHandler, IDesenvolvedorRepository desenvolvedorRepository, ICommandResult commandResult)
+        public AplicativoController(IAplicativoRepository aplicativoRepository, IMediatorHandler mediatorHandler, 
+            IDesenvolvedorRepository desenvolvedorRepository, ICommandResult commandResult)
         {
             _aplicativoRepository = aplicativoRepository;
             _mediatorHandler = mediatorHandler;
@@ -46,7 +47,7 @@ namespace backendtest.API.Controllers
             return _commandResult;
         }
 
-        [HttpGet("/v1/aplicativo/desenvolvedoresrelacionados/{id}")]
+        [HttpGet("/v1/aplicativo/desenvolvedores-relacionados/{id}")]
         public async Task<ICommandResult> GetAplicativoDesenvolvedoresRelacionados(Guid id)
         {
             var desenvolvedores = await _aplicativoRepository.ObterDesenvolvedoresRelacionados(id);
@@ -80,24 +81,24 @@ namespace backendtest.API.Controllers
             return _commandResult;
         }
 
-        [HttpPut("/v1/aplicativo/vincularDesenvolvedor")]
+        [HttpPut("/v1/aplicativo/vincular-desenvolvedor")]
         public async Task<ICommandResult> PutVincularDesenvolvedor(VincularAplicativoDesenvolvedorCommand command)
         {
             return await _mediatorHandler.EnviarComandoGenerico(command);
         }
 
-        [HttpPut("/v1/aplicativo/desvincularDesenvolvedor")]
+        [HttpPut("/v1/aplicativo/desvincular-desenvolvedor")]
         public async Task<ICommandResult> PutDesvincularDesenvolvedor(DesvincularAplicativoDesenvolvedorCommand command)
         {
             return await _mediatorHandler.EnviarComandoGenerico(command);
 
         }
-        [HttpPut("/v1/aplicativo/AdicionarDesenvolvedorResponsavel")]
+        [HttpPut("/v1/aplicativo/adicionar-desenvolvedor-responsavel")]
         public async Task<ICommandResult> PutAdicionarDesenvolvedorResponsavel(AdicionarDesenvolvedorResponsavelCommand command)
         {
             return await _mediatorHandler.EnviarComandoGenerico(command);
         }
-        [HttpPut("/v1/aplicativo/RemoverDesenvolvedorResponsavel")]
+        [HttpPut("/v1/aplicativo/remover-desenvolvedor-responsavel")]
         public async Task<ICommandResult> PutRemoverDesenvolvedorResponsavel(RemoverDesenvolvedorResponsavelCommand command)
         {
             return await _mediatorHandler.EnviarComandoGenerico(command);

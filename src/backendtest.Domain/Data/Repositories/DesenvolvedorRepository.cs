@@ -4,6 +4,7 @@ using backendtest.Shared.DomainObjects;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
+using System.Data.Common;
 using System.Linq;
 using System.Threading.Tasks;
 using backendtest.Domain.Application.DTOs;
@@ -82,6 +83,8 @@ namespace backendtest.Domain.Data.Repositories
 
             return desenvolvedorAplicativos.Select(x => AplicativoDto.ParaAplicativoDto(x.FkAplicativoNavigation));
         }
+
+        public DbConnection ObterConexao() => _context.Database.GetDbConnection();
 
         public async Task<bool> Excluir(Desenvolvedor desenvolvedor)
         {
