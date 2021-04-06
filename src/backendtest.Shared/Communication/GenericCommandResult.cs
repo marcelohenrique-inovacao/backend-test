@@ -6,9 +6,9 @@ namespace backendtest.Shared.Communication
 {
     public sealed class GenericCommandResult : ICommandResult
     {
-        public string Status;
-        public List<object> Result = new();
-        public readonly List<Validacao> Erros = new();
+        public string Status { get; set; }
+        public List<object> Result { get; set; } = new();
+        public List<Validacao> Erros { get; set; } = new();
 
         public GenericCommandResult()
         {
