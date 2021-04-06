@@ -12,7 +12,8 @@ namespace backendtest.Domain.Application.Commands.Handlers
 {
     public class DesenvolvedorCommandHandler : CommandHandler,
         IRequestHandler<RegistrarDesenvolvedorCommand, ICommandResult>,
-        IRequestHandler<AtualizarDesenvolvedorCommand, ICommandResult>
+        IRequestHandler<AtualizarDesenvolvedorCommand, ICommandResult>,
+        IRequestHandler<ExcluirDesenvolvedorCommand, ICommandResult>
     {
         private readonly IDesenvolvedorRepository _desenvolvedorRepository;
         private readonly IMediatorHandler _mediatorHandler;
@@ -120,6 +121,41 @@ namespace backendtest.Domain.Application.Commands.Handlers
             var validacaoSalvar = await PersistirDados(_desenvolvedorRepository.UnitOfWork);
             _comandResult.AddFluentValidation(validacaoSalvar);
             _comandResult.AddResult("Alterado com sucesso.");
+
+            return _comandResult;
+        }
+
+        public async Task<ICommandResult> Handle(ExcluirDesenvolvedorCommand request, CancellationToken cancellationToken)
+        {
+            if (!request.Valido())
+            {
+                _comandResult.AddFluentValidation(request.ValidationResult);
+                return _comandResult;
+            }
+
+            var desenvolvedor = await _desenvolvedorRepository.ObterPorIdComTracking(request.Id);
+
+            if (desenvolvedor == null)
+            {
+                AdicionarErro("Id", "Não existe Desenvolvedor com este Id.");
+                _comandResult.AddFluentValidation(ValidationResult);
+                return _comandResult;
+            }
+
+            //REVIEW: Mostrar os nomes dos aplicativos na mensagem.
+            if (!desenvolvedor.PermiteExcluir())
+            {
+                AdicionarErro("Id", "Impossível excluir, pois este Desenvolvedor está vinculado à algum Aplicativo.");
+                _comandResult.AddFluentValidation(ValidationResult);
+                return _comandResult; 
+            }
+
+            var sucesso = await _desenvolvedorRepository.Excluir(desenvolvedor);
+
+            if (sucesso)
+                _comandResult.AddResult("Excluído com sucesso");
+            else
+                _comandResult.AddErro("Id", "Falha ao excluir");
 
             return _comandResult;
         }

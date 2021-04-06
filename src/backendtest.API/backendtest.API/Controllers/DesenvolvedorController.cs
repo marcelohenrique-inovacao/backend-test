@@ -98,30 +98,7 @@ namespace backendtest.API.Controllers
         [HttpDelete("/v1/desenvolvedor/{id}")]
         public async Task<ICommandResult> ExcluirDesenvolvedor(Guid id)
         {
-            var desenvolvedor = await _desenvolvedorRepository.ObterPorIdComTracking(id);
-
-            if (desenvolvedor == null)
-            {
-                _comandResult.AddErro("Id", "Não existe Desenvolvedor com este Id.");
-                return _comandResult;
-            }
-
-            //REVIEW: Mostrar os nomes dos aplicativos na mensagem.
-            if (!desenvolvedor.PermiteExcluir())
-            {
-                _comandResult.AddErro("Id", "Impossível excluir, pois este Desenvolvedor está vinculado à algum Aplicativo.");
-                return _comandResult;
-
-            }
-
-            var sucesso = await _desenvolvedorRepository.Excluir(desenvolvedor);
-
-            if (sucesso)
-                _comandResult.AddResult("Excluído com sucesso");
-            else
-                _comandResult.AddErro("Id", "Falha ao excluir");
-
-            return _comandResult;
+            return await _mediatorHandler.EnviarComandoGenerico(new ExcluirDesenvolvedorCommand(id));
         }
         #endregion
     }

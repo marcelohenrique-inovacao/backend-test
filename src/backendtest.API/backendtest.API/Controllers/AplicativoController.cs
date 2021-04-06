@@ -22,7 +22,7 @@ namespace backendtest.API.Controllers
         private readonly IAplicativoRepository _aplicativoRepository;
         private readonly ICommandResult _commandResult;
 
-        public AplicativoController(IAplicativoRepository aplicativoRepository, IMediatorHandler mediatorHandler, 
+        public AplicativoController(IAplicativoRepository aplicativoRepository, IMediatorHandler mediatorHandler,
             IDesenvolvedorRepository desenvolvedorRepository, ICommandResult commandResult)
         {
             _aplicativoRepository = aplicativoRepository;
@@ -112,38 +112,7 @@ namespace backendtest.API.Controllers
         [HttpDelete("/v1/aplicativo/{id}")]
         public async Task<ICommandResult> ExcluirAplicativo(Guid id)
         {
-            var aplicativo = await _aplicativoRepository.ObterPorIdComTracking(id);
-
-            if (aplicativo == null)
-            {
-                _commandResult.AddErro("Id", "Nenhum Aplicativo encontrado com esse Id");
-                return _commandResult;
-            }
-
-            if (!aplicativo.PermiteExcluir())
-            {
-                var desenvolvedores =
-                    await _aplicativoRepository.ObterDesenvolvedoresRelacionados(aplicativo.Id);
-
-                var desenvolvedoresVinculados = new StringBuilder();
-
-                desenvolvedoresVinculados.AppendJoin(", ",
-                    desenvolvedores.Take(desenvolvedores.Count())
-                        .ToList()
-                        .Select(a => a.Nome));
-
-                _commandResult.AddErro("Id", $@"Impossível excluir, pois este Aplicativo está vinculado aos Desenvolvedores: {desenvolvedoresVinculados}.");
-                return _commandResult;
-            }
-
-            var sucesso = await _aplicativoRepository.Excluir(aplicativo);
-
-            if (sucesso)
-                _commandResult.AddResult("Excluído com sucesso");
-            else
-                _commandResult.AddErro("Id", "Falha ao excluir");
-
-            return _commandResult;
+            return await _mediatorHandler.EnviarComandoGenerico(new ExcluirAplicativoCommand(id));
         }
 
         #endregion
