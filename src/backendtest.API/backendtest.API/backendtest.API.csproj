@@ -4,6 +4,7 @@
     <TargetFramework>net5.0</TargetFramework>
     <UserSecretsId>b1e5850d-cacd-47f4-9ba1-fb8e4c6bf198</UserSecretsId>
     <DockerDefaultTargetOS>Linux</DockerDefaultTargetOS>
+    <StartupObject>backendtest.API.Program</StartupObject>
   </PropertyGroup>
 
   <ItemGroup>
@@ -41,5 +42,7 @@
   <ItemGroup>
     <Folder Include="Configuration\" />
   </ItemGroup>
+
+  <ProjectExtensions><VisualStudio><UserProperties properties_4launchsettings_1json__JsonSchema="" /></VisualStudio></ProjectExtensions>
 
 </Project>

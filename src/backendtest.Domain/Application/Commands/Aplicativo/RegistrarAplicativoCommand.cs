@@ -11,7 +11,7 @@ namespace backendtest.Domain.Application.Commands.Aplicativo
         public string Nome { get; private set; }
         public string DataLancamento { get; private set; }
         public ETipoPlataforma TipoPlataforma { get; private set; }
-        public Domain.Entities.Desenvolvedor? DesenvolvedorResponsavel { get; private set; }
+        public Domain.Entities.Desenvolvedor DesenvolvedorResponsavel { get; private set; }
 
         public RegistrarAplicativoCommand(Guid id, string nome, string dataLancamento, int tipoPlataforma, Domain.Entities.Desenvolvedor desenvolvedorResponsavel)
         {
