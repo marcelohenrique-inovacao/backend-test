@@ -1,25 +1,6 @@
 version: "3"
 
 services:
-    api-backendtest:
-        image: backendtest:latest
-        container_name: backendtestapi
-        build: 
-            context: ../src
-            dockerfile: ../src/Dockerfile
-        restart: always
-        ports:
-            - "5001:5001"
-            - "80:80"
-        environment:
-            - ASPNETCORE_ENVIRONMENT=Production
-            - ASPNETCORE_URLS=https://+:5001;http://+80
-            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
-            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/backendtest.pfx
-        volumes:
-            - ./certs:/https:ro  
-        depends_on: 
-            - sql-server
     sql-server:
         image: microsoft/mssql-server-2019-linux:latest
         container_name: backendtest-sql-server
@@ -31,3 +12,22 @@ services:
             ACCEPT_EULA: "Y"   
         ports:
             - "1433:1433" 
+    api-backendtest:
+        image: backendtest:latest
+        container_name: backendtestapi
+        ports:
+            - "5001:5001"
+            - "80:80"
+        environment:
+            - ASPNETCORE_ENVIRONMENT=Production
+            - ASPNETCORE_URLS=https://+:5001;http://+80
+            - ASPNETCORE_Kestrel__Certificates__Default__Password=nerdstore
+            - ASPNETCORE_Kestrel__Certificates__Default__Path=/https/backendtest.pfx
+        volumes:
+            - ./certs:/https:ro  
+        depends_on: 
+            - sql-server 
+        build: 
+            context: ../src
+            dockerfile: ../src/Dockerfile
+        restart: on-failure

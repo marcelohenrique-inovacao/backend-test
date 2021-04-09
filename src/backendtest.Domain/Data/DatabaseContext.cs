@@ -6,8 +6,7 @@ using backendtest.Shared.Messages;
 using FluentValidation.Results;
 using Microsoft.EntityFrameworkCore;
 using System.Linq;
-using System.Threading.Tasks;
-using backendtest.Domain.Data.Mappings;
+using System.Threading.Tasks; 
 
 namespace backendtest.Domain.Data
 {
@@ -21,7 +20,6 @@ namespace backendtest.Domain.Data
             ChangeTracker.QueryTrackingBehavior = QueryTrackingBehavior.NoTracking;
             ChangeTracker.AutoDetectChangesEnabled = false;
             _mediatorHandler = rebusHandler ?? throw new ArgumentNullException(nameof(rebusHandler));
-
         }
 
         public virtual DbSet<Desenvolvedor> Desenvolvedores { get; set; }
@@ -31,8 +29,8 @@ namespace backendtest.Domain.Data
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Ignore<ValidationResult>();
-            modelBuilder.Ignore<Event>();
-
+            modelBuilder.Ignore<Event>(); 
+            
             foreach (var property in modelBuilder.Model.GetEntityTypes().SelectMany(
                 e => e.GetProperties().Where(p => p.ClrType == typeof(string))))
                 property.SetColumnType("varchar(100)");
