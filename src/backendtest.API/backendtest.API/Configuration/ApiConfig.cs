@@ -1,4 +1,5 @@
-﻿using backendtest.Domain.Data;
+﻿using System;
+using backendtest.Domain.Data;
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -26,7 +27,11 @@ namespace backendtest.API.Configuration
             });
 
             services.AddDbContext<DatabaseContext>(options =>
-                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+                options.UseSqlServer(configuration.GetConnectionString("DefaultConnection"),
+                    opt => opt.EnableRetryOnFailure(
+                        maxRetryCount: 5,
+                        maxRetryDelay: TimeSpan.FromSeconds(30),
+                        errorNumbersToAdd: null)));
 
             services.AddControllersWithViews()
                 .AddNewtonsoftJson(options =>
