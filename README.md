@@ -21,3 +21,6 @@
 - Não pode excluir um Aplicativo se houver Desenvolvedor vinculado.
 
 ---
+
+
+kjkl

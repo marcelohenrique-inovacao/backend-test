@@ -35,7 +35,6 @@ namespace backendtest.Domain.Application.Commands.Handlers
                 return _comandResult;
             }
 
-            var desenvolvedor = new Domain.Entities.Desenvolvedor(request.Nome, request.Cpf, request.Email);
 
             var desenvolvedorExiste = await _desenvolvedorRepository.ObterPorCpf(request.Cpf);
 
@@ -45,6 +44,8 @@ namespace backendtest.Domain.Application.Commands.Handlers
                 _comandResult.AddFluentValidation(ValidationResult);
                 return _comandResult;
             }
+
+            var desenvolvedor = new Domain.Entities.Desenvolvedor(request.Nome, request.Cpf, request.Email);
 
             _desenvolvedorRepository.Adicionar(desenvolvedor);
             //REVIEW: Adicionar evento de cadastro.
