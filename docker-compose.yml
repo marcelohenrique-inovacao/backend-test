@@ -29,5 +29,4 @@ services:
             - sql-server 
         build: 
             context: ../src
-            dockerfile: ../src/Dockerfile
-        restart: on-failure
+            dockerfile: ../src/Dockerfile 
