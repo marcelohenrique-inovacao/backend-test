@@ -33,7 +33,7 @@ namespace backendtest.API.Configuration
                     options.SerializerSettings.ReferenceLoopHandling = Newtonsoft.Json.ReferenceLoopHandling.Ignore
                 );
             //services.AddDbContext<DatabaseContext>(
-            //    opt => opt.UseInMemoryDatabase("Database")); 
+            //    opt => opt.UseInMemoryDatabase("Database"));  
         }
 
         public static void UseApiConfiguration(this IApplicationBuilder app, IWebHostEnvironment env)
@@ -49,7 +49,8 @@ namespace backendtest.API.Configuration
 
             app.UseCors("Total");
 
-            //app.UseAuthConfiguration();
+            app.UseAuthentication();
+            app.UseAuthorization();
 
             app.UseEndpoints(endpoints =>
             {

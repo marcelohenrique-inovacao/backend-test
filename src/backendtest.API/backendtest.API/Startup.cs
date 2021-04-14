@@ -29,7 +29,8 @@ namespace backendtest.API
          
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddApiConfiguration(configuration); 
+            services.AddApiConfiguration(configuration);
+            services.AddIdentityConfig(configuration);
             services.RegisterServices();
             services.AddSwaggerConfiguration();
         }

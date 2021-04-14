@@ -1,4 +1,5 @@
-﻿using backendtest.Domain.Application.Commands.Aplicativo;
+﻿using backendtest.API.Extensions;
+using backendtest.Domain.Application.Commands.Aplicativo;
 using backendtest.Domain.Application.Commands.Desenvolvedor;
 using backendtest.Domain.Application.Commands.Handlers;
 using backendtest.Domain.Application.Commands.Vinculacao;
@@ -40,6 +41,8 @@ namespace backendtest.API.Configuration
             services.AddScoped<IRequestHandler<RemoverDesenvolvedorResponsavelCommand, ICommandResult>, VinculacaoAplicativoDesenvolvedorHandler>();
             services.AddScoped<IRequestHandler<VincularAplicativoDesenvolvedorCommand, ICommandResult>, VinculacaoAplicativoDesenvolvedorHandler>();
             services.AddScoped<IRequestHandler<DesvincularAplicativoDesenvolvedorCommand, ICommandResult>, VinculacaoAplicativoDesenvolvedorHandler>();
+
+            services.AddScoped<IUser, AspNetUser>();
         }
     }
 }

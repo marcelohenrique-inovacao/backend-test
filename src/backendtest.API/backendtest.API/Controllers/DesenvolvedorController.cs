@@ -1,20 +1,21 @@
-﻿using backendtest.Domain.Application.Commands.Desenvolvedor;
+﻿using backendtest.API.Extensions;
+using backendtest.Domain.Application.Commands.Desenvolvedor;
+using backendtest.Domain.Data.Queries;
 using backendtest.Domain.Data.Repositories;
-using backendtest.Domain.Domain.Entities;
+using backendtest.Shared.Communication;
 using backendtest.Shared.Communication.Mediator;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using backendtest.Domain.Application.DTOs;
-using backendtest.Domain.Data.Queries;
-using backendtest.Shared.Communication;
 
 namespace backendtest.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
+
     public class DesenvolvedorController : MainController
     {
         private readonly IMediatorHandler _mediatorHandler;
@@ -23,7 +24,7 @@ namespace backendtest.API.Controllers
         private readonly IDesenvolvedorQueries _desenvolvedorQueries;
 
         public DesenvolvedorController(IMediatorHandler mediatorHandler, IDesenvolvedorRepository desenvolvedorRepository,
-            ICommandResult comandResult, IDesenvolvedorQueries desenvolvedorQueries)
+            ICommandResult comandResult, IDesenvolvedorQueries desenvolvedorQueries, IUser user) : base(user)
         {
             _mediatorHandler = mediatorHandler;
             _desenvolvedorRepository = desenvolvedorRepository;
@@ -32,7 +33,7 @@ namespace backendtest.API.Controllers
         }
 
         #region GET
-
+        [AllowAnonymous]
         [HttpGet("/v1/desenvolvedores")]
         public async Task<ICommandResult> GetTodosDesenvolvedores()
         {
@@ -70,7 +71,7 @@ namespace backendtest.API.Controllers
         #endregion
 
         #region POST
-
+        [ClaimsAuthorize("desenvolvedor", "registrar")]
         [HttpPost("/v1/desenvolvedor/registrar")]
         public async Task<ICommandResult> PostCadastrar(RegistrarDesenvolvedorCommand command)
         {
@@ -80,7 +81,7 @@ namespace backendtest.API.Controllers
         #endregion
 
         #region PUT
-
+        [ClaimsAuthorize("desenvolvedor", "atualizar")]
         [HttpPut("/v1/desenvolvedor/{id}")]
         public async Task<ICommandResult> PutAtualizarCadastro(Guid id, AtualizarDesenvolvedorCommand command)
         {
@@ -94,7 +95,7 @@ namespace backendtest.API.Controllers
         #endregion
 
         #region DELETE
-
+        [ClaimsAuthorize("desenvolvedor", "excluir")]
         [HttpDelete("/v1/desenvolvedor/{id}")]
         public async Task<ICommandResult> ExcluirDesenvolvedor(Guid id)
         {

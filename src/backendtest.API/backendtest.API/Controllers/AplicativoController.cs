@@ -1,21 +1,20 @@
 ﻿using backendtest.Domain.Application.Commands.Aplicativo;
 using backendtest.Domain.Application.Commands.Vinculacao;
 using backendtest.Domain.Data.Repositories;
-using backendtest.Domain.Domain.Entities;
+using backendtest.Shared.Communication;
 using backendtest.Shared.Communication.Mediator;
 using Microsoft.AspNetCore.Mvc;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
-using backendtest.Domain.Application.DTOs;
-using backendtest.Shared.Communication;
+using backendtest.API.Extensions;
+using Microsoft.AspNetCore.Authorization;
 
 namespace backendtest.API.Controllers
 {
-    [Route("api/[controller]")]
+    [Authorize]
     [ApiController]
+    [Route("api/[controller]")]
     public class AplicativoController : MainController
     {
         private readonly IMediatorHandler _mediatorHandler;
@@ -23,7 +22,7 @@ namespace backendtest.API.Controllers
         private readonly ICommandResult _commandResult;
 
         public AplicativoController(IAplicativoRepository aplicativoRepository, IMediatorHandler mediatorHandler,
-            IDesenvolvedorRepository desenvolvedorRepository, ICommandResult commandResult)
+            IDesenvolvedorRepository desenvolvedorRepository, ICommandResult commandResult, IUser user) : base(user)
         {
             _aplicativoRepository = aplicativoRepository;
             _mediatorHandler = mediatorHandler;
@@ -31,6 +30,7 @@ namespace backendtest.API.Controllers
         }
 
         #region GET
+        [AllowAnonymous]
         [HttpGet("/v1/aplicativos")]
         public async Task<ICommandResult> GetTodosAplicativos()
         {
@@ -61,6 +61,7 @@ namespace backendtest.API.Controllers
         #endregion
 
         #region POST
+        [ClaimsAuthorize("aplicativo", "registrar")]
         [HttpPost("/v1/aplicativo/registrar")]
         public async Task<ICommandResult> PostCadastrar(RegistrarAplicativoCommand command)
         {
@@ -71,6 +72,7 @@ namespace backendtest.API.Controllers
         #endregion
 
         #region PUT
+        [ClaimsAuthorize("aplicativo", "atualizar")]
         [HttpPut("/v1/aplicativo/{id}")]
         public async Task<ICommandResult> PutAtualizarCadastro(Guid id, AtualizarAplicativoCommand command)
         {
@@ -108,7 +110,7 @@ namespace backendtest.API.Controllers
         #endregion
 
         #region DELETE
-
+        [ClaimsAuthorize("aplicativo", "excluir")]
         [HttpDelete("/v1/aplicativo/{id}")]
         public async Task<ICommandResult> ExcluirAplicativo(Guid id)
         {

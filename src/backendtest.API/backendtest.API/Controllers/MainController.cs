@@ -1,9 +1,11 @@
-﻿using backendtest.Shared.Communication;
+﻿using System;
+using backendtest.Shared.Communication;
 using FluentValidation.Results;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.ModelBinding;
 using System.Collections.Generic;
 using System.Linq;
+using backendtest.API.Extensions;
 
 namespace backendtest.API.Controllers
 {
@@ -11,6 +13,19 @@ namespace backendtest.API.Controllers
     public abstract class MainController : Controller
     {
         protected ICollection<string> Erros = new List<string>();
+        public readonly IUser AppUser;
+        protected Guid UsuarioId { get; set; }
+        protected bool UsuarioAutenticado { get; set; }
+
+        protected MainController(IUser appUser)
+        {
+            AppUser = appUser;
+
+            if (!appUser.IsAuthenticated()) return;
+
+            UsuarioId = appUser.GetUserId();
+            UsuarioAutenticado = true;
+        }
 
         protected ActionResult CustomResponse(object result = null)
         {
